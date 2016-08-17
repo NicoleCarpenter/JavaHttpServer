@@ -1,0 +1,31 @@
+package com.carpentern;
+
+import java.net.Socket;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
+
+public class HttpSocketConnection implements SocketConnection {
+
+  private Socket socket;
+  private InputStream inputStream;
+  private OutputStream outputStream;
+
+  public HttpSocketConnection(Socket socket, InputStream inputStream, OutputStream outputStream) {
+    this.socket = socket;
+    this.inputStream = inputStream;
+    this.outputStream = outputStream;
+  }
+
+  public Socket getSocket() {
+    return socket;
+  }
+
+  public InputStream getInputStream() {
+    return inputStream;
+  }
+
+  public OutputStream getOutputStream() {
+    return outputStream;
+  }
+}
