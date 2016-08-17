@@ -6,7 +6,8 @@ import java.io.IOException;
 public class Main {
 
   public static void main(String args[]) {
-    Integer port = 5000;
+    ArgumentParser argsParser = new ArgumentParser(args);
+    Integer port = argsParser.getPort();
     ServerSocket serverSocket;
 
     try {
