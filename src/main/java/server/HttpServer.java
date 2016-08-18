@@ -4,28 +4,29 @@ import java.io.IOException;
 
 public class HttpServer {
   ServerSocketInterface serverSocket;
-  SocketConnection socket;
+  SocketConnection socketConnection;
   RequestParser requestParser;
-  Handler handler;
+  Router router;
   ServerIO serverIO;
-  HttpRequest request;
-  HttpResponse response;
 
-  public HttpServer(ServerSocketInterface serverSocket, RequestParser requestParser, Handler handler, ServerIO serverIO) {
+  public HttpServer(ServerSocketInterface serverSocket, RequestParser requestParser, Router router, ServerIO serverIO) {
     this.serverSocket = serverSocket;
     this.requestParser = requestParser;
-    this.handler = handler;
+    this.router = router;
     this.serverIO = serverIO;
   }
 
   public void run() {
+
     try {
-      socket = serverSocket.listen();
-      request = requestParser.parseRequest(socket);
-      response = handler.handleRoute(request);
-      serverIO.writeResponse(response.formatToBytes(), socket.getOutputStream());
+      socketConnection = serverSocket.listen();
+      HttpRequest request = requestParser.parseRequest(socketConnection);
+      Handler handler = router.getRoute(request);
+      Response response = handler.handleRoute(request);
+      serverIO.writeResponse(response.formatToBytes(), socketConnection.getOutputStream());
     } catch (IOException e) {
       e.printStackTrace();
     }
+
   }
 }

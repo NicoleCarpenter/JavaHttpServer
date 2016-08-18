@@ -17,6 +17,10 @@ public class HttpServerIO implements ServerIO {
     while ((value = bufferedReader.read()) != -1) {
       char c = (char)value;
       rawRequest.append(c);
+
+      if (!bufferedReader.ready()) {
+        break;
+      }
     }
     return rawRequest.toString();
   }

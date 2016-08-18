@@ -8,52 +8,53 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HttpRequestParserTest extends junit.framework.TestCase {
-  MockHttpSocketConnection socketConnection;
-  RequestParser requestParser;
+  MockHttpServerIO serverIO;
 
   protected void setUp() {
-    requestParser = new HttpRequestParser();
+    serverIO = new MockHttpServerIO();
   }
 
   private HttpRequest createTestParsedRequest(String request) throws IOException {
+    serverIO.stubRequest(request);
+    HttpRequestParser requestParser = new HttpRequestParser(serverIO);
     OutputStream outputStream = new ByteArrayOutputStream();
     InputStream inputStream = new ByteArrayInputStream(request.getBytes());
-    socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
+    MockHttpSocketConnection socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
     return requestParser.parseRequest(socketConnection);
   }
 
   public void testGetInputStreamCalled() throws IOException {
-    String request = "GET / HTTP/1.0\r\n\r\n";
+    String request = "GET / HTTP/1.1\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
-    assertTrue(socketConnection.getInputStreamCalled());
+    assertTrue(serverIO.readRequestCalled());
   }
 
 
   public void testParseRequest() throws IOException {
-    String request = "GET / HTTP/1.0\r\n\r\n";
+    String request = "GET / HTTP/1.1\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     assertEquals("GET", parsedRequest.getMethod());
     assertEquals("/", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(new HashMap<>(), parsedRequest.getHeaderLines());
     assertEquals("", parsedRequest.getBody());
   }
 
   public void testParseRequestWithBody() throws IOException {
-    String request = "GET /index.html HTTP/1.0\r\n\r\nHello World\r\n\r\n";
+    String request = "GET /index.html HTTP/1.1\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     assertEquals("GET", parsedRequest.getMethod());
     assertEquals("/index.html", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(new HashMap<>(), parsedRequest.getHeaderLines());
     assertEquals("Hello World", parsedRequest.getBody());
   }
 
   public void testParseRequestSingleHeader() throws IOException {
-    String request = "POST /index.html HTTP/1.0\r\nAccept: text/plain\r\n\r\n";
+    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
@@ -61,13 +62,13 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
     assertEquals("POST", parsedRequest.getMethod());
     assertEquals("/index.html", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("", parsedRequest.getBody());
   }
 
   public void testParseRequestMultipleHeaders() throws IOException {
-    String request = "GET /index.html HTTP/1.0\r\nAccept: text/plain\r\nAccept-Language: en-US\r\n\r\n";
+    String request = "GET /index.html HTTP/1.1\r\nAccept: text/plain\r\nAccept-Language: en-US\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
@@ -76,13 +77,13 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
     assertEquals("GET", parsedRequest.getMethod());
     assertEquals("/index.html", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("", parsedRequest.getBody());
   }
 
   public void testParseRequestSingleHeaderWithBody() throws IOException {
-    String request = "POST /index.html HTTP/1.0\r\nAccept: text/plain\r\n\r\nHello World\r\n\r\n";
+    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
@@ -90,13 +91,13 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
     assertEquals("POST", parsedRequest.getMethod());
     assertEquals("/index.html", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("Hello World", parsedRequest.getBody());
   }
 
   public void testParseRequestMultipleHeadersWithBody() throws IOException {
-    String request = "POST /index.html HTTP/1.0\r\nAccept: text/plain\r\nAccept-Language: en-US\r\n\r\nHello World\r\n\r\n";
+    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\nAccept-Language: en-US\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
@@ -105,7 +106,7 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
     assertEquals("POST", parsedRequest.getMethod());
     assertEquals("/index.html", parsedRequest.getUri());
-    assertEquals("HTTP/1.0", parsedRequest.getHttpVersion());
+    assertEquals("HTTP/1.1", parsedRequest.getHttpVersion());
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("Hello World", parsedRequest.getBody());
   }

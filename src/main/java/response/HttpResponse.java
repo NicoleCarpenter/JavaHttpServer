@@ -2,33 +2,25 @@ package com.carpentern;
 
 import java.util.HashMap;
 
-public class HttpResponse {
-  String httpVersion;
-  String responseCode;
-  String responseMessage;
-  HashMap<String, String> headerLines;
-  String body;
+public class HttpResponse implements Response {
   static String CRLF = "\r\n\r\n";
   static String CR = "\r\n";
-
-  public HttpResponse(String httpVersion, String responseCode, String responseMessage, HashMap<String, String> headerLines, String body) {
-    this.httpVersion = httpVersion;
-    this.responseCode = responseCode;
-    this.responseMessage = responseMessage;
-    this.headerLines = headerLines;
-    this.body = body;
-  }
+  String httpVersion = "HTTP/1.1";
+  String statusCode;
+  String statusMessage;
+  HashMap<String, String> headerLines = new HashMap<String, String>();
+  byte[] body;
   
   public String getHttpVersion() {
     return httpVersion;
   }
 
-  public String getResponseCode() {
-    return responseCode;
+  public String getStatusCode() {
+    return statusCode;
   }
 
-  public String getResponseMessage() {
-    return responseMessage;
+  public String getStatusMessage() {
+    return statusMessage;
   }
 
   public HashMap<String, String> getHeaderLines() {
@@ -36,23 +28,37 @@ public class HttpResponse {
   }
 
   public String getBody() {
-    return body;
+    return new String(body);
   }
 
-  public byte[] formatToBytes() {
-    return (httpVersion 
-            + responseCode 
-            + responseMessage
-            + CR
-            + headersToString()
-            + CRLF
-            + body
-            + CRLF).getBytes();
+  public void setHeader(String key, String value) {
+    headerLines.put(key, value);
+  }
+
+  public String formatToString() {
+    byte[] ba = formatToBytes();
+    return new String(ba);
   }
 
   public String headersToString() {
     StringBuilder builder = new StringBuilder();
-    headerLines.forEach((key, value)-> builder.append(key + ": " + value + "\r\n"));
+    headerLines.forEach((key, value)-> builder.append(key + ": " + value + CR));
     return builder.toString();
   }
+
+  public String bodyToString() {
+    return new String(body);
+  }
+
+  public byte[] formatToBytes() {
+    return (httpVersion + " "
+            + statusCode + " "
+            + statusMessage
+            + CR
+            + headersToString()
+            + CR
+            + bodyToString()
+            + CRLF).getBytes();
+  }
+
 }

@@ -17,7 +17,9 @@ test.testLogging {
 
 jar {
   manifest {
-    attributes "Main-Class": "com.carpentern.Main"
+    attributes (
+      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      "Main-Class": "com.carpentern.Main")
   }
 
   from {

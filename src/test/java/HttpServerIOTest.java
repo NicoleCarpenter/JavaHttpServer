@@ -32,5 +32,4 @@ public class HttpServerIOTest extends junit.framework.TestCase {
     serverIO.writeResponse(response.getBytes(), socketConnection.getOutputStream());
     assertEquals(response, socketConnection.getOutputStream().toString());
   }
-
 }
