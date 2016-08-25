@@ -3,16 +3,16 @@ import com.carpentern.*;
 public class HttpServerTest extends junit.framework.TestCase {
   MockHttpServerSocket serverSocket;
   MockHttpRequestParser requestParser;
-  MockHttpHandler handler;
+  MockHttpRouter router;
   MockHttpServerIO serverIO;
   HttpServer server;
   
   protected void setUp() {
     serverSocket = new MockHttpServerSocket();
     requestParser = new MockHttpRequestParser();
-    handler = new MockHttpHandler();
+    router = new MockHttpRouter();
     serverIO = new MockHttpServerIO();
-    server = new HttpServer(serverSocket, requestParser, handler, serverIO);
+    server = new HttpServer(serverSocket, requestParser, router, serverIO);
     server.run();
   }
 
@@ -29,7 +29,7 @@ public class HttpServerTest extends junit.framework.TestCase {
   }
 
   public void testHandleRouteCalled() {
-    assertTrue(handler.handleRouteCalled());
+    assertTrue(router.getRouteCalled());
   }
 
   public void testWriteResponseCalled() {

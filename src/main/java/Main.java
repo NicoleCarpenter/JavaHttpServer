@@ -18,11 +18,13 @@ public class Main {
     }
 
     HttpServerSocket httpServerSocket = new HttpServerSocket(serverSocket);
-    HttpRequestParser httpRequestParser = new HttpRequestParser();
-    HttpHandler httpHandler = new HttpHandler();
     HttpServerIO httpServerIO = new HttpServerIO();
+    HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerIO);
+    HttpFileIO httpFileIO = new HttpFileIO();
+    HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(httpFileIO);
+    HttpRouter httpRouter = new HttpRouter(httpResponseBuilder);
     
-    HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpHandler, httpServerIO);
+    HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 
     server.run();
   }

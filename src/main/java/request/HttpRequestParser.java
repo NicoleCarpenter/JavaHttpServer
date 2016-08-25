@@ -5,21 +5,24 @@ import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 public class HttpRequestParser implements RequestParser {
+  ServerIO serverIO;
   static String CRLF = "\r\n\r\n";
   static String CR = "\r\n";
   static String BLANK = "";
   static String SPACE = " ";
 
+  public HttpRequestParser(ServerIO serverIO) {
+    this.serverIO = serverIO;
+  }
+
   public HttpRequest parseRequest(SocketConnection socket) throws IOException {
-    InputStreamReader inStreamReader = new InputStreamReader(socket.getInputStream());
-    BufferedReader bufferedReader = new BufferedReader(inStreamReader);
-    
-    String rawRequest = readFromBuffer(bufferedReader);
+    String rawRequest = serverIO.readRequest(socket.getInputStream());
     String[] requestLines = split(rawRequest, CRLF);
     String head = requestLines[0];
-
     String method = splitRequestStartLine(head)[0];
     String uri = splitRequestStartLine(head)[1];
     String httpVersion = splitRequestStartLine(head)[2];
@@ -30,17 +33,6 @@ public class HttpRequestParser implements RequestParser {
     
     return httpRequest;
   }
-
-  private static String readFromBuffer(BufferedReader bufferedReader) throws IOException {
-    StringBuilder rawRequest = new StringBuilder();
-    int value;
-    while ((value = bufferedReader.read()) != -1) {
-      char c = (char)value;
-      rawRequest.append(c);
-    }
-    return rawRequest.toString();
-  }
-
   private String[] split(String data, String separator) {
     data = data.replace("\\", "\\\\");
     return data.split(separator);

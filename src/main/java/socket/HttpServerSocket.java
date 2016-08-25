@@ -20,4 +20,5 @@ public class HttpServerSocket implements ServerSocketInterface {
     OutputStream outputStream = socket.getOutputStream();
     return new HttpSocketConnection(socket, inputStream, outputStream);
   }
+
 }
