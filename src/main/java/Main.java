@@ -29,6 +29,6 @@ public class Main {
     
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 
-    server.run();
+    server.start();
   }
 }

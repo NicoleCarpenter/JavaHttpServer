@@ -2,7 +2,7 @@ package com.carpentern;
 
 import java.io.IOException;
 
-public class HttpServer {
+public class HttpServer extends Thread {
   private ServerSocketInterface serverSocket;
   private SocketConnection socketConnection;
   private RequestParser requestParser;
@@ -16,19 +16,21 @@ public class HttpServer {
     this.serverIO = serverIO;
   }
 
-  public void run() {
+  public void start() {
 
     try {
-      while(true) {
+      while(!serverSocket.isConnectionClosed()) {
         socketConnection = serverSocket.listen();
-        HttpRequest request = requestParser.parseRequest(socketConnection);
-        Handler handler = router.getRoute(request);
-        Response response = handler.handleRoute(request);        
-        serverIO.writeResponse(response.formatToBytes(), socketConnection.getOutputStream());
+        try {
+          HttpServerRunner connection = new HttpServerRunner(socketConnection, requestParser, router, serverIO);
+          Thread thread = new Thread(connection);
+          thread.start();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 }
