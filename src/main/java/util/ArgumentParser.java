@@ -1,18 +1,41 @@
 package com.carpentern;
 
 public class ArgumentParser {
-  private int port;
+  private int port = 5000;
+  private String rootDirectory = "public";
   private String[] args;
 
   public ArgumentParser(String[] args) {
     this.args = args;
+    setServerOptions();
   }
 
-  public Integer getPort() {
-    try {
-      return Integer.parseInt(args[0]);
-    } catch (Exception e) {
-      return 5000;
+  public int getPort() {
+    return port;
+  }
+
+  public String getRootDirectory() {
+    return rootDirectory;
+  }
+
+  private void setServerOptions(){
+    for (int i = 0; i < args.length; i++){
+      switch (args[i]) {
+        case "-p":
+          setPort(i + 1);
+          break;
+        case "-d":
+          setRootDirectory(i + 1);
+          break;
+      }
     }
+  }
+
+  private void setPort(int argIndex){
+    port = Integer.parseInt(args[argIndex]);
+  }
+
+  private void setRootDirectory(int argIndex){
+    rootDirectory = args[argIndex];
   }
 }

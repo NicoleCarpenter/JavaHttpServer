@@ -1,16 +1,18 @@
 import com.carpentern.*;
 
 import java.util.HashMap;
+import java.io.File;
 
 public class HttpRouterTest extends junit.framework.TestCase {
   private HttpRequest request;
   private HttpRouter router;
 
   protected void setUp() {
+    File rootDirectory = new File("/public");
+    MockHttpFileSystem fileSystem = new MockHttpFileSystem();
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-
-    router = new HttpRouter(responseBuilder);
+    router = new HttpRouter(rootDirectory, fileSystem, responseBuilder);
   }
 
   public void testGetRootRoute() {
@@ -20,11 +22,17 @@ public class HttpRouterTest extends junit.framework.TestCase {
   }
 
   public void testGetFileRoute() {
-    assertTrue(true);
+    // request = new HttpRequest("GET", "index.html", "HTTP/1.0", new HashMap<>(), "");
+    // Handler handler = router.getRoute(request);
+    // System.out.println(handler.getClass());
+    // assertTrue(handler instanceof FileHandler);
   }
 
   public void testGetDirectoryRoute() {
-    assertTrue(true);
+    // request = new HttpRequest("GET", "sample", "HTTP/1.0", new HashMap<>(), "");
+    // Handler handler = router.getRoute(request);
+    // System.out.println(handler.getClass());
+    // assertTrue(handler instanceof FileHandler);
   }
 
 
