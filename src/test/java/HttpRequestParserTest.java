@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HttpRequestParserTest extends junit.framework.TestCase {
-  MockHttpServerIO serverIO;
+  private MockHttpServerIO serverIO;
 
   protected void setUp() {
     serverIO = new MockHttpServerIO();
@@ -29,7 +29,6 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
     assertTrue(serverIO.readRequestCalled());
   }
-
 
   public void testParseRequest() throws IOException {
     String request = "GET / HTTP/1.1\r\n\r\n";

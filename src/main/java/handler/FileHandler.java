@@ -5,14 +5,15 @@ import java.util.Arrays;
 import java.io.File;
 
 public class FileHandler implements Handler {
-  HttpResponseBuilder responseBuilder;
-  FileSystem fileSystem;
+  private HttpResponseBuilder responseBuilder;
+  private FileSystem fileSystem;
 
   public FileHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem) {
     this.responseBuilder = responseBuilder;
     this.fileSystem = fileSystem;
   }
 
+  @Override
   public Response handleRoute(HttpRequest request) {
     String uri = request.getUri();
     if (fileSystem.isFile()) {

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MockHttpFileSystem implements FileSystem {
-  boolean existsCalled = false;
-  boolean isFileCalled = false;
-  boolean isDirectoryCalled = false;
-  boolean listFilesCalled = false;
-  boolean getNameCalled = false;
-  boolean stubbedExists;
-  boolean stubbedIsFile;
-  boolean stubbedIsDirectory;
-  File[] stubbedListFiles;
-  String stubbedGetName;
+  private boolean existsCalled = false;
+  private boolean isFileCalled = false;
+  private boolean isDirectoryCalled = false;
+  private boolean listFilesCalled = false;
+  private boolean getNameCalled = false;
+  private boolean stubbedExists;
+  private boolean stubbedIsFile;
+  private boolean stubbedIsDirectory;
+  private File[] stubbedListFiles;
+  private String stubbedGetName;
 
   public boolean exists() {
     existsCalled = true;

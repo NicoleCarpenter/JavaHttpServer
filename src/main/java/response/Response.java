@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public interface Response {
   public abstract byte[] formatToBytes();
-  public String getHttpVersion();
-  public String getStatusCode();
-  public String getStatusMessage();
-  public HashMap<String, String> getHeaderLines();
-  public String getBody();
-  public String formatToString();
+  public abstract String getHttpVersion();
+  public abstract String getStatusCode();
+  public abstract String getStatusMessage();
+  public abstract HashMap<String, String> getHeaderLines();
+  public abstract String getBody();
+  public abstract String formatToString();
 }

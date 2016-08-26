@@ -5,10 +5,10 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class MockHttpSocketConnection implements SocketConnection {
-  boolean getInputStreamCalled = false;
-  boolean getOutputStreamCalled = false;
-  InputStream inputStream;
-  OutputStream outputStream;
+  private boolean getInputStreamCalled = false;
+  private boolean getOutputStreamCalled = false;
+  private InputStream inputStream;
+  private OutputStream outputStream;
 
   public MockHttpSocketConnection(InputStream inputStream, OutputStream outputStream) {
     this.inputStream = inputStream;

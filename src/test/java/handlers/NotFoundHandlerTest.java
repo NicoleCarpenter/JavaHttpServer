@@ -3,8 +3,8 @@ import com.carpentern.*;
 import java.util.HashMap;
 
 public class NotFoundHandlerTest extends junit.framework.TestCase {
-  Handler handler;
-  Response response;
+  private Handler handler;
+  private Response response;
 
   protected void setUp() {
     MockHttpFileIO fileIO = new MockHttpFileIO();

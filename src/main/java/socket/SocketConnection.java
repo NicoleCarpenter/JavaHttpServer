@@ -4,6 +4,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface SocketConnection {
-  public InputStream getInputStream();
-  public OutputStream getOutputStream();
+  public abstract InputStream getInputStream();
+  public abstract OutputStream getOutputStream();
 }

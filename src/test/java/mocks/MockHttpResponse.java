@@ -3,12 +3,12 @@ package com.carpentern;
 import java.util.HashMap;
 
 public class MockHttpResponse implements Response {
-  boolean formatToBytesCalled = false;
-  boolean getHttpVersionCalled = false;
-  boolean getStatusCodeCalled = false;
-  boolean getStatusMessageCalled = false;
-  boolean getHeaderLinesCalled = false;
-  boolean getBodyCalled = false;
+  private boolean formatToBytesCalled = false;
+  private boolean getHttpVersionCalled = false;
+  private boolean getStatusCodeCalled = false;
+  private boolean getStatusMessageCalled = false;
+  private boolean getHeaderLinesCalled = false;
+  private boolean getBodyCalled = false;
 
   public byte[] formatToBytes() {
     formatToBytesCalled = true;

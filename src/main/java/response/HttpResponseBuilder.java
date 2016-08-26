@@ -10,11 +10,11 @@ public class HttpResponseBuilder {
   }
 
   public void setStatusCode(String code) {
-    response.statusCode = code;
+    response.setStatusCode(code);
   }
 
   public void setStatusMessage(String message) {
-    response.statusMessage = message;
+    response.setStatusMessage(message);
   }
 
   public void setDefaultHeaders() {
@@ -22,15 +22,15 @@ public class HttpResponseBuilder {
   }
 
   public void setBody(String file) {
-    response.body = fileIO.getFileContents(file);
+    response.setBody(fileIO.getFileContents(file));
   }
 
   public void setBodyEmpty() {
-    response.body = new String("").getBytes();
+    response.setBody(new String("").getBytes());
   }
 
   public void setBodyMessage(String message) {
-    response.body = new String(message).getBytes();
+    response.setBody(new String(message).getBytes());
   }
 
   public HttpResponse getResponse() {

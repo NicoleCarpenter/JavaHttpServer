@@ -3,11 +3,11 @@ package com.carpentern;
 import java.io.IOException;
 
 public class HttpServer {
-  ServerSocketInterface serverSocket;
-  SocketConnection socketConnection;
-  RequestParser requestParser;
-  Router router;
-  ServerIO serverIO;
+  private ServerSocketInterface serverSocket;
+  private SocketConnection socketConnection;
+  private RequestParser requestParser;
+  private Router router;
+  private ServerIO serverIO;
 
   public HttpServer(ServerSocketInterface serverSocket, RequestParser requestParser, Router router, ServerIO serverIO) {
     this.serverSocket = serverSocket;

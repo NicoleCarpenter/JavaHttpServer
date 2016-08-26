@@ -3,41 +3,53 @@ package com.carpentern;
 import java.util.HashMap;
 
 public class HttpResponse implements Response {
-  static String CRLF = "\r\n\r\n";
-  static String CR = "\r\n";
-  String httpVersion = "HTTP/1.1";
-  String statusCode;
-  String statusMessage;
-  HashMap<String, String> headerLines = new HashMap<String, String>();
-  byte[] body;
+  private static String CRLF = "\r\n\r\n";
+  private static String CR = "\r\n";
+  private String httpVersion = "HTTP/1.1";
+  private String statusCode;
+  private String statusMessage;
+  private HashMap<String, String> headerLines = new HashMap<String, String>();
+  private byte[] body;
   
+    @Override
   public String getHttpVersion() {
     return httpVersion;
   }
 
+  @Override
   public String getStatusCode() {
     return statusCode;
   }
 
+  @Override
   public String getStatusMessage() {
     return statusMessage;
   }
 
+  @Override
   public HashMap<String, String> getHeaderLines() {
     return headerLines;
   }
 
+  @Override
   public String getBody() {
-    return new String(body);
+    return bodyToString();
+  }
+
+  public void setStatusCode(String statusCode) {
+    this.statusCode = statusCode;
+  }
+
+  public void setStatusMessage(String statusMessage) {
+    this.statusMessage = statusMessage;
   }
 
   public void setHeader(String key, String value) {
     headerLines.put(key, value);
   }
 
-  public String formatToString() {
-    byte[] ba = formatToBytes();
-    return new String(ba);
+  public void setBody(byte[] body) {
+    this.body = body;
   }
 
   public String headersToString() {
@@ -46,10 +58,13 @@ public class HttpResponse implements Response {
     return builder.toString();
   }
 
-  public String bodyToString() {
-    return new String(body);
+  @Override
+  public String formatToString() {
+    byte[] ba = formatToBytes();
+    return new String(ba);
   }
 
+  @Override
   public byte[] formatToBytes() {
     return (httpVersion + " "
             + statusCode + " "
@@ -61,4 +76,7 @@ public class HttpResponse implements Response {
             + CRLF).getBytes();
   }
 
+  private String bodyToString() {
+    return new String(body);
+  }
 }

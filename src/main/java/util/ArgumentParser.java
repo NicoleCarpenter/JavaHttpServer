@@ -1,7 +1,6 @@
 package com.carpentern;
 
 public class ArgumentParser {
-
   private int port;
   private String[] args;
 

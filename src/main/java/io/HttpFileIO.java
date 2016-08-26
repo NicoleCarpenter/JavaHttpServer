@@ -7,9 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class HttpFileIO implements FileIO {
-  FileInputStream fileInputStream = null;
-  FileOutputStream fileOutputStream = null;
+  private FileInputStream fileInputStream = null;
+  private FileOutputStream fileOutputStream = null;
 
+  @Override
   public byte[] getFileContents(String fileName) {
     File file = new File(fileName);
     byte[] fileContent = new byte[(int) file.length()];

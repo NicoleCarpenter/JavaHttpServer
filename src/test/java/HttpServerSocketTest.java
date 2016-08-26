@@ -4,8 +4,8 @@ import java.net.Socket;
 import java.io.IOException;
 
 public class HttpServerSocketTest extends junit.framework.TestCase {
-  MockServerSocket serverSocket;
-  ServerSocketInterface httpServerSocket;
+  private MockServerSocket serverSocket;
+  private ServerSocketInterface httpServerSocket;
 
   protected void setUp() throws IOException {
     serverSocket = new MockServerSocket();
