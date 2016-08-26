@@ -7,8 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class MockHttpServerSocket implements ServerSocketInterface {
-  String stubbedInputStream = "";
-  boolean listenCalled = false;
+  private String stubbedInputStream = "";
+  private boolean listenCalled = false;
 
   public MockHttpSocketConnection listen() throws IOException {
     listenCalled = true;

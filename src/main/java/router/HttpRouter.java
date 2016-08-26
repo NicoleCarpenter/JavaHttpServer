@@ -1,12 +1,13 @@
 package com.carpentern;
 
 public class HttpRouter implements Router {
-  HttpResponseBuilder responseBuilder;
+  private HttpResponseBuilder responseBuilder;
 
   public HttpRouter(HttpResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 
+  @Override
   public Handler getRoute(HttpRequest request) {
     String method = request.getMethod();
     String uri = request.getUri();

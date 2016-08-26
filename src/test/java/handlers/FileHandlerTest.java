@@ -3,11 +3,11 @@ import com.carpentern.*;
 import java.util.HashMap;
 
 public class FileHandlerTest extends junit.framework.TestCase {
-  Response response;
-  String responseBody;
-  MockHttpFileIO fileIO;
-  MockHttpFileSystem fileSystem;
-  HttpResponseBuilder responseBuilder;
+  private Response response;
+  private String responseBody;
+  private MockHttpFileIO fileIO;
+  private MockHttpFileSystem fileSystem;
+  private HttpResponseBuilder responseBuilder;
 
   public void testHandleRouteIsFile() {
     responseBody = "This is a file";

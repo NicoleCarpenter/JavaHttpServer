@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class HttpSocketConnection implements SocketConnection {
-
   private Socket socket;
   private InputStream inputStream;
   private OutputStream outputStream;
@@ -21,10 +20,12 @@ public class HttpSocketConnection implements SocketConnection {
     return socket;
   }
 
+  @Override
   public InputStream getInputStream() {
     return inputStream;
   }
 
+  @Override
   public OutputStream getOutputStream() {
     return outputStream;
   }

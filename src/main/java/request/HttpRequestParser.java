@@ -9,16 +9,17 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 public class HttpRequestParser implements RequestParser {
-  ServerIO serverIO;
-  static String CRLF = "\r\n\r\n";
-  static String CR = "\r\n";
-  static String BLANK = "";
-  static String SPACE = " ";
+  private ServerIO serverIO;
+  private static String CRLF = "\r\n\r\n";
+  private static String CR = "\r\n";
+  private static String BLANK = "";
+  private static String SPACE = " ";
 
   public HttpRequestParser(ServerIO serverIO) {
     this.serverIO = serverIO;
   }
 
+  @Override
   public HttpRequest parseRequest(SocketConnection socket) throws IOException {
     String rawRequest = serverIO.readRequest(socket.getInputStream());
     String[] requestLines = split(rawRequest, CRLF);
@@ -33,6 +34,7 @@ public class HttpRequestParser implements RequestParser {
     
     return httpRequest;
   }
+  
   private String[] split(String data, String separator) {
     data = data.replace("\\", "\\\\");
     return data.split(separator);

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.io.IOException;
 
 public class MockHttpRequestParser implements RequestParser {
-  boolean parseRequestCalled = false;
+  private boolean parseRequestCalled = false;
 
   public HttpRequest parseRequest(SocketConnection socket) throws IOException {
     parseRequestCalled = true;

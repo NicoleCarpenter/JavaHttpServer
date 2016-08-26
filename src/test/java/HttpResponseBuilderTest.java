@@ -3,9 +3,9 @@ import com.carpentern.*;
 import java.util.HashMap;
 
 public class HttpResponseBuilderTest extends junit.framework.TestCase {
-  HttpResponseBuilder builder;
-  HttpResponse response;
-  MockHttpFileIO fileIO;
+  private HttpResponseBuilder builder;
+  private HttpResponse response;
+  private MockHttpFileIO fileIO;
 
   protected void setUp() {
     fileIO = new MockHttpFileIO();

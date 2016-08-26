@@ -3,9 +3,9 @@ import com.carpentern.*;
 import java.util.HashMap;
 
 public class RootHandlerTest extends junit.framework.TestCase {
-  Handler handler;
-  Response response;
-  String responseBody;
+  private Handler handler;
+  private Response response;
+  private String responseBody;
 
   protected void setUp() {
     responseBody = "This is the root";

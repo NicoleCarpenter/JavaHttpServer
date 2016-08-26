@@ -4,11 +4,11 @@ import java.io.InputStream;
 import java.io.IOException;
 
 public class HttpServerIOTest extends junit.framework.TestCase {
-  String request;
-  String response;
-  InputStream input;
-  MockHttpSocketConnection socketConnection;
-  HttpServerIO serverIO;
+  private String request;
+  private String response;
+  private InputStream input;
+  private MockHttpSocketConnection socketConnection;
+  private HttpServerIO serverIO;
 
   protected void setUp() throws IOException {
     request = "GET / HTTP/1.0\r\n\r\n";

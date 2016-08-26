@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class HttpServerIO implements ServerIO {
 
+  @Override
   public String readRequest(InputStream input) throws IOException {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
     StringBuilder rawRequest = new StringBuilder();

@@ -1,11 +1,11 @@
 import com.carpentern.*;
 
 public class HttpServerTest extends junit.framework.TestCase {
-  MockHttpServerSocket serverSocket;
-  MockHttpRequestParser requestParser;
-  MockHttpRouter router;
-  MockHttpServerIO serverIO;
-  HttpServer server;
+  private MockHttpServerSocket serverSocket;
+  private MockHttpRequestParser requestParser;
+  private MockHttpRouter router;
+  private MockHttpServerIO serverIO;
+  private HttpServer server;
   
   protected void setUp() {
     serverSocket = new MockHttpServerSocket();

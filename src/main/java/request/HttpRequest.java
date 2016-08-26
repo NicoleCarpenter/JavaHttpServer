@@ -3,11 +3,11 @@ package com.carpentern;
 import java.util.HashMap;
 
 public class HttpRequest {
-  String method;
-  String uri;
-  String httpVersion;
-  HashMap<String, String> headerLines;
-  String body;
+  private String method;
+  private String uri;
+  private String httpVersion;
+  private HashMap<String, String> headerLines;
+  private String body;
 
   public HttpRequest(String method, String uri, String httpVersion, HashMap<String, String> headerLines, String body) {
     this.method = method;
