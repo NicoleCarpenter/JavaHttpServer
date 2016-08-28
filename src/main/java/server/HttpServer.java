@@ -19,11 +19,13 @@ public class HttpServer {
   public void run() {
 
     try {
-      socketConnection = serverSocket.listen();
-      HttpRequest request = requestParser.parseRequest(socketConnection);
-      Handler handler = router.getRoute(request);
-      Response response = handler.handleRoute(request);
-      serverIO.writeResponse(response.formatToBytes(), socketConnection.getOutputStream());
+      while(true) {
+        socketConnection = serverSocket.listen();
+        HttpRequest request = requestParser.parseRequest(socketConnection);
+        Handler handler = router.getRoute(request);
+        Response response = handler.handleRoute(request);        
+        serverIO.writeResponse(response.formatToBytes(), socketConnection.getOutputStream());
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

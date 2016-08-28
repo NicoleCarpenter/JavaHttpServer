@@ -1,6 +1,7 @@
 import com.carpentern.*;
 
 import java.util.HashMap;
+import java.io.File;
 
 public class FileHandlerTest extends junit.framework.TestCase {
   private Response response;
@@ -15,11 +16,13 @@ public class FileHandlerTest extends junit.framework.TestCase {
     fileIO.stubResponseBody(responseBody);
     responseBuilder = new HttpResponseBuilder(fileIO);
 
+    String path = "/Users/foo/application/public/file";
+    String uri = "/file";
     fileSystem = new MockHttpFileSystem();
     fileSystem.stubIsFile(true);
 
-    Handler handler = new FileHandler(responseBuilder, fileSystem);
-    HttpRequest request = new HttpRequest("GET", "/file", "HTTP/1.1", new HashMap<String, String>(), "");    
+    Handler handler = new FileHandler(responseBuilder, path, uri, fileSystem);
+    HttpRequest request = new HttpRequest("GET", uri, "HTTP/1.1", new HashMap<String, String>(), "");    
     
     response = handler.handleRoute(request);
     HashMap<String, String> testHeaders = new HashMap<>();

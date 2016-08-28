@@ -1,6 +1,7 @@
 package com.carpentern;
 
 import java.util.HashMap;
+import java.io.File;
 
 public class HttpRequest {
   private String method;
@@ -35,5 +36,10 @@ public class HttpRequest {
 
   public String getBody() {
     return body;
+  }
+
+  public String getPathFromRoot(File root) {
+    String rootName = root.getName();
+    return uri.replace(rootName, "");
   }
 }

@@ -2,6 +2,7 @@ package com.carpentern;
 
 import java.net.ServerSocket;
 import java.io.IOException;
+import java.io.File;
 
 public class Main {
 
@@ -21,8 +22,10 @@ public class Main {
     HttpServerIO httpServerIO = new HttpServerIO();
     HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerIO);
     HttpFileIO httpFileIO = new HttpFileIO();
+    File rootDirectory = new File(argsParser.getRootDirectory());
+    HttpFileSystem fileSystem = new HttpFileSystem();
     HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(httpFileIO);
-    HttpRouter httpRouter = new HttpRouter(httpResponseBuilder);
+    HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, httpResponseBuilder);
     
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 
