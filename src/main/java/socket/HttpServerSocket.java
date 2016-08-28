@@ -21,4 +21,8 @@ public class HttpServerSocket implements ServerSocketInterface {
     return new HttpSocketConnection(socket, inputStream, outputStream);
   }
 
+  @Override
+  public boolean isConnectionClosed() throws IOException {
+    return serverSocket.isClosed();
+  }
 }
