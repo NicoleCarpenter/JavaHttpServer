@@ -21,6 +21,10 @@ public class HttpResponseBuilder {
     response.setHeader("Server", "Nicole's HTTP server");
   }
 
+  public void setHeader(String key, String value) {
+    response.setHeader(key, value);
+  }
+
   public void setBody(String file) {
     response.setBody(fileIO.getFileContents(file));
   }
@@ -37,7 +41,7 @@ public class HttpResponseBuilder {
     return response;
   }
 
-  private String getContentLength() {
+  public String getContentLength() {
     String body = response.getBody();
     return Integer.toString(body.length());
   }
