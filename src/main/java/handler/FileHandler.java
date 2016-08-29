@@ -38,6 +38,7 @@ public class FileHandler implements Handler {
   }
 
   private HttpResponse buildDirectoryResponse() {
+    setDefaultResponseElements();
     responseBuilder.setBodyMessage(htmlHead + buildFileLinks() + htmlFoot);
     return responseBuilder.getResponse();
   }
@@ -70,7 +71,7 @@ public class FileHandler implements Handler {
     String extension = "";
     if (hasExtension(dotPosition)) {
       responseBuilder.setHeader("Content-Type", findFileType(getExtension(dotPosition)));
-      responseBuilder.setHeader("Content-Length", responseBuilder.getContentLength());
+      // responseBuilder.setHeader("Content-Length", responseBuilder.getContentLength());
     }
   }
 
@@ -89,6 +90,8 @@ public class FileHandler implements Handler {
       return "image/jpeg";
     } else if (isImageGif(extension)) {
       return "image/gif";
+    } else if (isImagePng(extension)) {
+      return "image/png";
     } else {
       return "application/octet-stream";
     }
@@ -104,5 +107,9 @@ public class FileHandler implements Handler {
 
   private boolean isImageGif(String extension) {
     return extension.equals(".gif");
+  }
+
+  private boolean isImagePng(String extension) {
+    return extension.equals(".png");
   }
 } 
