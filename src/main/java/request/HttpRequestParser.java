@@ -25,6 +25,7 @@ public class HttpRequestParser implements RequestParser {
     String[] requestLines = split(rawRequest, CRLF);
     String head = requestLines[0];
     String method = splitRequestStartLine(head)[0];
+
     String uri = splitRequestStartLine(head)[1];
     String httpVersion = splitRequestStartLine(head)[2];
     HashMap<String, String> headerLines = getHeaderLines(head);

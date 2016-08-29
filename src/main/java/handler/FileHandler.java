@@ -33,6 +33,7 @@ public class FileHandler implements Handler {
   private HttpResponse buildFileResponse() {
     setDefaultResponseElements();
     responseBuilder.setBody(path);
+    setFileTypeHeaders();
     return responseBuilder.getResponse();
   }
 
@@ -62,5 +63,46 @@ public class FileHandler implements Handler {
     responseBuilder.setStatusCode("200");
     responseBuilder.setStatusMessage("OK");
     responseBuilder.setDefaultHeaders();
+  }
+
+  private void setFileTypeHeaders() {
+    int dotPosition = uri.lastIndexOf(".");
+    String extension = "";
+    if (hasExtension(dotPosition)) {
+      responseBuilder.setHeader("Content-Type", findFileType(getExtension(dotPosition)));
+      responseBuilder.setHeader("Content-Length", responseBuilder.getContentLength());
+    }
+  }
+
+  private String getExtension(int dotPosition) {
+    return uri.substring(dotPosition);
+  }
+
+  private boolean hasExtension(int dotPosition) {
+    return dotPosition != -1;
+  }
+
+  private String findFileType(String extension) {
+    if (isText(extension)) {
+      return "text/html";
+    } else if (isImageJpg(extension)) {
+      return "image/jpeg";
+    } else if (isImageGif(extension)) {
+      return "image/gif";
+    } else {
+      return "application/octet-stream";
+    }
+  }
+
+  private boolean isText(String extension) {
+    return extension.equals(".htm") || extension.equals(".html") || extension.equals(".txt");
+  }
+
+  private boolean isImageJpg(String extension) {
+    return extension.equals(".jpg") || extension.equals(".jpeg");
+  }
+
+  private boolean isImageGif(String extension) {
+    return extension.equals(".gif");
   }
 } 

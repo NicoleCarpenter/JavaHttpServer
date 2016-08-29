@@ -20,9 +20,7 @@ public class HttpRouter implements Router {
     String path = rootDirectory.getAbsolutePath() + request.getPathFromRoot(rootDirectory);
 
     if (method.equals("GET")) {
-      if (uri.equals("/")) {
-        return new RootHandler(responseBuilder);
-      } else if (fileSystem.exists(path)) {
+      if (fileSystem.exists(path)) {
         return new FileHandler(responseBuilder, path, uri, fileSystem);
       } else {
         return new NotFoundHandler(responseBuilder);
