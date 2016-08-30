@@ -11,17 +11,15 @@ public class HttpServerIO implements ServerIO {
 
   @Override
   public String readRequest(InputStream input) throws IOException {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+    InputStreamReader inputStreamReader = new InputStreamReader(input);
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
     StringBuilder rawRequest = new StringBuilder();
-    int value;
+    String line = bufferedReader.readLine();
 
-    while ((value = bufferedReader.read()) != -1) {
-      char c = (char)value;
-      rawRequest.append(c);
-
-      if (!bufferedReader.ready()) {
-        break;
-      }
+    while (!line.isEmpty()) {
+      rawRequest.append(line);
+      rawRequest.append("\n");
+      line = bufferedReader.readLine();
     }
     return rawRequest.toString();
   }
