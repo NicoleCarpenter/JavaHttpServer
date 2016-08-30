@@ -31,6 +31,8 @@ public class HttpRouter implements Router {
       } else {
         return new NotFoundHandler(responseBuilder);
       }
+    } else if (method.equals("OPTIONS")) {
+      return new MethodOptionsHandler(responseBuilder);
     } else {
       return new HandlerNotAllowed(responseBuilder);
     }
