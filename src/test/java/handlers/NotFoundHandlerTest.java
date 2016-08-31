@@ -10,7 +10,7 @@ public class NotFoundHandlerTest extends junit.framework.TestCase {
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
     handler = new NotFoundHandler(responseBuilder);
-    HttpRequest request = new HttpRequest("GET", "mockUri", "HTTP/1.1", new HashMap<String, String>(), "");    
+    HttpRequest request = new HttpRequest("GET", "mockUri", "", "HTTP/1.1", new HashMap<String, String>(), "");    
     response = handler.handleRoute(request);
   }
 

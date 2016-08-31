@@ -2,15 +2,15 @@ import com.carpentern.*;
 
 import java.util.HashMap;
 
-public class HandlerNotAllowedTest extends junit.framework.TestCase {
+public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
 
   protected void setUp() {
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-    handler = new HandlerNotAllowed(responseBuilder);
-    HttpRequest request = new HttpRequest("mockMethod", "mockUri", "mockParams", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
+    handler = new ParameterDecoderHandler(responseBuilder);
+    HttpRequest request = new HttpRequest("mockMethod", "mockUri", "variable_2 = stuff", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
     response = handler.handleRoute(request);
   }
 
@@ -19,9 +19,9 @@ public class HandlerNotAllowedTest extends junit.framework.TestCase {
     testHeaders.put("Server", "Nicole's HTTP server");
 
     assertEquals("HTTP/1.1", response.getHttpVersion());
-    assertEquals("405", response.getStatusCode());
-    assertEquals("Method not allowed", response.getStatusMessage());
+    assertEquals("200", response.getStatusCode());
+    assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("variable_2 = stuff", response.getBody());
   }
 }

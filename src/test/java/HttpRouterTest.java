@@ -16,7 +16,7 @@ public class HttpRouterTest extends junit.framework.TestCase {
   }
 
   public void testGetRootRoute() {
-    request = new HttpRequest("GET", "/", "HTTP/1.0", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/", "", "HTTP/1.0", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(true);
   }

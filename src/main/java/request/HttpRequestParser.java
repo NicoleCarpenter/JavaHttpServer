@@ -1,5 +1,6 @@
 package com.carpentern;
 
+import java.net.URLDecoder;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.UnsupportedEncodingException;
 
 public class HttpRequestParser implements RequestParser {
   private ServerIO serverIO;
@@ -24,14 +26,15 @@ public class HttpRequestParser implements RequestParser {
     String rawRequest = serverIO.readRequest(socket.getInputStream());
     String[] requestLines = split(rawRequest, CRLF);
     String head = requestLines[0];
-    String method = splitRequestStartLine(head)[0];
 
-    String uri = splitRequestStartLine(head)[1];
-    String httpVersion = splitRequestStartLine(head)[2];
+    String method = getMethod(head);
+    String uri = getURI(head);
+    String params = parseParams(head);
+    String httpVersion = getHttpVersion(head);
     HashMap<String, String> headerLines = getHeaderLines(head);
     String body = getBody(requestLines);
 
-    HttpRequest httpRequest = new HttpRequest(method, uri, httpVersion, headerLines, body);
+    HttpRequest httpRequest = new HttpRequest(method, uri, params, httpVersion, headerLines, body);
     
     return httpRequest;
   }
@@ -41,9 +44,30 @@ public class HttpRequestParser implements RequestParser {
     return data.split(separator);
   }
 
-  private String[] splitRequestStartLine(String head) {
+  private String getMethod(String head) {
+    return splitRequestStartLine(head)[0];
+  }
+
+  private String getFullUri(String head) {
+    return splitRequestStartLine(head)[1]; 
+  }
+
+  private String getURI(String head) {
+    String fullUri = getFullUri(head);
+    return fullUri.split("\\?")[0];
+  }
+
+  private String getHttpVersion(String head) {
+    return splitRequestStartLine(head)[2];
+  }
+
+  private String getRequestStartLine(String head) {
     String[] headLines = split(head, CR);
-    String startLine = headLines[0];
+    return headLines[0];
+  }
+
+  private String[] splitRequestStartLine(String head) {
+    String startLine = getRequestStartLine(head);
     String[] startLineElements = split(startLine, SPACE);
     return startLineElements;
   }
@@ -51,7 +75,7 @@ public class HttpRequestParser implements RequestParser {
   private HashMap<String, String> getHeaderLines(String head) {
     String[] headLines = split(head, CR);
     HashMap<String, String> headers = new HashMap<>();
-    
+
     for (int i = 1; i < headLines.length; i++) {
       String[] headerInfo = split(headLines[i], ": ");
       headers.put(headerInfo[0], headerInfo[1]);
@@ -65,6 +89,47 @@ public class HttpRequestParser implements RequestParser {
     } else {
       return BLANK;
     }
+  }
+
+  private String parseParams(String head) {
+    String startLine = getRequestStartLine(head);
+    String[] params = getParams(startLine).split("&");
+    return buildParams(params);
+  }
+
+  private String getParams(String head) {
+    String params = "";
+    String wholeUri = getFullUri(head);
+    String[] uri = wholeUri.split("\\?");
+    if (uri.length > 1) {
+      params = uri[1];
+    }
+    return params;
+  }
+
+  private String buildParams(String[] params) {
+    String decodedParams = "";
+    try {
+      for (String param : params) {
+        if (param.contains("=")) {
+          decodedParams += formatParam(param);
+        } else {
+          decodedParams += decode(param) + "\n";
+        }
+      }
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+    return decodedParams;
+  }
+
+  private String formatParam(String param) throws UnsupportedEncodingException {
+    String[] parts = param.split("=");
+    return parts[0] + " = " + decode(parts[1]) + "\n";
+  }
+
+  private String decode(String param) throws UnsupportedEncodingException {
+    return URLDecoder.decode(param, "UTF-8");
   }
 
 }

@@ -22,6 +22,8 @@ public class HttpRouter implements Router {
     if (method.equals("GET")) {
       if (fileSystem.exists(path)) {
         return new FileHandler(responseBuilder, path, uri, fileSystem);
+      } else if (uri.equals("/parameters")) {
+        return new ParameterDecoderHandler(responseBuilder);
       } else {
         return new NotFoundHandler(responseBuilder);
       }

@@ -22,7 +22,7 @@ public class FileHandlerTest extends junit.framework.TestCase {
     fileSystem.stubIsFile(true);
 
     Handler handler = new FileHandler(responseBuilder, path, uri, fileSystem);
-    HttpRequest request = new HttpRequest("GET", uri, "HTTP/1.1", new HashMap<String, String>(), "");    
+    HttpRequest request = new HttpRequest("GET", uri, "", "HTTP/1.1", new HashMap<String, String>(), "");    
     
     response = handler.handleRoute(request);
     HashMap<String, String> testHeaders = new HashMap<>();
