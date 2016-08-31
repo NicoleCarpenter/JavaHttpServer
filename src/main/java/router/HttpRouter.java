@@ -24,6 +24,10 @@ public class HttpRouter implements Router {
         return new FileHandler(responseBuilder, path, uri, fileSystem);
       } else if (uri.equals("/parameters")) {
         return new ParameterDecoderHandler(responseBuilder);
+      } else if (uri.equals("/coffee")) {
+        return new TeapotHandler(responseBuilder);
+      } else if (uri.equals("/tea")) {
+        return new TeapotHandler(responseBuilder);
       } else {
         return new NotFoundHandler(responseBuilder);
       }
