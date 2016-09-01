@@ -13,15 +13,17 @@ public class HttpServerIO implements ServerIO {
   public String readRequest(InputStream input) throws IOException {
     InputStreamReader inputStreamReader = new InputStreamReader(input);
     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-    StringBuilder rawRequest = new StringBuilder();
-    String line = bufferedReader.readLine();
+    StringBuilder fullRequest = new StringBuilder();
+    int nextChar;
 
-    while (!line.isEmpty()) {
-      rawRequest.append(line);
-      rawRequest.append("\n");
-      line = bufferedReader.readLine();
+    while ((nextChar = bufferedReader.read()) != -1) {
+      fullRequest.append((char)nextChar);
+      if (!bufferedReader.ready()) {
+        break;
+      }
     }
-    return rawRequest.toString();
+
+    return fullRequest.toString();
   }
 
   public void writeResponse(byte[] response, OutputStream output) throws IOException {

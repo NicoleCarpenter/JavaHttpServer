@@ -19,7 +19,9 @@ public class HttpRouter implements Router {
     String method = request.getMethod();
     String path = rootDirectory.getAbsolutePath() + request.getPathFromRoot(rootDirectory);
 
-    if (method.equals("GET")) {
+    if (uri.equals("/form")) {
+      return new FormHandler(responseBuilder, new HttpFileIO(rootDirectory));
+    } else if (method.equals("GET")) {
       if (fileSystem.exists(path)) {
         return new FileHandler(responseBuilder, path, uri, fileSystem);
       } else if (uri.equals("/parameters")) {
