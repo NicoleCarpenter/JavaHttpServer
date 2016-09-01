@@ -30,6 +30,8 @@ public class HttpRouter implements Router {
         return new TeapotHandler(responseBuilder);
       } else if (uri.equals("/tea")) {
         return new TeapotHandler(responseBuilder);
+      } else if (uri.equals("/redirect")) {
+        return new RedirectHandler(responseBuilder);
       } else {
         return new NotFoundHandler(responseBuilder);
       }
