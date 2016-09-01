@@ -71,7 +71,7 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
-    headers.put("Accept", "text/plain");
+    headers.put("Accept", "text/plain\r");
     headers.put("Accept-Language", "en-US");
 
     assertEquals("GET", parsedRequest.getMethod());
@@ -100,7 +100,7 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
-    headers.put("Accept", "text/plain");
+    headers.put("Accept", "text/plain\r");
     headers.put("Accept-Language", "en-US");
 
     assertEquals("POST", parsedRequest.getMethod());

@@ -40,6 +40,12 @@ public class HttpRequest {
     return headerLines;
   }
 
+  public String headersToString() {
+    StringBuilder builder = new StringBuilder();
+    headerLines.forEach((key, value)-> builder.append(key + ": " + value + "\r\n"));
+    return builder.toString();
+  }
+
   public String getBody() {
     return body;
   }
