@@ -47,7 +47,6 @@ public class FileHandler implements Handler {
   }
 
   private String getRange(HttpRequest request) {
-    System.out.println(request.getHeaderLines().get("Range"));
     return request.getHeaderLines().get("Range");
   }
 

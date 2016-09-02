@@ -41,6 +41,8 @@ public class HttpRouter implements Router {
       } else {
         return new NotFoundHandler(responseBuilder);
       }
+    } else if (method.equals("PATCH")) {
+      return new PatchHandler(responseBuilder, new HttpFileIO(rootDirectory));
     } else if (method.equals("HEAD")) {
       if (fileSystem.exists(path)) {
         return new HeadHandler(responseBuilder);

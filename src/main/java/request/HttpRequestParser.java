@@ -32,7 +32,7 @@ public class HttpRequestParser implements RequestParser {
     String head = requestLines[0];
 
     String method = getMethod(head);
-    String uri = getURI(head);
+    String uri = getUri(head);
     String params = parseParams(head);
     String httpVersion = getHttpVersion(head);
     HashMap<String, String> headerLines = getHeaderLines(head);
@@ -56,7 +56,7 @@ public class HttpRequestParser implements RequestParser {
     return splitRequestStartLine(head)[1]; 
   }
 
-  private String getURI(String head) {
+  private String getUri(String head) {
     String fullUri = getFullUri(head);
     return fullUri.split("\\?")[0];
   }
