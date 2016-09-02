@@ -1,6 +1,8 @@
 package com.carpentern;
 
 import java.util.HashMap;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class HttpResponse implements Response {
   private static String CRLF = "\r\n\r\n";
@@ -59,21 +61,24 @@ public class HttpResponse implements Response {
   }
 
   @Override
-  public String formatToString() {
+  public String formatToString() throws IOException {
     byte[] ba = formatToBytes();
     return new String(ba);
   }
 
   @Override
-  public byte[] formatToBytes() {
-    return (httpVersion + " "
-            + statusCode + " "
-            + statusMessage
-            + CR
-            + headersToString()
-            + CR
-            + bodyToString()
-            + CRLF).getBytes();
+  public byte[] formatToBytes() throws IOException {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+    outputStream.write((httpVersion + " " +
+                        statusCode + " " +
+                        statusMessage +
+                        CR +
+                        headersToString() +
+                        CR).getBytes());
+    outputStream.write(body);
+    outputStream.write(CRLF.getBytes());
+    return outputStream.toByteArray();
   }
 
   private String bodyToString() {

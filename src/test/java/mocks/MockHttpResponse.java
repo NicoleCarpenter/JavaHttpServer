@@ -1,23 +1,15 @@
 package com.carpentern;
 
 import java.util.HashMap;
+import java.io.IOException;
 
 public class MockHttpResponse implements Response {
-  private boolean formatToBytesCalled = false;
   private boolean getHttpVersionCalled = false;
   private boolean getStatusCodeCalled = false;
   private boolean getStatusMessageCalled = false;
   private boolean getHeaderLinesCalled = false;
   private boolean getBodyCalled = false;
-
-  public byte[] formatToBytes() {
-    formatToBytesCalled = true;
-    return "Mock Response".getBytes();
-  }
-
-  public boolean formatToBytesCalled() {
-    return formatToBytesCalled;
-  }
+  private boolean formatToBytesCalled = false;
 
   public String getHttpVersion() {
     getHttpVersionCalled = true;
@@ -64,7 +56,16 @@ public class MockHttpResponse implements Response {
     return getBodyCalled;
   }
 
-  public String formatToString() {
+  public byte[] formatToBytes() throws IOException {
+    formatToBytesCalled = true;
+    return "Mock Response".getBytes();
+  }
+
+  public boolean formatToBytesCalled() {
+    return formatToBytesCalled;
+  }
+
+  public String formatToString() throws IOException {
     return "Hello world";
   }
 }
