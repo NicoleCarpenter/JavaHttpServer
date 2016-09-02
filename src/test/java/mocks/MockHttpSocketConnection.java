@@ -1,5 +1,4 @@
-import com.carpentern.*;
-
+import socket.SocketConnection;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;

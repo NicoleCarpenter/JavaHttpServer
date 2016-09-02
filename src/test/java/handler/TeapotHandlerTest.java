@@ -1,5 +1,7 @@
-import com.carpentern.*;
-
+import handler.Handler;
+import request.HttpRequest;
+import response.Response;
+import response.HttpResponseBuilder;import handler.TeapotHandler;
 import java.util.HashMap;
 
 public class TeapotHandlerTest extends junit.framework.TestCase {

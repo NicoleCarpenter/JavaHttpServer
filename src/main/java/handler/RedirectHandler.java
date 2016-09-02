@@ -1,4 +1,8 @@
-package com.carpentern;
+package handler;
+
+import request.HttpRequest;
+import response.Response;
+import response.HttpResponseBuilder;
 
 public class RedirectHandler implements Handler {
   HttpResponseBuilder responseBuilder;
