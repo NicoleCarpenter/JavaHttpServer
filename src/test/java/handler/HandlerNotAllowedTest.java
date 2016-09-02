@@ -1,5 +1,8 @@
-import com.carpentern.*;
-
+import handler.Handler;
+import handler.HandlerNotAllowed;
+import request.HttpRequest;
+import response.Response;
+import response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class HandlerNotAllowedTest extends junit.framework.TestCase {

@@ -1,17 +1,19 @@
-import com.carpentern.*;
-
+import handler.Handler;
+import handler.ParameterDecoderHandler;
+import request.HttpRequest;
+import response.Response;
+import response.HttpResponseBuilder;
 import java.util.HashMap;
-import java.io.File;
 
-public class HeadHandlerTest extends junit.framework.TestCase {
+public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
+  private Handler handler;
   private Response response;
 
   protected void setUp() {
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-    HeadHandler handler = new HeadHandler(responseBuilder);
-
-    HttpRequest request = new HttpRequest("HEAD", "/", "", "HTTP/1.1", new HashMap<String, String>(), "");    
+    handler = new ParameterDecoderHandler(responseBuilder);
+    HttpRequest request = new HttpRequest("mockMethod", "mockUri", "variable_2 = stuff", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
     response = handler.handleRoute(request);
   }
 
@@ -23,6 +25,6 @@ public class HeadHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("variable_2 = stuff", response.getBody());
   }
 }

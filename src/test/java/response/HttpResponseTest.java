@@ -1,5 +1,4 @@
-import com.carpentern.*;
-
+import response.HttpResponse;
 import java.util.HashMap;
 
 public class HttpResponseTest extends junit.framework.TestCase {

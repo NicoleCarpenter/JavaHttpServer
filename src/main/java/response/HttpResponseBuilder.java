@@ -1,4 +1,6 @@
-package com.carpentern;
+package response;
+
+import io.FileIO;
 
 public class HttpResponseBuilder {
   HttpResponse response;

@@ -1,16 +1,19 @@
-import com.carpentern.*;
-
+import handler.HeadHandler;
+import request.HttpRequest;
+import response.Response;
+import response.HttpResponseBuilder;
 import java.util.HashMap;
+import java.io.File;
 
-public class NotFoundHandlerTest extends junit.framework.TestCase {
-  private Handler handler;
+public class HeadHandlerTest extends junit.framework.TestCase {
   private Response response;
 
   protected void setUp() {
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-    handler = new NotFoundHandler(responseBuilder);
-    HttpRequest request = new HttpRequest("GET", "mockUri", "", "HTTP/1.1", new HashMap<String, String>(), "");    
+    HeadHandler handler = new HeadHandler(responseBuilder);
+
+    HttpRequest request = new HttpRequest("HEAD", "/", "", "HTTP/1.1", new HashMap<String, String>(), "");    
     response = handler.handleRoute(request);
   }
 
@@ -19,8 +22,8 @@ public class NotFoundHandlerTest extends junit.framework.TestCase {
     testHeaders.put("Server", "Nicole's HTTP server");
 
     assertEquals("HTTP/1.1", response.getHttpVersion());
-    assertEquals("404", response.getStatusCode());
-    assertEquals("Not Found", response.getStatusMessage());
+    assertEquals("200", response.getStatusCode());
+    assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
     assertEquals("", response.getBody());
   }
