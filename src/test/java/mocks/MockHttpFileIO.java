@@ -9,6 +9,10 @@ public class MockHttpFileIO implements FileIO {
     return stubbedResponseBody.getBytes();
   }
 
+  public byte[] getPartialFileContents(String filePath, String range) {
+    return stubbedResponseBody.getBytes();
+  }
+
   public String getRequestPath(HttpRequest request) {
     return "getRequestPath";
   }

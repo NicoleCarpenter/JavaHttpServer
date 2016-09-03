@@ -8,7 +8,8 @@ public interface Response {
   public abstract String getStatusCode();
   public abstract String getStatusMessage();
   public abstract HashMap<String, String> getHeaderLines();
-  public abstract String getBody();
+  public abstract byte[] getBody();
   public abstract byte[] formatToBytes() throws IOException;
   public abstract String formatToString() throws IOException;
+  public abstract String bodyToString();
 }

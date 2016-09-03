@@ -46,9 +46,9 @@ public class MockHttpResponse implements Response {
     return getHeaderLinesCalled;
   }
 
-  public String getBody() {
+  public byte[] getBody() {
     getBodyCalled = true;
-    return "Get Body";
+    return "Get Body".getBytes();
   }
 
   public boolean getBodyCalled() {
@@ -66,5 +66,9 @@ public class MockHttpResponse implements Response {
 
   public String formatToString() throws IOException {
     return "Hello world";
+  }
+
+  public String bodyToString() {
+    return "MockBody";
   }
 }

@@ -25,6 +25,6 @@ public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("variable_2 = stuff", response.getBody());
+    assertEquals("variable_2 = stuff", response.bodyToString());
   }
 }

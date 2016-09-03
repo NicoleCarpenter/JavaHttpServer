@@ -25,6 +25,6 @@ public class HandlerNotAllowedTest extends junit.framework.TestCase {
     assertEquals("405", response.getStatusCode());
     assertEquals("Method not allowed", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 }

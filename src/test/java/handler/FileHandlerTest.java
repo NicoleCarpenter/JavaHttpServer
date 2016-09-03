@@ -35,7 +35,7 @@ public class FileHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals(responseBody, response.getBody());
+    assertEquals(responseBody, response.bodyToString());
   }
 
   public void testHandleRouteIsDirectory() {

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class HttpFileIO implements FileIO {
   private File rootDirectory;
@@ -33,6 +34,67 @@ public class HttpFileIO implements FileIO {
       e.printStackTrace();
     }
     return fileContent;
+  }
+
+  public byte[] getPartialFileContents(String filePath, String rawRange) {
+    File file = new File(filePath);
+    int fileLength = getFileLength(file);
+    byte[] fileContents = getFileContents(filePath);
+    int[] range = splitRange(rawRange, fileLength);
+    int startOfRange = range[0];
+    int endOfRange = range[1];
+
+    return Arrays.copyOfRange(fileContents, startOfRange, endOfRange);
+  }
+
+  private int getFileLength(File file) {
+    return (int) file.length();
+  }
+
+  private int[] splitRange(String range, int fileLength) {
+    String rawRange = getRangeFromHeader(range);
+    String[] rangeLimits = getRangeLimits(rawRange);
+    return getRange(rangeLimits, fileLength);
+  }
+
+  private String getRangeFromHeader(String range) {
+    return range.split("=")[1];
+  }
+
+  private String[] getRangeLimits(String rawRange) {
+    return rawRange.trim().split("-");
+  }
+
+  private int[] getRange(String[] range, int fileLength) {
+    int rangeStart = 0;
+    int rangeEnd = fileLength;
+
+    if (isRangeWithoutEnd(range)) {
+      rangeStart = getRangeLimitAsInt(range, 0);
+    } else if (isRangeWithoutStart(range)) {
+      rangeStart = fileLength - getRangeLimitAsInt(range, 1);
+    } else {
+      rangeStart = getRangeLimitAsInt(range, 0);
+      rangeEnd = getRangeLimitAsInt(range, 1) + 1;
+    }
+    return new int[] {rangeStart, rangeEnd};
+  }
+
+  private boolean isRangeWithoutEnd(String[] range) {
+    return range.length == 1;
+  }
+
+  private boolean isRangeWithoutStart(String[] range) {
+    return range[0].isEmpty();
+  }
+
+  private int getRangeLimitAsInt(String[] range, int index) {
+    try {
+      return Integer.parseInt(range[index]);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return -1;
+    }
   }
 
   public File createFile(String uri) {

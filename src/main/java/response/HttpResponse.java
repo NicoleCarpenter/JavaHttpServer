@@ -34,8 +34,8 @@ public class HttpResponse implements Response {
   }
 
   @Override
-  public String getBody() {
-    return bodyToString();
+  public byte[] getBody() {
+    return body;
   }
 
   public void setStatusCode(String statusCode) {
@@ -62,14 +62,13 @@ public class HttpResponse implements Response {
 
   @Override
   public String formatToString() throws IOException {
-    byte[] ba = formatToBytes();
-    return new String(ba);
+    byte[] responseInBytes = formatToBytes();
+    return new String(responseInBytes);
   }
 
   @Override
   public byte[] formatToBytes() throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
     outputStream.write((httpVersion + " " +
                         statusCode + " " +
                         statusMessage +
@@ -81,7 +80,7 @@ public class HttpResponse implements Response {
     return outputStream.toByteArray();
   }
 
-  private String bodyToString() {
+  public String bodyToString() {
     return new String(body);
   }
 }

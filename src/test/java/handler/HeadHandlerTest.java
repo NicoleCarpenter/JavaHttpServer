@@ -25,6 +25,6 @@ public class HeadHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 }

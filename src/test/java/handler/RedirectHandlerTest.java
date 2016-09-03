@@ -26,6 +26,6 @@ public class RedirectHandlerTest extends junit.framework.TestCase {
     assertEquals("302", response.getStatusCode());
     assertEquals("REDIRECT", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 }

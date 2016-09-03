@@ -1,6 +1,7 @@
 package response;
 
 import io.FileIO;
+import request.HttpRequest;
 
 public class HttpResponseBuilder {
   HttpResponse response;
@@ -27,8 +28,8 @@ public class HttpResponseBuilder {
     response.setHeader(key, value);
   }
 
-  public void setBody(String file) {
-    response.setBody(fileIO.getFileContents(file));
+  public void setBody(String filePath) {
+    response.setBody(fileIO.getFileContents(filePath));
   }
 
   public void setBodyEmpty() {
@@ -39,12 +40,16 @@ public class HttpResponseBuilder {
     response.setBody(new String(message).getBytes());
   }
 
+  public void setBodyPartial(String filePath, String range) {
+    response.setBody(fileIO.getPartialFileContents(filePath, range));
+  }
+
   public HttpResponse getResponse() {
     return response;
   }
 
   public String getContentLength() {
-    String body = response.getBody();
+    String body = response.bodyToString();
     return Integer.toString(body.length());
   }
 

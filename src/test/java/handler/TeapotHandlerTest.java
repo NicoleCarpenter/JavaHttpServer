@@ -24,7 +24,7 @@ public class TeapotHandlerTest extends junit.framework.TestCase {
     assertEquals("418", response.getStatusCode());
     assertEquals("Teapot", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("I'm a teapot", response.getBody());
+    assertEquals("I'm a teapot", response.bodyToString());
   }
 
   public void testHandleRouteTea() {
@@ -37,6 +37,6 @@ public class TeapotHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 }

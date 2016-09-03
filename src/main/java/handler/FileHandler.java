@@ -27,7 +27,7 @@ public class FileHandler implements Handler {
   @Override
   public Response handleRoute(HttpRequest request) {    
     if (fileSystem.isFile(path)) {
-      return buildFileResponse();
+      return buildFileResponse(request);
     } else if (fileSystem.isDirectory(path)) {
       return buildDirectoryResponse();
     } else {
@@ -35,11 +35,33 @@ public class FileHandler implements Handler {
     }
   }
 
-  private HttpResponse buildFileResponse() {
-    setDefaultResponseElements();
-    responseBuilder.setBody(path);
+  private HttpResponse buildFileResponse(HttpRequest request) {
+    if (isPartialContentRequest(request)) {
+      String range = getRange(request);
+      buildPartialFileResponse(request, range);
+    } else {
+      buildFullFileResponse();
+    }
     setFileTypeHeaders();
     return responseBuilder.getResponse();
+  }
+
+  private String getRange(HttpRequest request) {
+    System.out.println(request.getHeaderLines().get("Range"));
+    return request.getHeaderLines().get("Range");
+  }
+
+  private void buildPartialFileResponse(HttpRequest request, String range) {
+    responseBuilder.setStatusCode("206");
+    responseBuilder.setStatusMessage("OK");
+    responseBuilder.setDefaultHeaders();
+    responseBuilder.setHeader("Content-Range", range);
+    responseBuilder.setBodyPartial(path, range);    
+  }
+
+  private void buildFullFileResponse() {
+    setDefaultResponseElements();
+    responseBuilder.setBody(path);    
   }
 
   private HttpResponse buildDirectoryResponse() {
@@ -63,6 +85,11 @@ public class FileHandler implements Handler {
       pathSlash = "/";
     }
     return "<a href=\"" + uri + pathSlash + file + "\">" + file + "</a><br>";
+  }
+
+  private boolean isPartialContentRequest(HttpRequest request) {
+    HashMap<String, String> headers = request.getHeaderLines();
+    return headers.containsKey("Range");
   }
 
   private void setDefaultResponseElements() {

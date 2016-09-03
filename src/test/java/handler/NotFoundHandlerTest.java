@@ -25,6 +25,6 @@ public class NotFoundHandlerTest extends junit.framework.TestCase {
     assertEquals("404", response.getStatusCode());
     assertEquals("Not Found", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 }
