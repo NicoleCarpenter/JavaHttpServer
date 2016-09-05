@@ -1,14 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'com.carpentern.Main'
+mainClassName = 'Main'
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
-  testCompile "junit:junit:4.11"
+  testCompile 'junit:junit:4.11'
 }
 
 test.testLogging {
@@ -19,7 +19,7 @@ jar {
   manifest {
     attributes (
       'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-      "Main-Class": "com.carpentern.Main")
+      'Main-Class': 'Main')
   }
 
   from {
