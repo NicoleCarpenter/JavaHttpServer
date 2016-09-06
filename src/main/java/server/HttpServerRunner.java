@@ -25,9 +25,15 @@ public class HttpServerRunner implements Runnable {
   public void run() {
     try {
       HttpRequest request = requestParser.parseRequest(socketConnection);
+
       Handler handler = router.getRoute(request);
       Response response = handler.handleRoute(request);
+      byte[] body = response.getBody();
 
+      System.out.println(response.bodyToString());
+      System.out.println(body);
+      System.out.println(new String(body));
+      
       serverIO.writeResponse(response.formatToBytes(), socketConnection.getOutputStream());
     } catch (IOException e) {
       e.printStackTrace();

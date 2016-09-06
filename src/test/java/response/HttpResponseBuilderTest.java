@@ -39,20 +39,20 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
     fileIO.stubResponseBody(responseBody);
     builder.setBody("/");
     response = builder.getResponse();
-    assertEquals(responseBody, response.getBody());
+    assertEquals(responseBody, response.bodyToString());
   }
 
   public void testSetBodyEmpty() {
     builder.setBodyEmpty();
     response = builder.getResponse();
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 
   public void testSetBodyMessage() {
     String responseMessage = "This is a body message";
     builder.setBodyMessage(responseMessage);
     response = builder.getResponse();
-    assertEquals(responseMessage, response.getBody());
+    assertEquals(responseMessage, response.bodyToString());
   }
 
   public void testGetResponse() {
@@ -69,7 +69,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.getBody());
+    assertEquals("", response.bodyToString());
   }
 
 }
