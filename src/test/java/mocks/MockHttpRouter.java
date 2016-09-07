@@ -15,4 +15,12 @@ public class MockHttpRouter implements Router {
   public boolean getRouteCalled() {
     return getRouteCalled;
   }
+
+  public void registerRoute(String uriWithMethod, Handler handler) {
+
+  }
+
+  public void registerMethodHandler(String uriWithMethod, Handler handler) {
+    
+  }
 }

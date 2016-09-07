@@ -48,4 +48,8 @@ public class HttpRequest {
     return body;
   }
 
+  public String getMethodWithUri() {
+    return method + " " + getUri();
+  }
+
 }
