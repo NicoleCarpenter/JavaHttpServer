@@ -10,8 +10,7 @@ public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
   private Response response;
 
   protected void setUp() {
-    MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new ParameterDecoderHandler(responseBuilder);
     HttpRequest request = new HttpRequest("mockMethod", "mockUri", "variable_2 = stuff", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
     response = handler.handleRoute(request);

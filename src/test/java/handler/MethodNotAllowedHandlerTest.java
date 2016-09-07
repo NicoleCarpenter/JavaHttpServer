@@ -1,18 +1,17 @@
 import handler.Handler;
-import handler.HandlerNotAllowed;
+import handler.MethodNotAllowedHandler;
 import request.HttpRequest;
 import response.Response;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 
-public class HandlerNotAllowedTest extends junit.framework.TestCase {
+public class MethodNotAllowedHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
 
   protected void setUp() {
-    MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-    handler = new HandlerNotAllowed(responseBuilder);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
+    handler = new MethodNotAllowedHandler(responseBuilder);
     HttpRequest request = new HttpRequest("mockMethod", "mockUri", "mockParams", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
     response = handler.handleRoute(request);
   }

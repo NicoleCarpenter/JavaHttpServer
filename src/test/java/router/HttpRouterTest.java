@@ -13,8 +13,8 @@ public class HttpRouterTest extends junit.framework.TestCase {
     File rootDirectory = new File("/public");
     MockHttpFileSystem fileSystem = new MockHttpFileSystem();
     MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
-    router = new HttpRouter(rootDirectory, fileSystem, responseBuilder);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
+    router = new HttpRouter(rootDirectory, fileSystem, fileIO, responseBuilder);
   }
 
   public void testGetRootRoute() {

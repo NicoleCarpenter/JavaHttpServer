@@ -13,11 +13,9 @@ public class RedirectHandler implements Handler {
 
   @Override
   public Response handleRoute(HttpRequest request) {
-    responseBuilder.setStatusCode("302");
-    responseBuilder.setStatusMessage("REDIRECT");
-    responseBuilder.setHeader("Location", "http://localhost:5000/");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyEmpty();
+    byte[] emptyBody = new String("").getBytes();
+    responseBuilder.buildRedirectResponse();
+    responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();
   }
 }

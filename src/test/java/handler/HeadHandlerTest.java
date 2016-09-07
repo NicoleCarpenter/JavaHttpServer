@@ -9,8 +9,7 @@ public class HeadHandlerTest extends junit.framework.TestCase {
   private Response response;
 
   protected void setUp() {
-    MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     HeadHandler handler = new HeadHandler(responseBuilder);
 
     HttpRequest request = new HttpRequest("HEAD", "/", "", "HTTP/1.1", new HashMap<String, String>(), "");    

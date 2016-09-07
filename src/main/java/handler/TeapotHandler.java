@@ -23,17 +23,15 @@ public class TeapotHandler implements Handler {
   }
 
   private void buildCoffeeResponse() {
-    responseBuilder.setStatusCode("418");
-    responseBuilder.setStatusMessage("Teapot");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyMessage("I'm a teapot");
+    byte[] teapotMessage = new String("I'm a teapot").getBytes();
+    responseBuilder.buildCoffeeResponse();
+    responseBuilder.setBody(teapotMessage);
   }
 
   private void buildTeaResponse() {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyEmpty();
+    byte[] emptyBody = new String("").getBytes();
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(emptyBody);
   }
 
 }

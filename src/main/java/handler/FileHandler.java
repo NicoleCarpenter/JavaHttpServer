@@ -1,5 +1,6 @@
 package handler;
 
+import io.FileIO;
 import file.FileSystem;
 import request.HttpRequest;
 import response.Response;
@@ -11,21 +12,26 @@ import java.io.File;
 
 public class FileHandler implements Handler {
   private HttpResponseBuilder responseBuilder;
-  private String path;
-  private String uri;
   private FileSystem fileSystem;
+  private FileIO fileIO;
+  private String uri;
+  private String path;
   private final String htmlHead = "<!DOCTYPE html><html><body>";
   private final String htmlFoot = "</body></html>";
 
-  public FileHandler(HttpResponseBuilder responseBuilder, String path, String uri, FileSystem fileSystem) {
+  public FileHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
-    this.path = path;
-    this.uri = uri;
+    this.fileIO = fileIO;
     this.fileSystem = fileSystem;
+    this.uri = "";
+    this.path = "";
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {    
+  public Response handleRoute(HttpRequest request) {
+    setUri(request.getUri());
+    setPath(findPath(request));
+    
     if (fileSystem.isFile(path)) {
       return buildFileResponse(request);
     } else if (fileSystem.isDirectory(path)) {
@@ -36,9 +42,8 @@ public class FileHandler implements Handler {
   }
 
   private HttpResponse buildFileResponse(HttpRequest request) {
-    if (isPartialContentRequest(request)) {
-      String range = getRange(request);
-      buildPartialFileResponse(request, range);
+    if (isPartialFileRequest(request)) {
+      buildPartialFileResponse(request);
     } else {
       buildFullFileResponse();
     }
@@ -46,26 +51,32 @@ public class FileHandler implements Handler {
     return responseBuilder.getResponse();
   }
 
+  private boolean isPartialFileRequest(HttpRequest request) {
+    HashMap<String, String> headers = request.getHeaderLines();
+    return headers.containsKey("Range");
+  }
+
+  private void buildPartialFileResponse(HttpRequest request) {
+    String range = getRange(request);
+    byte[] partialFileContent = fileIO.getPartialFileContents(path, range);
+    responseBuilder.buildPartialFileResponse(range);
+    responseBuilder.setBody(partialFileContent);
+  }
+
   private String getRange(HttpRequest request) {
     return request.getHeaderLines().get("Range");
   }
 
-  private void buildPartialFileResponse(HttpRequest request, String range) {
-    responseBuilder.setStatusCode("206");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setHeader("Content-Range", range);
-    responseBuilder.setBodyPartial(path, range);    
-  }
-
   private void buildFullFileResponse() {
-    setDefaultResponseElements();
-    responseBuilder.setBody(path);    
+    byte[] fileContent = fileIO.getFileContents(path);
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(fileContent);
   }
 
   private HttpResponse buildDirectoryResponse() {
-    setDefaultResponseElements();
-    responseBuilder.setBodyMessage(htmlHead + buildFileLinks() + htmlFoot);
+    byte[] directoryContents = new String(htmlHead + buildFileLinks() + htmlFoot).getBytes();
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(directoryContents);
     return responseBuilder.getResponse();
   }
 
@@ -85,24 +96,12 @@ public class FileHandler implements Handler {
     }
     return "<a href=\"" + uri + pathSlash + file + "\">" + file + "</a><br>";
   }
-
-  private boolean isPartialContentRequest(HttpRequest request) {
-    HashMap<String, String> headers = request.getHeaderLines();
-    return headers.containsKey("Range");
-  }
-
-  private void setDefaultResponseElements() {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-  }
-
+  
   private void setFileTypeHeaders() {
     int dotPosition = uri.lastIndexOf(".");
     String extension = "";
     if (hasExtension(dotPosition)) {
       responseBuilder.setHeader("Content-Type", findFileType(getExtension(dotPosition)));
-      // responseBuilder.setHeader("Content-Length", responseBuilder.getContentLength());
     }
   }
 
@@ -142,5 +141,21 @@ public class FileHandler implements Handler {
 
   private boolean isImagePng(String extension) {
     return extension.equals(".png");
+  }
+
+  private String findPath(HttpRequest request) {
+    String uri = request.getUri();  
+    File rootDirectory = fileIO.getRootDirectory();
+    String rootPath = rootDirectory.getAbsolutePath();
+    String requestPath = uri.replace(rootDirectory.getName(), "");
+    return rootPath + requestPath;
+  }
+
+  private void setUri(String uri) {
+    this.uri = uri;
+  }
+
+  private void setPath(String path) {
+    this.path = path;
   }
 } 

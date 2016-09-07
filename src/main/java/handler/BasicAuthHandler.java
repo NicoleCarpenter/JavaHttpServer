@@ -63,17 +63,15 @@ public class BasicAuthHandler implements Handler {
   }
 
   private void handleAuthorizedRequest() {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyMessage(getLogData());
+    byte[] logData = new String(getLogData()).getBytes();
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(logData);
   }
 
   private void handleUnauthorizedRequest() {
-    responseBuilder.setStatusCode("401");
-    responseBuilder.setStatusMessage("Unauthorized");
-    responseBuilder.setHeader("WWW-Authenticate", "Basic realm=\"Server\"");
-    responseBuilder.setBodyMessage("Unauthorized");
+    byte[] unauthorizedMessage = "Unauthorized".getBytes();
+    responseBuilder.buildUnauthorizedResponse();
+    responseBuilder.setBody(unauthorizedMessage);
   }
 
   private String getLogData() {

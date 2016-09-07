@@ -5,11 +5,9 @@ import java.util.HashMap;
 public class HttpResponseBuilderTest extends junit.framework.TestCase {
   private HttpResponseBuilder builder;
   private HttpResponse response;
-  private MockHttpFileIO fileIO;
 
   protected void setUp() {
-    fileIO = new MockHttpFileIO();
-    builder = new HttpResponseBuilder(fileIO);
+    builder = new HttpResponseBuilder();
   }
 
   public void testSetStatusCode() {
@@ -36,30 +34,32 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
 
   public void testSetBody() {
     String responseBody = "This is the root";
-    fileIO.stubResponseBody(responseBody);
-    builder.setBody("/");
+    byte[] bodyContent = new String("/").getBytes();
+    builder.setBody(bodyContent);
     response = builder.getResponse();
-    assertEquals(responseBody, response.bodyToString());
+    assertEquals("/", response.bodyToString());
   }
 
   public void testSetBodyEmpty() {
-    builder.setBodyEmpty();
+    byte[] emptyBody = new String("").getBytes();
+    builder.setBody(emptyBody);
     response = builder.getResponse();
     assertEquals("", response.bodyToString());
   }
 
   public void testSetBodyMessage() {
-    String responseMessage = "This is a body message";
-    builder.setBodyMessage(responseMessage);
+    byte[] responseMessage = new String("This is a body message").getBytes();
+    builder.setBody(responseMessage);
     response = builder.getResponse();
-    assertEquals(responseMessage, response.bodyToString());
+    assertEquals("This is a body message", response.bodyToString());
   }
 
   public void testGetResponse() {
+    byte[] emptyBody = new String("").getBytes();
     builder.setStatusCode("200");
     builder.setStatusMessage("OK");
     builder.setDefaultHeaders();
-    builder.setBodyEmpty();
+    builder.setBody(emptyBody);
     HttpResponse response = builder.getResponse();
 
     HashMap<String, String> testHeaders = new HashMap<>();

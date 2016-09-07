@@ -21,8 +21,10 @@ public class FormHandler implements Handler {
   @Override
   public Response handleRoute(HttpRequest request) {
     String method = request.getMethod();
+    String path = findPath(request);
+
     if (method.equals("GET")) {
-      getForm(request);
+      getForm(request, path);
     } else if (method.equals("POST")) {
       postForm(request);
     } else if (method.equals("PUT")) {
@@ -33,32 +35,34 @@ public class FormHandler implements Handler {
     return responseBuilder.getResponse();
   }
 
-  public void getForm(HttpRequest request) {
+  public void getForm(HttpRequest request, String path) {
     String form = generateForm("");
-    File file = new File(fileIO.getRequestPath(request));
-    setDefaultResponseElements();
+    File file = new File(path);
+    responseBuilder.buildOkResponse();
     
     if (file.exists()) {
-      responseBuilder.setBody(fileIO.getRequestPath(request));
+      byte[] fileContent = fileIO.getFileContents(path);
+      responseBuilder.setBody(fileContent);
     } else {
-      responseBuilder.setBodyMessage(form);
+      byte[] formContent = new String(form).getBytes();
+      responseBuilder.setBody(formContent);
     }
     HttpResponse response = responseBuilder.getResponse();
   }
 
   public void postForm(HttpRequest request) {
     fileIO.writeToFile(fileIO.getRequestPath(request), request.getBody());
-    setDefaultResponseElements();
+    responseBuilder.buildOkResponse();
   }
 
   public void putForm(HttpRequest request) {
     fileIO.updateFile(fileIO.getRequestPath(request), request.getBody());
-    setDefaultResponseElements();
+    responseBuilder.buildOkResponse();
   }
 
   public void deleteForm(HttpRequest request) {
     fileIO.deleteFileContent(fileIO.getRequestPath(request));
-    setDefaultResponseElements();
+    responseBuilder.buildOkResponse();
   }
 
   private String generateForm(String value) {
@@ -73,9 +77,11 @@ public class FormHandler implements Handler {
            "</body></html>";
   }
 
-  private void setDefaultResponseElements() {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
+  private String findPath(HttpRequest request) {
+    String uri = request.getUri();  
+    File rootDirectory = fileIO.getRootDirectory();
+    String rootPath = rootDirectory.getAbsolutePath();
+    String requestPath = uri.replace(rootDirectory.getName(), "");
+    return rootPath + requestPath;
   }
 }
