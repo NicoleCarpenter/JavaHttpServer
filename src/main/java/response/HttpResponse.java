@@ -64,7 +64,6 @@ public class HttpResponse implements Response {
                         headersToString() +
                         CR).getBytes());
     outputStream.write(body);
-    outputStream.write(CRLF.getBytes());
     return outputStream.toByteArray();
   }
 
