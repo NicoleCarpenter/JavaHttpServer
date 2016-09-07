@@ -20,6 +20,10 @@ public class HttpRequest {
     this.body = body;
   }
 
+  public String getRequestStartLine() {
+    return method + " " + uri + " " + httpVersion;
+  }
+
   public String getMethod() {
     return method;
   }

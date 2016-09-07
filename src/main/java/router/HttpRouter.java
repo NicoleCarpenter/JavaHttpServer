@@ -5,7 +5,7 @@ import file.FileSystem;
 import handler.*;
 import request.HttpRequest;
 import response.HttpResponseBuilder;
-import file.FileSystem;
+import util.RequestLogger;
 import java.io.File;
 
 public class HttpRouter implements Router {
@@ -25,6 +25,8 @@ public class HttpRouter implements Router {
     String method = request.getMethod();
     String path = rootDirectory.getAbsolutePath() + request.getPathFromRoot(rootDirectory);
 
+    RequestLogger.log(request);
+
     if (uri.equals("/form")) {
       return new FormHandler(responseBuilder, new HttpFileIO(rootDirectory));
     } else if (method.equals("GET")) {
@@ -38,6 +40,8 @@ public class HttpRouter implements Router {
         return new TeapotHandler(responseBuilder);
       } else if (uri.equals("/redirect")) {
         return new RedirectHandler(responseBuilder);
+      } else if (uri.equals("/logs")) {
+        return new BasicAuthHandler(responseBuilder);
       } else {
         return new NotFoundHandler(responseBuilder);
       }
