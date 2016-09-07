@@ -19,12 +19,6 @@ public class HttpFileSystem implements FileSystem {
   }
 
   @Override
-  public boolean isDirectory(String file) {
-    f = new File(file);
-    return f.isDirectory();
-  }
-
-  @Override
   public File[] listFiles(String directory) {
     d = new File(directory);
     return d.listFiles();

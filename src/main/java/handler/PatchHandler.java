@@ -24,17 +24,12 @@ public class PatchHandler implements Handler {
   public Response handleRoute(HttpRequest request) {
     String path = findPath(request);
     String requestEtag = getRequestEtag(request);
-    String requestPath = fileIO.getRequestPath(request);
-    fileIO.writeToFile(requestPath, request.getBody());
+    fileIO.writeToFile(path, request.getBody());
 
     if (isMatchingPatchTag(requestEtag)) {
-      byte[] emptyBody = new String("").getBytes();
-      responseBuilder.buildPatchedContentResponse();
-      responseBuilder.setBody(emptyBody);
+      buildPatchedContentResponse();
     } else {
-      byte[] fileContent = fileIO.getFileContents(path);
-      responseBuilder.buildOkResponse();
-      responseBuilder.setBody(fileContent);
+      buildFullFileContentResponse(path);
     }
 
     responseBuilder.setHeader("Etag", etag);
@@ -50,6 +45,18 @@ public class PatchHandler implements Handler {
     return requestEtag.trim().equals(etag.trim());
   }
 
+  private void buildPatchedContentResponse() {
+    byte[] emptyBody = new String("").getBytes();
+    responseBuilder.buildPatchedContentResponse();
+    responseBuilder.setBody(emptyBody);
+  }
+
+  private void buildFullFileContentResponse(String path) {
+      byte[] fileContent = fileIO.getFileContents(path);
+      responseBuilder.buildOkResponse();
+      responseBuilder.setBody(fileContent);
+  }
+
   private String findPath(HttpRequest request) {
     String uri = request.getUri();  
     File rootDirectory = fileIO.getRootDirectory();
@@ -57,5 +64,5 @@ public class PatchHandler implements Handler {
     String requestPath = uri.replace(rootDirectory.getName(), "");
     return rootPath + requestPath;
   }
-
+  
 }

@@ -143,8 +143,4 @@ public class HttpFileIO implements FileIO {
     return rootDirectory;
   }
 
-  public String getRequestPath(HttpRequest request) {
-    return rootDirectory.getAbsolutePath() + request.getPathFromRoot(rootDirectory);
-  }
-
 }

@@ -9,7 +9,5 @@ public interface Response {
   public abstract String getStatusMessage();
   public abstract HashMap<String, String> getHeaderLines();
   public abstract byte[] getBody();
-  public abstract byte[] formatToBytes() throws IOException;
-  public abstract String formatToString() throws IOException;
-  public abstract String bodyToString();
+  public abstract byte[] getFormattedResponse() throws IOException;
 }

@@ -10,5 +10,4 @@ public interface FileIO {
   public abstract void updateFile(String filePath, String content);
   public abstract void deleteFileContent(String fileName);
   public abstract File getRootDirectory();
-  public abstract String getRequestPath(HttpRequest request);
 }

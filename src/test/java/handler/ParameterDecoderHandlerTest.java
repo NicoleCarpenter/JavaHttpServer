@@ -8,8 +8,10 @@ import java.util.HashMap;
 public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new ParameterDecoderHandler(responseBuilder);
     HttpRequest request = new HttpRequest("mockMethod", "mockUri", "variable_2 = stuff", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
@@ -24,6 +26,6 @@ public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("variable_2 = stuff", response.bodyToString());
+    assertEquals("variable_2 = stuff", formatter.bodyToString(response));
   }
 }

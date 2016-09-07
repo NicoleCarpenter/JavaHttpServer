@@ -26,7 +26,7 @@ public class HttpRouter implements Router {
   public Handler getRoute(HttpRequest request) {
     String uri = request.getUri();
     String method = request.getMethod();
-    String path = rootDirectory.getAbsolutePath() + request.getPathFromRoot(rootDirectory);
+    String path = findPath(request);
 
     RequestLogger.log(request);
 
@@ -61,5 +61,13 @@ public class HttpRouter implements Router {
     } else {
       return new MethodNotAllowedHandler(responseBuilder);
     }
+  }
+
+  private String findPath(HttpRequest request) {
+    String uri = request.getUri();  
+    File rootDirectory = fileIO.getRootDirectory();
+    String rootPath = rootDirectory.getAbsolutePath();
+    String requestPath = uri.replace(rootDirectory.getName(), "");
+    return rootPath + requestPath;
   }
 }

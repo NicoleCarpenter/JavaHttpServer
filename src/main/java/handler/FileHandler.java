@@ -34,10 +34,8 @@ public class FileHandler implements Handler {
     
     if (fileSystem.isFile(path)) {
       return buildFileResponse(request);
-    } else if (fileSystem.isDirectory(path)) {
-      return buildDirectoryResponse();
     } else {
-      return null;
+      return buildDirectoryResponse();
     }
   }
 

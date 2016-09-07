@@ -54,20 +54,8 @@ public class HttpResponse implements Response {
     this.body = body;
   }
 
-  public String headersToString() {
-    StringBuilder builder = new StringBuilder();
-    headerLines.forEach((key, value)-> builder.append(key + ": " + value + CR));
-    return builder.toString();
-  }
-
   @Override
-  public String formatToString() throws IOException {
-    byte[] responseInBytes = formatToBytes();
-    return new String(responseInBytes);
-  }
-
-  @Override
-  public byte[] formatToBytes() throws IOException {
+  public byte[] getFormattedResponse() throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     outputStream.write((httpVersion + " " +
                         statusCode + " " +
@@ -80,7 +68,10 @@ public class HttpResponse implements Response {
     return outputStream.toByteArray();
   }
 
-  public String bodyToString() {
-    return new String(body);
+  private String headersToString() {
+    StringBuilder builder = new StringBuilder();
+    headerLines.forEach((key, value)-> builder.append(key + ": " + value + CR));
+    return builder.toString();
   }
+
 }
