@@ -33,7 +33,4 @@ public class MockHttpFileIO implements FileIO {
     return new File("/");
   }
 
-  public String getRequestPath(HttpRequest request) {
-    return "getRequestPath";
-  }
 }

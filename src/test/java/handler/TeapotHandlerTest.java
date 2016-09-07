@@ -7,8 +7,10 @@ import java.util.HashMap;
 public class TeapotHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new TeapotHandler(responseBuilder);
   }
@@ -23,7 +25,7 @@ public class TeapotHandlerTest extends junit.framework.TestCase {
     assertEquals("418", response.getStatusCode());
     assertEquals("Teapot", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("I'm a teapot", response.bodyToString());
+    assertEquals("I'm a teapot", formatter.bodyToString(response));
   }
 
   public void testHandleRouteTea() {
@@ -36,6 +38,6 @@ public class TeapotHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 }

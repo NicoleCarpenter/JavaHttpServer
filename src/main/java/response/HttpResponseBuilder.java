@@ -85,9 +85,4 @@ public class HttpResponseBuilder {
     setDefaultHeaders();
   }
 
-  public String getContentLength() {
-    String body = response.bodyToString();
-    return Integer.toString(body.length());
-  }
-
 }

@@ -12,19 +12,21 @@ import java.io.File;
 public class FormHandler implements Handler {
   private HttpResponseBuilder responseBuilder;
   private FileIO fileIO;
+  private String path;
 
   public FormHandler(HttpResponseBuilder responseBuilder, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
     this.fileIO = fileIO;
+    this.path = "";
   }
 
   @Override
   public Response handleRoute(HttpRequest request) {
     String method = request.getMethod();
-    String path = findPath(request);
+    setPath(findPath(request));
 
     if (method.equals("GET")) {
-      getForm(request, path);
+      getForm(request);
     } else if (method.equals("POST")) {
       postForm(request);
     } else if (method.equals("PUT")) {
@@ -35,8 +37,8 @@ public class FormHandler implements Handler {
     return responseBuilder.getResponse();
   }
 
-  public void getForm(HttpRequest request, String path) {
-    String form = generateForm("");
+  public void getForm(HttpRequest request) {
+    String form = generateForm();
     File file = new File(path);
     responseBuilder.buildOkResponse();
     
@@ -51,29 +53,28 @@ public class FormHandler implements Handler {
   }
 
   public void postForm(HttpRequest request) {
-    fileIO.writeToFile(fileIO.getRequestPath(request), request.getBody());
+    fileIO.writeToFile(path, request.getBody());
     responseBuilder.buildOkResponse();
   }
 
   public void putForm(HttpRequest request) {
-    fileIO.updateFile(fileIO.getRequestPath(request), request.getBody());
+    fileIO.updateFile(path, request.getBody());
     responseBuilder.buildOkResponse();
   }
 
   public void deleteForm(HttpRequest request) {
-    fileIO.deleteFileContent(fileIO.getRequestPath(request));
+    fileIO.deleteFileContent(path);
     responseBuilder.buildOkResponse();
   }
 
-  private String generateForm(String value) {
+  private String generateForm() {
     return "<!DOCTYPE html>\n" + 
            "<html>\n" + 
            "<body>\n" +
            "<form action=\"/form\" method=\"post\">" +
            "<input name=\"data\" type=\"text\">" +
            "<input type=\"submit\" value=\"submit\">" +
-           "</form>" + 
-           value + 
+           "</form>" +
            "</body></html>";
   }
 
@@ -83,5 +84,9 @@ public class FormHandler implements Handler {
     String rootPath = rootDirectory.getAbsolutePath();
     String requestPath = uri.replace(rootDirectory.getName(), "");
     return rootPath + requestPath;
+  }
+
+  private void setPath(String path) {
+    this.path = path;
   }
 }

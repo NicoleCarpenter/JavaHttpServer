@@ -8,8 +8,10 @@ import java.util.HashMap;
 public class NotFoundHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new NotFoundHandler(responseBuilder);
     HttpRequest request = new HttpRequest("GET", "mockUri", "", "HTTP/1.1", new HashMap<String, String>(), "");    
@@ -24,6 +26,6 @@ public class NotFoundHandlerTest extends junit.framework.TestCase {
     assertEquals("404", response.getStatusCode());
     assertEquals("Not Found", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 }

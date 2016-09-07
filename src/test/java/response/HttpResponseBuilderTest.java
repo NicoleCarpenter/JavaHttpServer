@@ -5,8 +5,10 @@ import java.util.HashMap;
 public class HttpResponseBuilderTest extends junit.framework.TestCase {
   private HttpResponseBuilder builder;
   private HttpResponse response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     builder = new HttpResponseBuilder();
   }
 
@@ -37,21 +39,21 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
     byte[] bodyContent = new String("/").getBytes();
     builder.setBody(bodyContent);
     response = builder.getResponse();
-    assertEquals("/", response.bodyToString());
+    assertEquals("/", formatter.bodyToString(response));
   }
 
   public void testSetBodyEmpty() {
     byte[] emptyBody = new String("").getBytes();
     builder.setBody(emptyBody);
     response = builder.getResponse();
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 
   public void testSetBodyMessage() {
     byte[] responseMessage = new String("This is a body message").getBytes();
     builder.setBody(responseMessage);
     response = builder.getResponse();
-    assertEquals("This is a body message", response.bodyToString());
+    assertEquals("This is a body message", formatter.bodyToString(response));
   }
 
   public void testGetResponse() {
@@ -69,7 +71,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 
 }

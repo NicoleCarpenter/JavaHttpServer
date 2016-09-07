@@ -7,8 +7,10 @@ import java.io.File;
 
 public class HeadHandlerTest extends junit.framework.TestCase {
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     HeadHandler handler = new HeadHandler(responseBuilder);
 
@@ -24,6 +26,6 @@ public class HeadHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 }

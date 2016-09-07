@@ -7,14 +7,12 @@ import java.util.Collections;
 public class MockHttpFileSystem implements FileSystem {
   private boolean existsCalled = false;
   private boolean isFileCalled = false;
-  private boolean isDirectoryCalled = false;
   private boolean listFilesCalled = false;
   private boolean listCalled = false;
   private boolean getNameCalled = false;
   private boolean getAbsolutePathCalled = false;
   private boolean stubbedExists;
   private boolean stubbedIsFile;
-  private boolean stubbedIsDirectory;
   private File[] stubbedListFiles;
   private String[] stubbedList;
   private String stubbedGetName;
@@ -28,11 +26,6 @@ public class MockHttpFileSystem implements FileSystem {
   public boolean isFile(String file) {
     isFileCalled = true;
     return stubbedIsFile;
-  }
-
-  public boolean isDirectory(String file) {
-    isDirectoryCalled = true;
-    return stubbedIsDirectory;
   }
 
   public File[] listFiles(String directory) {
@@ -61,10 +54,6 @@ public class MockHttpFileSystem implements FileSystem {
 
   public void stubIsFile(boolean stubbedValue) {
     stubbedIsFile = stubbedValue;
-  }
-
-  public void stubIsDirectory(boolean stubbedValue) {
-    stubbedIsDirectory = stubbedValue;
   }
 
   public void stubListFiles(File[] stubbedValue) {

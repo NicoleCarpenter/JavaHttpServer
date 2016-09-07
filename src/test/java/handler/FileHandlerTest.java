@@ -12,6 +12,11 @@ public class FileHandlerTest extends junit.framework.TestCase {
   private MockHttpFileIO fileIO;
   private MockHttpFileSystem fileSystem;
   private HttpResponseBuilder responseBuilder;
+  private Formatter formatter;
+
+  protected void setUp() {
+    formatter = new Formatter();
+  }
 
   public void testHandleRouteIsFile() {
     responseBody = "This is a file";
@@ -35,7 +40,7 @@ public class FileHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals(responseBody, response.bodyToString());
+    assertEquals(responseBody, formatter.bodyToString(response));
   }
 
   public void testHandleRouteIsDirectory() {

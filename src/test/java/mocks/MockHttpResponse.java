@@ -8,7 +8,7 @@ public class MockHttpResponse implements Response {
   private boolean getStatusMessageCalled = false;
   private boolean getHeaderLinesCalled = false;
   private boolean getBodyCalled = false;
-  private boolean formatToBytesCalled = false;
+  private boolean getFormattedResponseCalled = false;
 
   public String getHttpVersion() {
     getHttpVersionCalled = true;
@@ -55,20 +55,13 @@ public class MockHttpResponse implements Response {
     return getBodyCalled;
   }
 
-  public byte[] formatToBytes() throws IOException {
-    formatToBytesCalled = true;
+  public byte[] getFormattedResponse() throws IOException {
+    getFormattedResponseCalled = true;
     return "Mock Response".getBytes();
   }
 
-  public boolean formatToBytesCalled() {
-    return formatToBytesCalled;
+  public boolean getFormattedResponseCalled() {
+    return getFormattedResponseCalled;
   }
 
-  public String formatToString() throws IOException {
-    return "Hello world";
-  }
-
-  public String bodyToString() {
-    return "MockBody";
-  }
 }

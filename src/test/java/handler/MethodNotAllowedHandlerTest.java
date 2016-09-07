@@ -8,8 +8,10 @@ import java.util.HashMap;
 public class MethodNotAllowedHandlerTest extends junit.framework.TestCase {
   private Handler handler;
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new MethodNotAllowedHandler(responseBuilder);
     HttpRequest request = new HttpRequest("mockMethod", "mockUri", "mockParams", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
@@ -24,6 +26,6 @@ public class MethodNotAllowedHandlerTest extends junit.framework.TestCase {
     assertEquals("405", response.getStatusCode());
     assertEquals("Method not allowed", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 }

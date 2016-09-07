@@ -7,8 +7,10 @@ import java.io.File;
 
 public class RedirectHandlerTest extends junit.framework.TestCase {
   private Response response;
+  private Formatter formatter;
 
   protected void setUp() {
+    formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     RedirectHandler handler = new RedirectHandler(responseBuilder);
 
@@ -25,6 +27,6 @@ public class RedirectHandlerTest extends junit.framework.TestCase {
     assertEquals("302", response.getStatusCode());
     assertEquals("REDIRECT", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("", response.bodyToString());
+    assertEquals("", formatter.bodyToString(response));
   }
 }
