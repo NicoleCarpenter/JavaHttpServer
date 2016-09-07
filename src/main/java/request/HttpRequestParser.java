@@ -97,19 +97,6 @@ public class HttpRequestParser implements RequestParser {
     }
   }
 
-  public static String getData(String rawRequest) {
-    try {
-      Scanner scanner = new Scanner(rawRequest);
-      scanner.useDelimiter(CRLF);
-      scanner.next();
-      String data = scanner.next();
-      scanner.close();
-      return data;
-    } catch (Exception e) {
-      return BLANK;
-    }
-  }
-
   private String parseParams(String head) {
     String startLine = getRequestStartLine(head);
     String[] params = getParams(startLine).split("&");
