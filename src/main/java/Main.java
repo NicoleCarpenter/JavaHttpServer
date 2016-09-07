@@ -30,10 +30,10 @@ public class Main {
     HttpServerIO httpServerIO = new HttpServerIO();
     HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerIO);
     File rootDirectory = new File(argsParser.getRootDirectory());
-    HttpFileIO httpFileIO = new HttpFileIO(rootDirectory);
     HttpFileSystem fileSystem = new HttpFileSystem();
-    HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(httpFileIO);
-    HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, httpResponseBuilder);
+    HttpFileIO fileIO = new HttpFileIO(rootDirectory);
+    HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
+    HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder);
     
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 

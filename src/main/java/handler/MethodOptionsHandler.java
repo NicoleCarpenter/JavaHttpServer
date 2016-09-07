@@ -13,10 +13,9 @@ public class MethodOptionsHandler implements Handler {
 
   @Override
   public Response handleRoute(HttpRequest request) {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyEmpty();
+    byte[] emptyBody = new String("").getBytes();
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(emptyBody);
     if (request.getUri().equals("/method_options")) {
       responseBuilder.setHeader("Allow", "GET,HEAD,POST,OPTIONS,PATCH,PUT");
     } else {

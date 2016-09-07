@@ -13,10 +13,9 @@ public class NotFoundHandler implements Handler {
 
   @Override
   public Response handleRoute(HttpRequest request) {
-    responseBuilder.setStatusCode("404");
-    responseBuilder.setStatusMessage("Not Found");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyEmpty();
+    byte[] emptyBody = new String("").getBytes();
+    responseBuilder.buildNotFoundResponse();
+    responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();
   }
 

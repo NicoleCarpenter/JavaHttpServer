@@ -1,5 +1,6 @@
 package router;
 
+import io.FileIO;
 import io.HttpFileIO;
 import file.FileSystem;
 import handler.*;
@@ -11,11 +12,13 @@ import java.io.File;
 public class HttpRouter implements Router {
   private File rootDirectory;
   private FileSystem fileSystem;
+  private FileIO fileIO;
   private HttpResponseBuilder responseBuilder;
 
-  public HttpRouter(File rootDirectory, FileSystem fileSystem, HttpResponseBuilder responseBuilder) {
+  public HttpRouter(File rootDirectory, FileSystem fileSystem, FileIO fileIO, HttpResponseBuilder responseBuilder) {
     this.rootDirectory = rootDirectory;
     this.fileSystem = fileSystem;
+    this.fileIO = fileIO;
     this.responseBuilder = responseBuilder;
   }
 
@@ -28,10 +31,10 @@ public class HttpRouter implements Router {
     RequestLogger.log(request);
 
     if (uri.equals("/form")) {
-      return new FormHandler(responseBuilder, new HttpFileIO(rootDirectory));
+      return new FormHandler(responseBuilder, fileIO);
     } else if (method.equals("GET")) {
       if (fileSystem.exists(path)) {
-        return new FileHandler(responseBuilder, path, uri, fileSystem);
+        return new FileHandler(responseBuilder, fileSystem, fileIO);
       } else if (uri.equals("/parameters")) {
         return new ParameterDecoderHandler(responseBuilder);
       } else if (uri.equals("/coffee")) {
@@ -46,7 +49,7 @@ public class HttpRouter implements Router {
         return new NotFoundHandler(responseBuilder);
       }
     } else if (method.equals("PATCH")) {
-      return new PatchHandler(responseBuilder, new HttpFileIO(rootDirectory));
+      return new PatchHandler(responseBuilder, fileIO);
     } else if (method.equals("HEAD")) {
       if (fileSystem.exists(path)) {
         return new HeadHandler(responseBuilder);
@@ -56,7 +59,7 @@ public class HttpRouter implements Router {
     } else if (method.equals("OPTIONS")) {
       return new MethodOptionsHandler(responseBuilder);
     } else {
-      return new HandlerNotAllowed(responseBuilder);
+      return new MethodNotAllowedHandler(responseBuilder);
     }
   }
 }

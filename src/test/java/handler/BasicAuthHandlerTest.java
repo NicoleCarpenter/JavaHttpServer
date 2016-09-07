@@ -9,8 +9,7 @@ import java.io.File;
 public class BasicAuthHandlerTest extends junit.framework.TestCase {
 
   public void testHandleRoute() {
-    MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     Handler handler = new BasicAuthHandler(responseBuilder);
     HashMap<String, String> requestHeaders = new HashMap<String, String>();
     requestHeaders.put("Authorization", "SomethingEncoded");

@@ -13,10 +13,9 @@ public class ParameterDecoderHandler implements Handler {
 
   @Override
   public Response handleRoute(HttpRequest request) {
-    responseBuilder.setStatusCode("200");
-    responseBuilder.setStatusMessage("OK");
-    responseBuilder.setDefaultHeaders();
-    responseBuilder.setBodyMessage(request.getParams());
+    byte[] params = new String(request.getParams()).getBytes();
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(params);
     return responseBuilder.getResponse();
   }
 

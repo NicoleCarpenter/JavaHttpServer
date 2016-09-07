@@ -13,10 +13,6 @@ public class MockHttpFileIO implements FileIO {
     return stubbedResponseBody.getBytes();
   }
 
-  public String getRequestPath(HttpRequest request) {
-    return "getRequestPath";
-  }
-
   public void writeToFile(String filePath, String content) {
 
   }
@@ -31,5 +27,13 @@ public class MockHttpFileIO implements FileIO {
 
   public void stubResponseBody(String responseBody) {
     stubbedResponseBody = responseBody;
+  }
+
+  public File getRootDirectory() {
+    return new File("/");
+  }
+
+  public String getRequestPath(HttpRequest request) {
+    return "getRequestPath";
   }
 }

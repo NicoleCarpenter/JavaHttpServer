@@ -3,7 +3,6 @@ import handler.PatchHandler;
 import request.HttpRequest;
 import response.Response;
 import response.HttpResponseBuilder;
-import io.FileIO;
 
 public class PatchHandlerTest extends junit.framework.TestCase {
   private Response response;
@@ -16,7 +15,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
     responseBody = "default content";
     fileIO = new MockHttpFileIO();
     fileIO.stubResponseBody(responseBody);
-    responseBuilder = new HttpResponseBuilder(fileIO);
+    responseBuilder = new HttpResponseBuilder();
 
     String path = "/Users/foo/application/public/patch-content.txt";
     String uri = "/file";

@@ -17,14 +17,14 @@ public class FileHandlerTest extends junit.framework.TestCase {
     responseBody = "This is a file";
     fileIO = new MockHttpFileIO();
     fileIO.stubResponseBody(responseBody);
-    responseBuilder = new HttpResponseBuilder(fileIO);
+    responseBuilder = new HttpResponseBuilder();
 
     String path = "/Users/foo/application/public/file";
     String uri = "/file";
     fileSystem = new MockHttpFileSystem();
     fileSystem.stubIsFile(true);
 
-    Handler handler = new FileHandler(responseBuilder, path, uri, fileSystem);
+    Handler handler = new FileHandler(responseBuilder, fileSystem, fileIO);
     HttpRequest request = new HttpRequest("GET", uri, "", "HTTP/1.1", new HashMap<String, String>(), "");    
     
     response = handler.handleRoute(request);

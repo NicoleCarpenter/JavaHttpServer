@@ -9,8 +9,7 @@ public class TeapotHandlerTest extends junit.framework.TestCase {
   private Response response;
 
   protected void setUp() {
-    MockHttpFileIO fileIO = new MockHttpFileIO();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder(fileIO);
+    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new TeapotHandler(responseBuilder);
   }
 
