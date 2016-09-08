@@ -7,6 +7,7 @@ import router.HttpRouter;
 import server.HttpServer;
 import socket.HttpServerSocket;
 import util.ArgumentParser;
+import util.SetUp;
 
 import java.net.ServerSocket;
 import java.io.IOException;
@@ -35,6 +36,9 @@ public class Main {
     HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
     HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder);
     
+    SetUp setUp = new SetUp();
+    setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO);
+
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 
     server.start();
