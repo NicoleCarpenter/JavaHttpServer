@@ -1,3 +1,10 @@
 .gradle
-build
+build/classes
+build/dependency-cache
+build/distributions
+build/reports
+build/reports
+build/scripts
+build/test-results
+build/tmp
 .DS_Store
