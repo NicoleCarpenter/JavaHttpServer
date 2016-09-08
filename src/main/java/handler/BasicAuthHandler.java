@@ -29,8 +29,8 @@ public class BasicAuthHandler implements Handler {
         }
       } catch (UnsupportedEncodingException e) {
         e.printStackTrace();
-      } 
-    } else { 
+      }
+    } else {
       handleUnauthorizedRequest();
     }
     return responseBuilder.getResponse();

@@ -27,7 +27,7 @@ public class MockHttpSocketConnection implements SocketConnection {
     getOutputStreamCalled = true;
     return outputStream;
   }
-  
+
   public boolean getOutputStreamCalled() {
     return getOutputStreamCalled;
   }

@@ -10,7 +10,7 @@ public class HttpServerSocket implements ServerSocketInterface {
   private ServerSocket serverSocket;
 
   public HttpServerSocket(ServerSocket serverSocket) {
-    this.serverSocket = serverSocket;  
+    this.serverSocket = serverSocket;
   }
 
   @Override

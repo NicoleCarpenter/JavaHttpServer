@@ -12,7 +12,7 @@ public class HttpServerIOTest extends junit.framework.TestCase {
   protected void setUp() throws IOException {
     request = "GET / HTTP/1.0\r\n\r\n";
     response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n";
-    
+
     MockHttpServerSocket serverSocket = new MockHttpServerSocket();
     serverSocket.stubInputStream(request);
     socketConnection = serverSocket.listen();

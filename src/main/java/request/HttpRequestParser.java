@@ -39,10 +39,10 @@ public class HttpRequestParser implements RequestParser {
     String body = getBody(requestLines);
 
     HttpRequest httpRequest = new HttpRequest(method, uri, params, httpVersion, headerLines, body);
-    
+
     return httpRequest;
   }
-  
+
   private String[] split(String data, String separator) {
     data = data.replace("\\", "\\\\");
     return data.split(separator);
@@ -53,7 +53,7 @@ public class HttpRequestParser implements RequestParser {
   }
 
   private String getFullUri(String head) {
-    return splitRequestStartLine(head)[1]; 
+    return splitRequestStartLine(head)[1];
   }
 
   private String getUri(String head) {
@@ -76,16 +76,16 @@ public class HttpRequestParser implements RequestParser {
     return startLineElements;
   }
 
-  private HashMap<String, String> getHeaderLines(String head) { 
+  private HashMap<String, String> getHeaderLines(String head) {
     String[] headLines = split(head, NEWLINE);
-    HashMap<String, String> headers = new HashMap<>(); 
+    HashMap<String, String> headers = new HashMap<>();
     int length = headLines.length;
-    
+
     for (int i = 1; i < headLines.length; i++) {
       String[] headerInfo = split(headLines[i], ": ");
-      
+
       headers.put(headerInfo[0], headerInfo[1]);
-    } 
+    }
     return headers;
   }
 

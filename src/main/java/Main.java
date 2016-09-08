@@ -35,7 +35,7 @@ public class Main {
     HttpFileIO fileIO = new HttpFileIO(rootDirectory);
     HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
     HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder);
-    
+
     SetUp setUp = new SetUp();
     setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO);
 

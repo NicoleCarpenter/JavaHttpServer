@@ -14,7 +14,7 @@ public class RedirectHandlerTest extends junit.framework.TestCase {
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     RedirectHandler handler = new RedirectHandler(responseBuilder);
 
-    HttpRequest request = new HttpRequest("GET", "/redirect", "", "HTTP/1.1", new HashMap<String, String>(), "");    
+    HttpRequest request = new HttpRequest("GET", "/redirect", "", "HTTP/1.1", new HashMap<String, String>(), "");
     response = handler.handleRoute(request);
   }
 

@@ -18,7 +18,7 @@ public class HttpRouterTest extends junit.framework.TestCase {
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     router = new HttpRouter(rootDirectory, fileSystem, fileIO, responseBuilder);
-    
+
     SetUp setUp = new SetUp();
     setUp.registerRoutes(router, responseBuilder, fileSystem, fileIO);
     setUp.registerMethodHandlers(router, responseBuilder, fileSystem, fileIO);

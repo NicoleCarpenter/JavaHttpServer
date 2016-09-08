@@ -38,5 +38,5 @@ public class MockHttpServerSocket implements ServerSocketInterface {
   public void stubIsConnectionClosed(boolean value) {
     stubbedIsConnectionClosed = value;
   }
- 
+
 }

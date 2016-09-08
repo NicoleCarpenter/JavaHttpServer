@@ -27,7 +27,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
   public void testSetDefaultHeaders() {
     HashMap<String, String> testHeaders = new HashMap<>();
     testHeaders.put("Server", "Nicole's HTTP server");
-    
+
     builder.setDefaultHeaders();
     response = builder.getResponse();
 
