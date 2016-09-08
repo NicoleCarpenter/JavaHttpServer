@@ -19,10 +19,10 @@ public class SetUp {
     router.registerRoute("GET /tea", new TeapotHandler(responseBuilder));
     router.registerRoute("GET /redirect", new RedirectHandler(responseBuilder));
     router.registerRoute("GET /logs", new BasicAuthHandler(responseBuilder));
-    router.registerRoute("GET /form", new FormHandler(responseBuilder, fileIO));
-    router.registerRoute("POST /form", new FormHandler(responseBuilder, fileIO));
-    router.registerRoute("PUT /form", new FormHandler(responseBuilder, fileIO));
-    router.registerRoute("DELETE /form", new FormHandler(responseBuilder, fileIO));
+    router.registerRoute("GET /form", new FormHandler(responseBuilder, fileSystem, fileIO));
+    router.registerRoute("POST /form", new FormHandler(responseBuilder, fileSystem, fileIO));
+    router.registerRoute("PUT /form", new FormHandler(responseBuilder, fileSystem, fileIO));
+    router.registerRoute("DELETE /form", new FormHandler(responseBuilder, fileSystem, fileIO));
   }
 
   public void registerMethodHandlers(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {

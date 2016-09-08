@@ -6,10 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class MockHttpServerSocket implements ServerSocketInterface {
-  private String stubbedInputStream;
-  private boolean listenCalled = false;
-  private boolean stubbedIsConnectionClosed;
-  private boolean isConnectionClosedCalled = false;
+  String stubbedInputStream;
+  boolean listenCalled = false;
+  boolean stubbedIsConnectionClosed;
+  boolean isConnectionClosedCalled = false;
 
   public MockHttpSocketConnection listen() throws IOException {
     listenCalled = true;

@@ -21,8 +21,8 @@ public class FileHandler implements Handler {
 
   public FileHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
-    this.fileIO = fileIO;
     this.fileSystem = fileSystem;
+    this.fileIO = fileIO;
     this.uri = "";
     this.path = "";
   }

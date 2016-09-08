@@ -26,7 +26,7 @@ public class PatchHandler implements Handler {
     String requestEtag = getRequestEtag(request);
     fileIO.writeToFile(path, request.getBody());
 
-    if (isMatchingPatchTag(requestEtag)) {
+    if (requestEtag != null && isMatchingPatchTag(requestEtag)) {
       buildPatchedContentResponse();
     } else {
       buildFullFileContentResponse(path);
