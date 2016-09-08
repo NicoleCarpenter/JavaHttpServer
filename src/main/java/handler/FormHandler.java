@@ -1,6 +1,7 @@
 package handler;
 
 import io.FileIO;
+import file.FileSystem;
 import request.HttpRequest;
 import response.Response;
 import response.HttpResponse;
@@ -11,11 +12,13 @@ import java.io.File;
 
 public class FormHandler implements Handler {
   private HttpResponseBuilder responseBuilder;
+  private FileSystem fileSystem;
   private FileIO fileIO;
   private String path;
 
-  public FormHandler(HttpResponseBuilder responseBuilder, FileIO fileIO) {
+  public FormHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
+    this.fileSystem = fileSystem;
     this.fileIO = fileIO;
     this.path = "";
   }
@@ -42,7 +45,7 @@ public class FormHandler implements Handler {
     File file = new File(path);
     responseBuilder.buildOkResponse();
 
-    if (file.exists()) {
+    if (fileSystem.exists(path)) {
       byte[] fileContent = fileIO.getFileContents(path);
       responseBuilder.setBody(fileContent);
     } else {

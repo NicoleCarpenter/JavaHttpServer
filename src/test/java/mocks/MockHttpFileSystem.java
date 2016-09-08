@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MockHttpFileSystem implements FileSystem {
-  private boolean existsCalled = false;
-  private boolean isFileCalled = false;
-  private boolean listFilesCalled = false;
-  private boolean listCalled = false;
-  private boolean getNameCalled = false;
-  private boolean getAbsolutePathCalled = false;
-  private boolean stubbedExists;
-  private boolean stubbedIsFile;
-  private File[] stubbedListFiles;
-  private String[] stubbedList;
-  private String stubbedGetName;
-  private String stubbedGetAbsolutePath;
+  boolean existsCalled = false;
+  boolean isFileCalled = false;
+  boolean listFilesCalled = false;
+  boolean listCalled = false;
+  boolean getNameCalled = false;
+  boolean getAbsolutePathCalled = false;
+  boolean stubbedExists;
+  boolean stubbedIsFile;
+  File[] stubbedListFiles;
+  String[] stubbedList;
+  String stubbedGetName;
+  String stubbedGetAbsolutePath;
 
   public boolean exists(String file) {
     existsCalled = true;
