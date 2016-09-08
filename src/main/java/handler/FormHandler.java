@@ -41,7 +41,7 @@ public class FormHandler implements Handler {
     String form = generateForm();
     File file = new File(path);
     responseBuilder.buildOkResponse();
-    
+
     if (file.exists()) {
       byte[] fileContent = fileIO.getFileContents(path);
       responseBuilder.setBody(fileContent);
@@ -68,8 +68,8 @@ public class FormHandler implements Handler {
   }
 
   private String generateForm() {
-    return "<!DOCTYPE html>\n" + 
-           "<html>\n" + 
+    return "<!DOCTYPE html>\n" +
+           "<html>\n" +
            "<body>\n" +
            "<form action=\"/form\" method=\"post\">" +
            "<input name=\"data\" type=\"text\">" +
@@ -79,7 +79,7 @@ public class FormHandler implements Handler {
   }
 
   private String findPath(HttpRequest request) {
-    String uri = request.getUri();  
+    String uri = request.getUri();
     File rootDirectory = fileIO.getRootDirectory();
     String rootPath = rootDirectory.getAbsolutePath();
     String requestPath = uri.replace(rootDirectory.getName(), "");

@@ -21,9 +21,9 @@ Then `cd` into the application's root directory
 
 ```
 cd JavaHttpServer.git
-``` 
+```
 
-From there, to run the application, 
+From there, to run the application,
 
 ```
 java -jar <path to application/build/libs/JavaHttpServer.jar>

@@ -31,7 +31,7 @@ public class FileHandler implements Handler {
   public Response handleRoute(HttpRequest request) {
     setUri(request.getUri());
     setPath(findPath(request));
-    
+
     if (fileSystem.isFile(path)) {
       return buildFileResponse(request);
     } else {
@@ -94,7 +94,7 @@ public class FileHandler implements Handler {
     }
     return "<a href=\"" + uri + pathSlash + file + "\">" + file + "</a><br>";
   }
-  
+
   private void setFileTypeHeaders() {
     int dotPosition = uri.lastIndexOf(".");
     String extension = "";
@@ -142,7 +142,7 @@ public class FileHandler implements Handler {
   }
 
   private String findPath(HttpRequest request) {
-    String uri = request.getUri();  
+    String uri = request.getUri();
     File rootDirectory = fileIO.getRootDirectory();
     String rootPath = rootDirectory.getAbsolutePath();
     String requestPath = uri.replace(rootDirectory.getName(), "");

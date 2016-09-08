@@ -58,11 +58,11 @@ public class PatchHandler implements Handler {
   }
 
   private String findPath(HttpRequest request) {
-    String uri = request.getUri();  
+    String uri = request.getUri();
     File rootDirectory = fileIO.getRootDirectory();
     String rootPath = rootDirectory.getAbsolutePath();
     String requestPath = uri.replace(rootDirectory.getName(), "");
     return rootPath + requestPath;
   }
-  
+
 }

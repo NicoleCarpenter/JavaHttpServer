@@ -12,7 +12,7 @@ public class HttpResponse implements Response {
   private String statusMessage;
   private HashMap<String, String> headerLines = new HashMap<String, String>();
   private byte[] body;
-  
+
   @Override
   public String getHttpVersion() {
     return httpVersion;

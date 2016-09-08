@@ -1,7 +1,7 @@
 import util.ArgumentParser;
 
 public class ArgumentParserTest extends junit.framework.TestCase {
-  
+
   public void testGetPortGiven() {
     String[] args = new String[] {"-p", "3333"};
     ArgumentParser argParser = new ArgumentParser(args);

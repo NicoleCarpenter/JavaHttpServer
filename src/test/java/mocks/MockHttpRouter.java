@@ -21,6 +21,6 @@ public class MockHttpRouter implements Router {
   }
 
   public void registerMethodHandler(String uriWithMethod, Handler handler) {
-    
+
   }
 }

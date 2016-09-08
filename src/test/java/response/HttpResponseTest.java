@@ -36,5 +36,5 @@ public class HttpResponseTest extends junit.framework.TestCase {
     response.setHeader("Content-Type", "text/html");
     assertEquals("Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT\r\nContent-Length: 9\r\nContent-Type: text/html\r\n", formatter.headersToString(response));
   }
-  
+
 }

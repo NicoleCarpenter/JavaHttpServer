@@ -20,7 +20,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
     String path = "/Users/foo/application/public/patch-content.txt";
     String uri = "/file";
     fileSystem = new MockHttpFileSystem();
-    
+
     assertTrue(true);
   }
 }

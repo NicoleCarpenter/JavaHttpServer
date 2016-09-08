@@ -10,7 +10,7 @@ public class HttpServerRunnerTest extends junit.framework.TestCase {
   private MockHttpRouter router;
   private MockHttpServerIO serverIO;
   private HttpServerRunner server;
-  
+
   protected void setUp() {
     OutputStream outputStream = new ByteArrayOutputStream();
     InputStream inputStream = new ByteArrayInputStream("anything".getBytes());

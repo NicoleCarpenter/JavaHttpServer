@@ -14,7 +14,7 @@ public class NotFoundHandlerTest extends junit.framework.TestCase {
     formatter = new Formatter();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new NotFoundHandler(responseBuilder);
-    HttpRequest request = new HttpRequest("GET", "mockUri", "", "HTTP/1.1", new HashMap<String, String>(), "");    
+    HttpRequest request = new HttpRequest("GET", "mockUri", "", "HTTP/1.1", new HashMap<String, String>(), "");
     response = handler.handleRoute(request);
   }
 

@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Formatter {
-  
+
   public String headersToString(Response response) {
     HashMap<String, String> headerLines = response.getHeaderLines();
     StringBuilder builder = new StringBuilder();
