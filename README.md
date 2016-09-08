@@ -42,5 +42,5 @@ This project encorporates Gradle as a build tool. Gradle provides a wrapper feat
 To run the tests from the root directory, type
 
 ```
-gradlew test
+./gradlew test
 ```
