@@ -1,7 +1,7 @@
 import handler.Handler;
 import handler.BasicAuthHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;

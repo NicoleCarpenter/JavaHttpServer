@@ -3,7 +3,7 @@ package handler;
 import io.FileIO;
 import file.FileSystem;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class FormHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     String method = request.getMethod();
     setPath(findPath(request));
 

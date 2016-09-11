@@ -1,12 +1,12 @@
 import handler.MethodOptionsHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 
 public class MethodOptionsHandlerTest extends junit.framework.TestCase {
-  private Response response;
+  private HttpResponse response;
   private Formatter formatter;
   private MethodOptionsHandler handler;
   private HashMap<String, String> testHeaders;
@@ -19,7 +19,7 @@ public class MethodOptionsHandlerTest extends junit.framework.TestCase {
     testHeaders.put("Server", "Nicole's HTTP server");
   }
 
-  private Response testHandlerResponse(String uri, String allowedMethods) {
+  private HttpResponse testHandlerResponse(String uri, String allowedMethods) {
     HttpRequest request = new HttpRequest("HEAD", uri, "", "HTTP/1.1", new HashMap<String, String>(), "");
     testHeaders.put("Allow", allowedMethods);
     return handler.handleRoute(request);
@@ -29,7 +29,7 @@ public class MethodOptionsHandlerTest extends junit.framework.TestCase {
     String uri = "/method_options";
     String allowedMethods = "GET,HEAD,POST,OPTIONS,PATCH,PUT";
 
-    Response response = testHandlerResponse(uri, allowedMethods);
+    HttpResponse response = testHandlerResponse(uri, allowedMethods);
 
     assertEquals("HTTP/1.1", response.getHttpVersion());
     assertEquals("200", response.getStatusCode());
@@ -42,7 +42,7 @@ public class MethodOptionsHandlerTest extends junit.framework.TestCase {
     String uri = "/method_options2";
     String allowedMethods = "GET,OPTIONS";
 
-    Response response = testHandlerResponse(uri, allowedMethods);
+    HttpResponse response = testHandlerResponse(uri, allowedMethods);
 
     assertEquals("HTTP/1.1", response.getHttpVersion());
     assertEquals("200", response.getStatusCode());

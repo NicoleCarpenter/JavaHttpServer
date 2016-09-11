@@ -1,13 +1,13 @@
 import handler.Handler;
 import handler.PatchHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class PatchHandlerTest extends junit.framework.TestCase {
   private Formatter formatter;
-  private Response response;
+  private HttpResponse response;
   private String responseBody;
   private MockHttpFileIO fileIO;
   private HttpResponseBuilder responseBuilder;
@@ -30,7 +30,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
     testHeaders = null;
   }
 
-  private Response testHandlerResponse(String responseBody) {
+  private HttpResponse testHandlerResponse(String responseBody) {
     fileIO.stubResponseBody(responseBody);
     Handler handler = new PatchHandler(responseBuilder, fileIO);
     HttpRequest request = new HttpRequest("PATCH", "/file", "", "HTTP/1.1", requestHeaders, "");

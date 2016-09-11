@@ -1,8 +1,8 @@
 package handler;
 
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 
 public interface Handler {
-  public abstract Response handleRoute(HttpRequest request);
+  public abstract HttpResponse handleRoute(HttpRequest request);
 }

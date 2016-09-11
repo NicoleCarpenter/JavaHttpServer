@@ -1,7 +1,7 @@
 package handler;
 
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 
 public class ParameterDecoderHandler implements Handler {
@@ -12,7 +12,7 @@ public class ParameterDecoderHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     byte[] params = new String(request.getParams()).getBytes();
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(params);

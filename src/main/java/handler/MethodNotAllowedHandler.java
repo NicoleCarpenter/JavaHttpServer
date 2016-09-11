@@ -1,7 +1,7 @@
 package handler;
 
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public class MethodNotAllowedHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     byte[] emptyBody = new String("").getBytes();
     responseBuilder.buildMethodNotAllowedResponse();
     responseBuilder.setBody(emptyBody);

@@ -1,13 +1,13 @@
 import handler.Handler;
 import handler.NotFoundHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class NotFoundHandlerTest extends junit.framework.TestCase {
   private Handler handler;
-  private Response response;
+  private HttpResponse response;
   private Formatter formatter;
 
   protected void setUp() {

@@ -3,7 +3,7 @@ package response;
 import io.FileIO;
 import request.HttpRequest;
 
-public class HttpResponseBuilder {
+public class HttpResponseBuilder implements ResponseBuilder {
   HttpResponse response;
 
   public HttpResponseBuilder() {

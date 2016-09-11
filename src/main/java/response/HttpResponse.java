@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class HttpResponse implements Response {
+public class HttpResponse {
   private static String CRLF = "\r\n\r\n";
   private static String CR = "\r\n";
   private String httpVersion = "HTTP/1.1";
@@ -13,27 +13,22 @@ public class HttpResponse implements Response {
   private HashMap<String, String> headerLines = new HashMap<String, String>();
   private byte[] body;
 
-  @Override
   public String getHttpVersion() {
     return httpVersion;
   }
 
-  @Override
   public String getStatusCode() {
     return statusCode;
   }
 
-  @Override
   public String getStatusMessage() {
     return statusMessage;
   }
 
-  @Override
   public HashMap<String, String> getHeaderLines() {
     return headerLines;
   }
 
-  @Override
   public byte[] getBody() {
     return body;
   }
@@ -54,7 +49,6 @@ public class HttpResponse implements Response {
     this.body = body;
   }
 
-  @Override
   public byte[] getFormattedResponse() throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     outputStream.write((httpVersion + " " +

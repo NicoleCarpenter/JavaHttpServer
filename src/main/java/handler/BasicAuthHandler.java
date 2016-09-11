@@ -2,7 +2,7 @@ package handler;
 
 import util.RequestLogger;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
@@ -18,7 +18,7 @@ public class BasicAuthHandler implements Handler {
     this.defaultPassword = "hunter2";
   }
 
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     String authorizationHeader = request.getHeaderLines().get("Authorization");
     if (authorizationHeader != null && authorizationHeader.contains(" ")) {
       try {
