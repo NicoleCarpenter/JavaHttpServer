@@ -1,7 +1,7 @@
 package handler;
 
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 
 public class RedirectHandler implements Handler {
@@ -12,7 +12,7 @@ public class RedirectHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     byte[] emptyBody = new String("").getBytes();
     responseBuilder.buildRedirectResponse();
     responseBuilder.setBody(emptyBody);

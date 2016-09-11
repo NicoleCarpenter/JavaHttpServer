@@ -1,13 +1,13 @@
 import handler.Handler;
 import handler.FormHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 
 public class FormHandlerTest extends junit.framework.TestCase {
-  private Response response;
+  private HttpResponse response;
   private String responseBody;
   private MockHttpFileIO fileIO;
   private MockHttpFileSystem fileSystem;
@@ -32,7 +32,7 @@ public class FormHandlerTest extends junit.framework.TestCase {
     responseBuilder = null;
   }
 
-  private Response testHandlerResponse(String responseBody, String method, Boolean exists) {
+  private HttpResponse testHandlerResponse(String responseBody, String method, Boolean exists) {
     fileIO.stubResponseBody(responseBody);
     fileSystem.stubExists(exists);
 

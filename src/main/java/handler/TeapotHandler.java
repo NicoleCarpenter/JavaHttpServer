@@ -1,7 +1,7 @@
 package handler;
 
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 
 public class TeapotHandler implements Handler {
@@ -12,7 +12,7 @@ public class TeapotHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     String uri = request.getUri();
     if (uri.equals("/coffee")) {
       buildCoffeeResponse();

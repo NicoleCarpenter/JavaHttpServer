@@ -4,7 +4,7 @@ import handler.Handler;
 import io.ServerIO;
 import request.HttpRequest;
 import request.RequestParser;
-import response.Response;
+import response.HttpResponse;
 import router.Router;
 import socket.SocketConnection;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class HttpServerRunner implements Runnable {
     try {
       HttpRequest request = requestParser.parseRequest(socketConnection);
       Handler handler = router.getRoute(request);
-      Response response = handler.handleRoute(request);
+      HttpResponse response = handler.handleRoute(request);
       serverIO.writeResponse(response.getFormattedResponse(), socketConnection.getOutputStream());
     } catch (IOException e) {
       e.printStackTrace();

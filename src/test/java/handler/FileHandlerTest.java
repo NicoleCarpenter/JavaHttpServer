@@ -1,13 +1,13 @@
 import handler.Handler;
 import handler.FileHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 
 public class FileHandlerTest extends junit.framework.TestCase {
-  private Response response;
+  private HttpResponse response;
   private String responseBody;
   private MockHttpFileIO fileIO;
   private MockHttpFileSystem fileSystem;

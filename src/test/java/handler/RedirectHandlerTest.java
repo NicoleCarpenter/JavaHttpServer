@@ -1,12 +1,12 @@
 import handler.RedirectHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 
 public class RedirectHandlerTest extends junit.framework.TestCase {
-  private Response response;
+  private HttpResponse response;
   private Formatter formatter;
 
   protected void setUp() {

@@ -1,12 +1,12 @@
 import handler.HeadHandler;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 
 public class HeadHandlerTest extends junit.framework.TestCase {
-  private Response response;
+  private HttpResponse response;
   private Formatter formatter;
 
   protected void setUp() {

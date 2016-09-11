@@ -1,5 +1,5 @@
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import handler.Handler;
 import java.util.HashMap;
@@ -7,9 +7,9 @@ import java.util.HashMap;
 public class MockHandler implements Handler {
   private boolean handleRouteCalled = false;
 
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     handleRouteCalled = true;
-    Response response = buildMockResponse();
+    HttpResponse response = buildMockResponse();
     return response;
   }
 
@@ -17,7 +17,7 @@ public class MockHandler implements Handler {
     return handleRouteCalled;
   }
 
-  private Response buildMockResponse() {
+  private HttpResponse buildMockResponse() {
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     byte[] emptyBody = new String("").getBytes();
     responseBuilder.buildOkResponse();

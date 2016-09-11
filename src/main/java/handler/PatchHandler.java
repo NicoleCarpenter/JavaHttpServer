@@ -3,7 +3,7 @@ package handler;
 import file.FileSystem;
 import io.FileIO;
 import request.HttpRequest;
-import response.Response;
+import response.HttpResponse;
 import response.HttpResponseBuilder;
 import java.io.File;
 
@@ -21,7 +21,7 @@ public class PatchHandler implements Handler {
   }
 
   @Override
-  public Response handleRoute(HttpRequest request) {
+  public HttpResponse handleRoute(HttpRequest request) {
     String path = findPath(request);
     String requestEtag = getRequestEtag(request);
     fileIO.writeToFile(path, request.getBody());
