@@ -7,6 +7,7 @@ import router.HttpRouter;
 import server.HttpServer;
 import socket.HttpServerSocket;
 import util.ArgumentParser;
+import util.FileTypeMatcher;
 import util.SetUp;
 
 import java.net.ServerSocket;
@@ -32,12 +33,13 @@ public class Main {
     HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerIO);
     File rootDirectory = new File(argsParser.getRootDirectory());
     HttpFileSystem fileSystem = new HttpFileSystem();
-    HttpFileIO fileIO = new HttpFileIO(rootDirectory);
+    HttpFileIO fileIO = new HttpFileIO(rootDirectory, fileSystem);
     HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
     HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder);
+    FileTypeMatcher typeMatcher = new FileTypeMatcher();
 
     SetUp setUp = new SetUp();
-    setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO);
+    setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO, typeMatcher);
 
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
 

@@ -8,9 +8,9 @@ import io.FileIO;
 
 public class SetUp {
 
-  public void setUpRouter(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
+  public void setUpRouter(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
     registerRoutes(router, responseBuilder, fileSystem, fileIO);
-    registerMethodHandlers(router, responseBuilder, fileSystem, fileIO);
+    registerMethodHandlers(router, responseBuilder, fileSystem, fileIO, typeMatcher);
   }
 
   public void registerRoutes(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
@@ -25,8 +25,8 @@ public class SetUp {
     router.registerRoute("DELETE /form", new FormHandler(responseBuilder, fileSystem, fileIO));
   }
 
-  public void registerMethodHandlers(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
-    router.registerMethodHandler("GET", new FileHandler(responseBuilder, fileSystem, fileIO));
+  public void registerMethodHandlers(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
+    router.registerMethodHandler("GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
     router.registerMethodHandler("PATCH", new PatchHandler(responseBuilder, fileIO));
     router.registerMethodHandler("HEAD", new HeadHandler(responseBuilder));
     router.registerMethodHandler("OPTIONS", new MethodOptionsHandler(responseBuilder));

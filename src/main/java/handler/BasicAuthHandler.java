@@ -1,18 +1,18 @@
 package handler;
 
-import util.RequestLogger;
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
+import util.RequestLogger;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 public class BasicAuthHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
   private String defaultUsername;
   private String defaultPassword;
 
-  public BasicAuthHandler(HttpResponseBuilder responseBuilder) {
+  public BasicAuthHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
     this.defaultUsername = "admin";
     this.defaultPassword = "hunter2";
@@ -20,46 +20,59 @@ public class BasicAuthHandler implements Handler {
 
   public HttpResponse handleRoute(HttpRequest request) {
     String authorizationHeader = request.getHeaderLines().get("Authorization");
-    if (authorizationHeader != null && authorizationHeader.contains(" ")) {
-      try {
-        if (isAuthorized(authorizationHeader, request)) {
-          handleAuthorizedRequest();
-        } else {
-          handleUnauthorizedRequest();
-        }
-      } catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
+    try {
+      if (isAuthorized(authorizationHeader)) {
+        handleAuthorizedRequest();
+      } else {
+        handleUnauthorizedRequest();
       }
-    } else {
-      handleUnauthorizedRequest();
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
     }
     return responseBuilder.getResponse();
   }
 
-  private boolean isAuthorizationHeaderPresent(String authorizationHeader) {
-    return authorizationHeader != null;
+  private boolean isAuthorized(String authorizationHeader) throws UnsupportedEncodingException {
+    return isHeaderIncludesAuthRequest(authorizationHeader) && isMatchingRequest(authorizationHeader);
   }
 
-  private String getCurrentUser(String authorizationHeader) {
-    return authorizationHeader.split(" ")[0];
+  private boolean isHeaderIncludesAuthRequest(String authorizationHeader) {
+    return authorizationHeader != null && authorizationHeader.contains(" ");
   }
 
-  private String getPassPhrase(String authorizationHeader) {
+  private boolean isMatchingRequest(String authorizationHeader) throws UnsupportedEncodingException {
+    String encodedUsernameAndPass = getEncodedUsernameAndPass(authorizationHeader);
+    String decodedUsernameAndPass = decode(encodedUsernameAndPass);
+    return isProperlyFormattedUsernameAndPass(decodedUsernameAndPass) && isUsernameAndPassValid(decodedUsernameAndPass);
+  }
+
+  private String getEncodedUsernameAndPass(String authorizationHeader) {
     return authorizationHeader.split(" ")[1];
   }
 
-  private boolean isAuthorized(String authorizationHeader, HttpRequest request) throws UnsupportedEncodingException {
-    String userAndPass = authorizationHeader.split(" ")[1];
-    String decoded = new String(Base64.getMimeDecoder().decode(userAndPass), "UTF-8");
-    if (decoded.contains(":")) {
-      String[] usernameAndPass = decoded.split(":");
-      return usernameAndPasswordMatchGiven(usernameAndPass[0], usernameAndPass[1]);
-    }
-    return false;
+  private String decode(String encodedUsernameAndPass) throws UnsupportedEncodingException {
+    return new String(Base64.getMimeDecoder().decode(encodedUsernameAndPass), "UTF-8");
   }
 
-  private boolean usernameAndPasswordMatchGiven(String username, String password) {
-    return username.equals(defaultUsername) && password.equals(defaultPassword);
+  private boolean isProperlyFormattedUsernameAndPass(String decodedUsernameAndPass) {
+    return decodedUsernameAndPass.contains(":");
+  }
+
+  private boolean isUsernameAndPassValid(String decodedUsernameAndPass) {
+    String[] usernameAndPass = splitUsernameAndPass(decodedUsernameAndPass);
+    return isUsernameMatching(usernameAndPass) && isPassphraseMatching(usernameAndPass);
+  }
+
+  private String[] splitUsernameAndPass(String decodedUsernameAndPass) {
+    return decodedUsernameAndPass.split(":");
+  }
+
+  private boolean isUsernameMatching(String[] usernameAndPass) {
+    return usernameAndPass[0].equals(defaultUsername);
+  }
+
+  private boolean isPassphraseMatching(String[] usernameAndPass) {
+    return usernameAndPass[1].equals(defaultPassword);
   }
 
   private void handleAuthorizedRequest() {

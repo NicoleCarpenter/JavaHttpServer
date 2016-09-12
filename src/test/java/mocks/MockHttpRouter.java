@@ -5,22 +5,20 @@ import router.Router;
 import java.util.HashMap;
 
 public class MockHttpRouter implements Router {
-  private boolean getRouteCalled = false;
+  boolean getRouteCalled = false;
+  boolean registerRouteCalled = false;
+  boolean registerMethodHandlerCalled = false;
 
   public Handler getRoute(HttpRequest request) {
     getRouteCalled = true;
     return new MockHandler();
   }
 
-  public boolean getRouteCalled() {
-    return getRouteCalled;
-  }
-
   public void registerRoute(String uriWithMethod, Handler handler) {
-
+    registerRouteCalled = true;
   }
 
   public void registerMethodHandler(String uriWithMethod, Handler handler) {
-
+    registerMethodHandlerCalled = true;
   }
 }

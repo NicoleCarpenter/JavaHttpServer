@@ -4,10 +4,10 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class MockHttpSocketConnection implements SocketConnection {
-  private boolean getInputStreamCalled = false;
-  private boolean getOutputStreamCalled = false;
-  private InputStream inputStream;
-  private OutputStream outputStream;
+  boolean getInputStreamCalled = false;
+  boolean getOutputStreamCalled = false;
+  InputStream inputStream;
+  OutputStream outputStream;
 
   public MockHttpSocketConnection(InputStream inputStream, OutputStream outputStream) {
     this.inputStream = inputStream;
@@ -19,16 +19,8 @@ public class MockHttpSocketConnection implements SocketConnection {
     return inputStream;
   }
 
-  public boolean getInputStreamCalled() {
-    return getInputStreamCalled;
-  }
-
   public OutputStream getOutputStream() {
     getOutputStreamCalled = true;
     return outputStream;
-  }
-
-  public boolean getOutputStreamCalled() {
-    return getOutputStreamCalled;
   }
 }

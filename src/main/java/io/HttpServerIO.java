@@ -26,6 +26,7 @@ public class HttpServerIO implements ServerIO {
     return fullRequest.toString();
   }
 
+  @Override
   public void writeResponse(byte[] response, OutputStream output) throws IOException {
     DataOutputStream dataOutputStream = new DataOutputStream(output);
     dataOutputStream.write(response, 0, response.length);

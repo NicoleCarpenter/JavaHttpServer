@@ -2,12 +2,12 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 
 public class MethodOptionsHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
 
-  public MethodOptionsHandler(HttpResponseBuilder responseBuilder) {
+  public MethodOptionsHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 

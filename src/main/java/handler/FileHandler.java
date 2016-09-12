@@ -4,49 +4,43 @@ import io.FileIO;
 import file.FileSystem;
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
+import util.FileTypeMatcher;
+import util.HtmlFormatter;
 import java.util.HashMap;
-import java.util.Arrays;
-import java.io.File;
 
 public class FileHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
   private FileSystem fileSystem;
   private FileIO fileIO;
-  private String uri;
-  private String path;
-  private final String htmlHead = "<!DOCTYPE html><html><body>";
-  private final String htmlFoot = "</body></html>";
+  private FileTypeMatcher typeMatcher;
 
-  public FileHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
+  public FileHandler(ResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
     this.responseBuilder = responseBuilder;
     this.fileSystem = fileSystem;
     this.fileIO = fileIO;
-    this.uri = "";
-    this.path = "";
+    this.typeMatcher = typeMatcher;
   }
 
   @Override
   public HttpResponse handleRoute(HttpRequest request) {
-    setUri(request.getUri());
-    setPath(findPath(request));
-
+    String uri = request.getUri();
+    String path = findPath(request, uri);
     if (fileSystem.isFile(path)) {
-      return buildFileResponse(request);
+      buildFileResponse(request, path, uri);
     } else {
-      return buildDirectoryResponse();
+      buildDirectoryResponse(path, uri);
     }
+    return responseBuilder.getResponse();
   }
 
-  private HttpResponse buildFileResponse(HttpRequest request) {
+  private void buildFileResponse(HttpRequest request, String path, String uri) {
     if (isPartialFileRequest(request)) {
-      buildPartialFileResponse(request);
+      buildPartialFileResponse(request, path);
     } else {
-      buildFullFileResponse();
+      buildFullFileResponse(path);
     }
-    setFileTypeHeaders();
-    return responseBuilder.getResponse();
+    setFileTypeHeaders(uri);
   }
 
   private boolean isPartialFileRequest(HttpRequest request) {
@@ -54,7 +48,7 @@ public class FileHandler implements Handler {
     return headers.containsKey("Range");
   }
 
-  private void buildPartialFileResponse(HttpRequest request) {
+  private void buildPartialFileResponse(HttpRequest request, String path) {
     String range = getRange(request);
     byte[] partialFileContent = fileIO.getPartialFileContents(path, range);
     responseBuilder.buildPartialFileResponse(range);
@@ -65,95 +59,39 @@ public class FileHandler implements Handler {
     return request.getHeaderLines().get("Range");
   }
 
-  private void buildFullFileResponse() {
+  private void buildFullFileResponse(String path) {
     byte[] fileContent = fileIO.getFileContents(path);
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(fileContent);
   }
 
-  private HttpResponse buildDirectoryResponse() {
-    byte[] directoryContents = new String(htmlHead + buildFileLinks() + htmlFoot).getBytes();
+  private void buildDirectoryResponse(String path, String uri) {
+    HtmlFormatter formatter = new HtmlFormatter();
+    String[] files = fileSystem.list(path);
+    byte[] directoryContents = formatter.getFormattedDirectoryFiles(files, uri);
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(directoryContents);
-    return responseBuilder.getResponse();
   }
 
-  private String buildFileLinks() {
-    String[] files = fileSystem.list(path);
-    StringBuilder directoryContents = new StringBuilder();
-    for (String file : files) {
-      directoryContents.append(buildLink(file));
-    }
-    return directoryContents.toString();
-  }
-
-  private String buildLink(String file) {
-    String pathSlash = "";
-    if (!uri.endsWith("/")) {
-      pathSlash = "/";
-    }
-    return "<a href=\"" + uri + pathSlash + file + "\">" + file + "</a><br>";
-  }
-
-  private void setFileTypeHeaders() {
-    int dotPosition = uri.lastIndexOf(".");
-    String extension = "";
+  private void setFileTypeHeaders(String uri) {
+    int dotPosition = findDotPosition(uri);
     if (hasExtension(dotPosition)) {
-      responseBuilder.setHeader("Content-Type", findFileType(getExtension(dotPosition)));
+      responseBuilder.setHeader("Content-Type", typeMatcher.getFileType(uri));
     }
   }
 
-  private String getExtension(int dotPosition) {
-    return uri.substring(dotPosition);
+  private int findDotPosition(String uri) {
+    return uri.lastIndexOf(".");
   }
 
   private boolean hasExtension(int dotPosition) {
     return dotPosition != -1;
   }
 
-  private String findFileType(String extension) {
-    if (isText(extension)) {
-      return "text/html";
-    } else if (isImageJpg(extension)) {
-      return "image/jpeg";
-    } else if (isImageGif(extension)) {
-      return "image/gif";
-    } else if (isImagePng(extension)) {
-      return "image/png";
-    } else {
-      return "application/octet-stream";
-    }
-  }
-
-  private boolean isText(String extension) {
-    return extension.equals(".htm") || extension.equals(".html") || extension.equals(".txt");
-  }
-
-  private boolean isImageJpg(String extension) {
-    return extension.equals(".jpg") || extension.equals(".jpeg");
-  }
-
-  private boolean isImageGif(String extension) {
-    return extension.equals(".gif");
-  }
-
-  private boolean isImagePng(String extension) {
-    return extension.equals(".png");
-  }
-
-  private String findPath(HttpRequest request) {
-    String uri = request.getUri();
-    File rootDirectory = fileIO.getRootDirectory();
-    String rootPath = rootDirectory.getAbsolutePath();
-    String requestPath = uri.replace(rootDirectory.getName(), "");
+  private String findPath(HttpRequest request, String uri) {
+    String rootPath = fileSystem.getFileAbsolutePath(fileIO.getRootDirectory());
+    String requestPath = uri.replace(fileSystem.getFileName(fileIO.getRootDirectory()), "");
     return rootPath + requestPath;
   }
 
-  private void setUri(String uri) {
-    this.uri = uri;
-  }
-
-  private void setPath(String path) {
-    this.path = path;
-  }
 } 

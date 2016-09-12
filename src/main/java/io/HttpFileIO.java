@@ -1,6 +1,6 @@
 package io;
 
-import request.HttpRequest;
+import file.FileSystem;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,17 +13,19 @@ import java.util.Arrays;
 
 public class HttpFileIO implements FileIO {
   private File rootDirectory;
+  private FileSystem fileSystem;
   private FileInputStream fileInputStream = null;
   private FileOutputStream fileOutputStream = null;
 
-  public HttpFileIO(File rootDirectory) {
+  public HttpFileIO(File rootDirectory, FileSystem fileSystem) {
     this.rootDirectory = rootDirectory;
+    this.fileSystem = fileSystem;
   }
 
   @Override
   public byte[] getFileContents(String filePath) {
     File file = new File(filePath);
-    byte[] fileContent = new byte[(int) file.length()];
+    byte[] fileContent = new byte[getFileLength(file)];
     try {
       fileInputStream = new FileInputStream(file);
       fileInputStream.read(fileContent);
@@ -37,14 +39,10 @@ public class HttpFileIO implements FileIO {
   }
 
   public byte[] getPartialFileContents(String filePath, String rawRange) {
-    File file = new File(filePath);
-    int fileLength = getFileLength(file);
+    int fileLength = getFileLength(new File(filePath));
     byte[] fileContents = getFileContents(filePath);
     int[] range = splitRange(rawRange, fileLength);
-    int startOfRange = range[0];
-    int endOfRange = range[1];
-
-    return Arrays.copyOfRange(fileContents, startOfRange, endOfRange);
+    return Arrays.copyOfRange(fileContents, range[0], range[1]);
   }
 
   private int getFileLength(File file) {
@@ -68,7 +66,6 @@ public class HttpFileIO implements FileIO {
   private int[] getRange(String[] range, int fileLength) {
     int rangeStart = 0;
     int rangeEnd = fileLength;
-
     if (isRangeWithoutEnd(range)) {
       rangeStart = getRangeLimitAsInt(range, 0);
     } else if (isRangeWithoutStart(range)) {

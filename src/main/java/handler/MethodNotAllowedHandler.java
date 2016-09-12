@@ -2,13 +2,13 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 import java.util.HashMap;
 
 public class MethodNotAllowedHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
 
-  public MethodNotAllowedHandler(HttpResponseBuilder responseBuilder) {
+  public MethodNotAllowedHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 

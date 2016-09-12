@@ -2,12 +2,12 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 
 public class NotFoundHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
 
-  public NotFoundHandler(HttpResponseBuilder responseBuilder) {
+  public NotFoundHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 

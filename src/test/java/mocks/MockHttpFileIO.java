@@ -6,6 +6,8 @@ public class MockHttpFileIO implements FileIO {
   String stubbedResponseBody;
   Boolean deleteFileContentCalled = false;
   Boolean getFileContentsCalled = false;
+  Boolean getPartialFileContentsCalled = false;
+  String getPartialFileContentsCalledWith;
   Boolean getRootDirectoryCalled = false;
   Boolean updateFileCalled = false;
   Boolean writeToFileCalled = false;
@@ -16,6 +18,8 @@ public class MockHttpFileIO implements FileIO {
   }
 
   public byte[] getPartialFileContents(String filePath, String range) {
+    getPartialFileContentsCalledWith = filePath + " " + range;
+    getPartialFileContentsCalled = true;
     return stubbedResponseBody.getBytes();
   }
 

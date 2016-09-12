@@ -5,18 +5,18 @@ import file.FileSystem;
 import request.HttpRequest;
 import response.HttpResponse;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.io.File;
 
 public class FormHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
   private FileSystem fileSystem;
   private FileIO fileIO;
   private String path;
 
-  public FormHandler(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
+  public FormHandler(ResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
     this.fileSystem = fileSystem;
     this.fileIO = fileIO;

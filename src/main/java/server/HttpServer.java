@@ -30,6 +30,7 @@ public class HttpServer extends Thread {
           HttpServerRunner connection = new HttpServerRunner(socketConnection, requestParser, router, serverIO);
           Thread thread = new Thread(connection);
           thread.start();
+          
         } catch (Exception e) {
           e.printStackTrace();
         }
