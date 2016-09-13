@@ -27,14 +27,6 @@ public class MockHttpServerSocket implements ServerSocketInterface {
     stubbedInputStream = inputStream;
   }
 
-  public boolean listenCalled() {
-    return listenCalled;
-  }
-
-  public boolean isConnectionClosedCalled() {
-    return stubbedIsConnectionClosed;
-  }
-
   public void stubIsConnectionClosed(boolean value) {
     stubbedIsConnectionClosed = value;
   }

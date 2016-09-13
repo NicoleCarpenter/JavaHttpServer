@@ -1,23 +1,23 @@
-package response;
-
 import response.HttpResponse;
 import response.ResponseBuilder;
 
 public class MockHttpResponseBuilder implements ResponseBuilder {
-  private boolean setStatusCodeCalled;
-  private boolean setStatusMessageCalled;
-  private boolean setDefaultHeadersCalled;
-  private boolean setHeaderCalled;
-  private boolean setBodyCalled;
-  private boolean getResponseCalled;
-  private boolean buildOkResponseCalled;
-  private boolean buildPartialFileResponseCalled;
-  private boolean buildUnauthorizedResponseCalled;
-  private boolean buildMethodNotAllowedResponseCalled;
-  private boolean buildNotFoundResponseCalled;
-  private boolean buildPatchedContentResponseCalled;
-  private boolean buildRedirectResponseCalled;
-  private boolean buildCoffeeResponseCalled;
+  boolean setStatusCodeCalled;
+  boolean setStatusMessageCalled;
+  boolean setDefaultHeadersCalled;
+  boolean setHeaderCalled;
+  String setHeaderCalledWith;
+  boolean setBodyCalled;
+  byte[] setBodyCalledWith;
+  boolean getResponseCalled;
+  boolean buildOkResponseCalled;
+  boolean buildPartialFileResponseCalled;
+  boolean buildUnauthorizedResponseCalled;
+  boolean buildMethodNotAllowedResponseCalled;
+  boolean buildNotFoundResponseCalled;
+  boolean buildPatchedContentResponseCalled;
+  boolean buildRedirectResponseCalled;
+  boolean buildCoffeeResponseCalled;
   
   public MockHttpResponseBuilder() {
     setStatusCodeCalled = false;
@@ -25,6 +25,7 @@ public class MockHttpResponseBuilder implements ResponseBuilder {
     setDefaultHeadersCalled = false;
     setHeaderCalled = false;
     setBodyCalled = false;
+    setBodyCalledWith = new byte[0];
     getResponseCalled = false;
     buildOkResponseCalled = false;
     buildPartialFileResponseCalled = false;
@@ -49,10 +50,12 @@ public class MockHttpResponseBuilder implements ResponseBuilder {
   }
 
   public void setHeader(String key, String value) {
+    setHeaderCalledWith = key + ": " + value;
     setHeaderCalled = true;
   }
 
   public void setBody(byte[] bodyContent) {
+    setBodyCalledWith = bodyContent;
     setBodyCalled = true;
   }
 

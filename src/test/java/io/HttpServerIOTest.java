@@ -24,8 +24,7 @@ public class HttpServerIOTest extends junit.framework.TestCase {
   }
 
   public void testReadRequest() throws IOException {
-    assertTrue(true);
-    // assertEquals(request, serverIO.readRequest(socketConnection.getInputStream()));
+    assertEquals(request, serverIO.readRequest(socketConnection.getInputStream()));
   }
 
   public void testWriteResponse() throws IOException {

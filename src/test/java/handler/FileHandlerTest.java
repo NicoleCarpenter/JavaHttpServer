@@ -2,48 +2,88 @@ import handler.Handler;
 import handler.FileHandler;
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import util.FileTypeMatcher;
 import java.util.HashMap;
 import java.io.File;
 
 public class FileHandlerTest extends junit.framework.TestCase {
-  private HttpResponse response;
+  private FileHandler handler;
+  private HttpRequest request;
   private String responseBody;
   private MockHttpFileIO fileIO;
   private MockHttpFileSystem fileSystem;
-  private HttpResponseBuilder responseBuilder;
-  private Formatter formatter;
+  private MockHttpResponseBuilder responseBuilder;
+  private HashMap<String, String> requestHeaders;
 
   protected void setUp() {
-    formatter = new Formatter();
+    responseBuilder = new MockHttpResponseBuilder();
+    fileSystem = new MockHttpFileSystem();
+    fileSystem.stubGetFileAbsolutePath("/");
+    fileSystem.stubGetFileName("root");
+    fileIO = new MockHttpFileIO();
+    FileTypeMatcher typeMatcher = new FileTypeMatcher();
+    handler = new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher);
+    requestHeaders = new HashMap<>();
+  }
+
+  private HttpResponse testResponse(String uri, boolean isFile, String responseBody) {
+    request = new HttpRequest("GET", uri, "", "HTTP/1.1", requestHeaders, "");
+    fileSystem.stubIsFile(isFile);
+    fileIO.stubResponseBody(responseBody);
+    return handler.handleRoute(request);
+  }
+
+  public void testHandleRouteSideEffects() {
+    String uri = "/file.txt";
+    boolean isFile = true;
+    String responseBody = "This is a file";
+    HttpResponse response = testResponse(uri, isFile, responseBody);
+
+    assertTrue(fileIO.getRootDirectoryCalled);
+    assertTrue(fileSystem.isFileCalled);
+    assertTrue(fileSystem.getFileAbsolutePathCalled);
+    assertTrue(fileSystem.getFileNameCalled);
+    assertTrue(responseBuilder.setHeaderCalled);
+    assertTrue(responseBuilder.setBodyCalled);
+    assertTrue(responseBuilder.getResponseCalled);
   }
 
   public void testHandleRouteIsFile() {
-    responseBody = "This is a file";
-    fileIO = new MockHttpFileIO();
-    fileIO.stubResponseBody(responseBody);
-    responseBuilder = new HttpResponseBuilder();
+    String uri = "/file.txt";
+    boolean isFile = true;
+    String responseBody = "This is a file";
+    HttpResponse response = testResponse(uri, isFile, responseBody);
 
-    String path = "/Users/foo/application/public/file";
-    String uri = "/file";
-    fileSystem = new MockHttpFileSystem();
-    fileSystem.stubIsFile(true);
+    assertTrue(fileIO.getFileContentsCalled);
+    assertTrue(responseBuilder.buildOkResponseCalled);
+    assertEquals("This is a file", new String(responseBuilder.setBodyCalledWith));
+  }
 
-    Handler handler = new FileHandler(responseBuilder, fileSystem, fileIO);
-    HttpRequest request = new HttpRequest("GET", uri, "", "HTTP/1.1", new HashMap<String, String>(), "");
+  public void testHandleRoutePartialFile() {
+    String uri = "/file.txt";
+    boolean isFile = true;
+    requestHeaders.put("Range", "bytes=0-4");
+    String responseBody = "This ";
+    HttpResponse response = testResponse(uri, isFile, responseBody);
 
-    response = handler.handleRoute(request);
-    HashMap<String, String> testHeaders = new HashMap<>();
-    testHeaders.put("Server", "Nicole's HTTP server");
-
-    assertEquals("HTTP/1.1", response.getHttpVersion());
-    assertEquals("200", response.getStatusCode());
-    assertEquals("OK", response.getStatusMessage());
-    assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals(responseBody, formatter.bodyToString(response));
+    assertTrue(fileIO.getPartialFileContentsCalled);
+    assertEquals("//file.txt bytes=0-4", fileIO.getPartialFileContentsCalledWith);
+    assertTrue(responseBuilder.buildPartialFileResponseCalled);
+    assertEquals("This ", new String(responseBuilder.setBodyCalledWith));
   }
 
   public void testHandleRouteIsDirectory() {
-    assertTrue(true);
+    String uri = "/file.txt";
+    boolean isFile = false;
+    String responseBody = "This is a file";
+    String[] directoryFiles = {"File1", "File2", "File3"};
+    fileSystem.stubList(directoryFiles);
+    HttpResponse response = testResponse(uri, isFile, responseBody);
+
+    assertTrue(fileSystem.listCalled);
+    assertTrue(responseBuilder.buildOkResponseCalled);
+    assertEquals("<!DOCTYPE html><html><body><a href=\"/file.txt/File1\">File1</a><br><a href=\"/file.txt/File2\">File2</a><br><a href=\"/file.txt/File3\">File3</a><br></body></html>",
+                  new String(responseBuilder.setBodyCalledWith));
   }
+
 }

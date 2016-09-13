@@ -4,9 +4,9 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class MockHttpServerIO implements ServerIO {
-  private boolean readRequestCalled = false;
-  private boolean writeResponseCalled = false;
-  private String stubbedRequest;
+  boolean readRequestCalled = false;
+  boolean writeResponseCalled = false;
+  String stubbedRequest;
 
   public String readRequest(InputStream input) throws IOException {
     readRequestCalled = true;
@@ -15,14 +15,6 @@ public class MockHttpServerIO implements ServerIO {
 
   public void writeResponse(byte[] response, OutputStream output) throws IOException {
     writeResponseCalled = true;
-  }
-
-  public boolean readRequestCalled() {
-    return readRequestCalled;
-  }
-
-  public boolean writeResponseCalled() {
-    return writeResponseCalled;
   }
 
   public void stubRequest(String request) {

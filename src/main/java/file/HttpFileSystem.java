@@ -19,12 +19,6 @@ public class HttpFileSystem implements FileSystem {
   }
 
   @Override
-  public File[] listFiles(String directory) {
-    d = new File(directory);
-    return d.listFiles();
-  }
-
-  @Override
   public String[] list(String directory) {
     d = new File(directory);
     return d.list();
@@ -33,12 +27,22 @@ public class HttpFileSystem implements FileSystem {
   @Override
   public String getName(String file) {
     f = new File(file);
-    return f.getName();
+    return getFileName(f);
   }
 
   @Override
   public String getAbsolutePath(String file) {
     f = new File(file);
-    return f.getAbsolutePath();
+    return getFileAbsolutePath(f);
+  }
+
+  @Override
+  public String getFileAbsolutePath(File file) {
+    return file.getAbsolutePath();
+  }
+
+  @Override
+  public String getFileName(File file) {
+    return file.getName();
   }
 }

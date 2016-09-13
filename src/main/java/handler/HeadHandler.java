@@ -2,12 +2,12 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 
 public class HeadHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
 
-  public HeadHandler(HttpResponseBuilder responseBuilder) {
+  public HeadHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 

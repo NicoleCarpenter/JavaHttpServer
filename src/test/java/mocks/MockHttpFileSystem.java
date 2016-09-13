@@ -7,16 +7,18 @@ import java.util.Collections;
 public class MockHttpFileSystem implements FileSystem {
   boolean existsCalled = false;
   boolean isFileCalled = false;
-  boolean listFilesCalled = false;
   boolean listCalled = false;
   boolean getNameCalled = false;
+  boolean getFileNameCalled = false;
   boolean getAbsolutePathCalled = false;
+  boolean getFileAbsolutePathCalled = false;
   boolean stubbedExists;
   boolean stubbedIsFile;
-  File[] stubbedListFiles;
   String[] stubbedList;
   String stubbedGetName;
+  String stubbedGetFileName;
   String stubbedGetAbsolutePath;
+  String stubbedGetFileAbsolutePath;
 
   public boolean exists(String file) {
     existsCalled = true;
@@ -28,13 +30,8 @@ public class MockHttpFileSystem implements FileSystem {
     return stubbedIsFile;
   }
 
-  public File[] listFiles(String directory) {
-    listFilesCalled = true;
-    return stubbedListFiles;
-  }
-
   public String[] list(String directory) {
-    listFilesCalled = true;
+    listCalled = true;
     return stubbedList;
   }
 
@@ -48,6 +45,16 @@ public class MockHttpFileSystem implements FileSystem {
     return stubbedGetAbsolutePath;
   }
 
+  public String getFileAbsolutePath(File file) {
+    getFileAbsolutePathCalled = true;
+    return stubbedGetFileAbsolutePath;
+  }
+
+  public String getFileName(File file) {
+    getFileNameCalled = true;
+    return stubbedGetFileName;
+  }
+
   public void stubExists(boolean stubbedValue) {
     stubbedExists = stubbedValue;
   }
@@ -56,16 +63,24 @@ public class MockHttpFileSystem implements FileSystem {
     stubbedIsFile = stubbedValue;
   }
 
-  public void stubListFiles(File[] stubbedValue) {
-    // stubbedListFiles.add(stubbedValue);
+  public void stubList(String[] stubbedValue) {
+    stubbedList = stubbedValue;
   }
 
   public void stubGetName(String stubbedValue) {
     stubbedGetName = stubbedValue;
   }
 
-  public void stubbedGetAbsolutePath(String stubbedValue) {
+  public void stubGetFileName(String stubbedValue) {
+    stubbedGetFileName = stubbedValue;
+  }
+
+  public void stubGetAbsolutePath(String stubbedValue) {
     stubbedGetAbsolutePath = stubbedValue;
+  }
+
+  public void stubGetFileAbsolutePath(String stubbedValue) {
+    stubbedGetFileAbsolutePath = stubbedValue;
   }
 
 }

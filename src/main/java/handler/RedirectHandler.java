@@ -2,12 +2,12 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 
 public class RedirectHandler implements Handler {
-  HttpResponseBuilder responseBuilder;
+  ResponseBuilder responseBuilder;
 
-  public RedirectHandler(HttpResponseBuilder responseBuilder) {
+  public RedirectHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 

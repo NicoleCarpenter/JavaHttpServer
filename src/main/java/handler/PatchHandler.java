@@ -4,16 +4,16 @@ import file.FileSystem;
 import io.FileIO;
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 import java.io.File;
 
 public class PatchHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
   private FileIO fileIO;
   private String etag;
   private String defaultEtag;
 
-  public PatchHandler(HttpResponseBuilder responseBuilder, FileIO fileIO) {
+  public PatchHandler(ResponseBuilder responseBuilder, FileIO fileIO) {
     this.responseBuilder = responseBuilder;
     this.fileIO = fileIO;
     this.etag = "dc50a0d27dda2eee9f65644cd7e4c9cf11de8bec";

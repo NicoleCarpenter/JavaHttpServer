@@ -2,6 +2,7 @@ import handler.*;
 import request.HttpRequest;
 import response.HttpResponseBuilder;
 import router.HttpRouter;
+import util.FileTypeMatcher;
 import util.SetUp;
 import java.util.HashMap;
 import java.io.File;
@@ -12,7 +13,7 @@ public class HttpRouterTest extends junit.framework.TestCase {
   private MockHttpFileSystem fileSystem;
 
   protected void setUp() {
-
+    FileTypeMatcher typeMatcher = new FileTypeMatcher();
     File rootDirectory = new File("/public");
     fileSystem = new MockHttpFileSystem();
     MockHttpFileIO fileIO = new MockHttpFileIO();
@@ -21,7 +22,7 @@ public class HttpRouterTest extends junit.framework.TestCase {
 
     SetUp setUp = new SetUp();
     setUp.registerRoutes(router, responseBuilder, fileSystem, fileIO);
-    setUp.registerMethodHandlers(router, responseBuilder, fileSystem, fileIO);
+    setUp.registerMethodHandlers(router, responseBuilder, fileSystem, fileIO, typeMatcher);
   }
 
   protected void tearDown() {

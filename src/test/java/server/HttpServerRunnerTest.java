@@ -27,14 +27,14 @@ public class HttpServerRunnerTest extends junit.framework.TestCase {
   }
 
   public void testParseRequestCalled() {
-    assertTrue(requestParser.parseRequestCalled());
+    assertTrue(requestParser.parseRequestCalled);
   }
 
   public void testGetRouteCalled() {
-    assertTrue(router.getRouteCalled());
+    assertTrue(router.getRouteCalled);
   }
 
   public void testWriteResponseCalled() {
-    assertTrue(serverIO.writeResponseCalled());
+    assertTrue(serverIO.writeResponseCalled);
   }
 }

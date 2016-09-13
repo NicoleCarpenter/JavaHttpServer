@@ -1,5 +1,5 @@
 import io.HttpFileIO;
-
+import file.FileSystem;
 import java.io.File;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -13,7 +13,8 @@ public class HttpFileIOTest extends junit.framework.TestCase {
   protected void setUp() {
     testRoot = "/Users/foo/Desktop/coding/java/applications/JavaHttpServer/src/test/java/testFiles";
     applicationRoot = "/Users/foo/Desktop/coding/java/applications/JavaHttpServer/public";
-    fileIO = new HttpFileIO(new File(testRoot));
+    MockHttpFileSystem fileSystem = new MockHttpFileSystem();
+    fileIO = new HttpFileIO(new File(testRoot), fileSystem);
   }
 
   protected void tearDown() {
@@ -58,11 +59,29 @@ public class HttpFileIOTest extends junit.framework.TestCase {
                  new String(fileIO.getPartialFileContents(filePath, rawRange)));
   }
 
-
   public void testWriteToFile() {
     String filePath = testRoot + "/test-file-2.txt";
     String content = "Hello World";
     fileIO.writeToFile(filePath, content);
     assertEquals("Hello World\n", new String(fileIO.getFileContents(filePath)));
   }
+
+  public void testUpdateFile() {
+    String filePath = testRoot + "/test-file-2.txt";
+    String content = "Hello World";
+    fileIO.updateFile(filePath, content);
+    assertEquals("Hello World", new String(fileIO.getFileContents(filePath)));
+  }
+
+  public void testDeleteFileContent() {
+    String filePath = testRoot + "/test-file-3.txt";
+    String content = "contents to be deleted";
+
+    fileIO.writeToFile(filePath, content);
+    assertEquals("contents to be deleted\n", new String(fileIO.getFileContents(filePath)));
+
+    fileIO.deleteFileContent(filePath);
+    assertEquals("", new String(fileIO.getFileContents(filePath)));
+  }
+
 }

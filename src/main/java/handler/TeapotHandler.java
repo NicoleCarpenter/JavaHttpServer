@@ -2,12 +2,12 @@ package handler;
 
 import request.HttpRequest;
 import response.HttpResponse;
-import response.HttpResponseBuilder;
+import response.ResponseBuilder;
 
 public class TeapotHandler implements Handler {
-  private HttpResponseBuilder responseBuilder;
+  private ResponseBuilder responseBuilder;
 
-  public TeapotHandler(HttpResponseBuilder responseBuilder) {
+  public TeapotHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 
