@@ -27,7 +27,7 @@ public class FileHandlerTest extends junit.framework.TestCase {
   }
 
   private HttpResponse testResponse(String uri, boolean isFile, String responseBody) {
-    request = new HttpRequest("GET", uri, "", "HTTP/1.1", requestHeaders, "");
+    request = new HttpRequest("GET", uri, new HashMap<>(), "HTTP/1.1", requestHeaders, "");
     fileSystem.stubIsFile(isFile);
     fileIO.stubResponseBody(responseBody);
     return handler.handleRoute(request);

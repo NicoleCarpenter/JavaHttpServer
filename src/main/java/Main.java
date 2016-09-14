@@ -1,9 +1,10 @@
 import file.HttpFileSystem;
-import io.HttpServerIO;
+import io.HttpServerOutput;
 import io.HttpFileIO;
 import request.HttpRequestParser;
 import response.HttpResponseBuilder;
 import router.HttpRouter;
+import parser.HttpParamParser;
 import server.HttpServer;
 import socket.HttpServerSocket;
 import util.ArgumentParser;
@@ -29,8 +30,9 @@ public class Main {
     }
 
     HttpServerSocket httpServerSocket = new HttpServerSocket(serverSocket);
-    HttpServerIO httpServerIO = new HttpServerIO();
-    HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerIO);
+    HttpServerOutput httpServerOutput = new HttpServerOutput();
+    HttpParamParser httpParamParser = new HttpParamParser();
+    HttpRequestParser httpRequestParser = new HttpRequestParser(httpServerOutput, httpParamParser);
     File rootDirectory = new File(argsParser.getRootDirectory());
     HttpFileSystem fileSystem = new HttpFileSystem();
     HttpFileIO fileIO = new HttpFileIO(rootDirectory, fileSystem);
@@ -41,7 +43,7 @@ public class Main {
     SetUp setUp = new SetUp();
     setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO, typeMatcher);
 
-    HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerIO);
+    HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerOutput);
 
     server.start();
   }

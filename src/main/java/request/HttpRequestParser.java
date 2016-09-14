@@ -1,8 +1,8 @@
 package request;
 
-import io.ServerIO;
+import io.ServerOutput;
+import parser.HttpParamParser;
 import socket.SocketConnection;
-import java.net.URLDecoder;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -11,36 +11,54 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.UnsupportedEncodingException;
 
 public class HttpRequestParser implements RequestParser {
-  private ServerIO serverIO;
+  private ServerOutput serverIO;
+  private HttpParamParser paramParser;
   private static String CRLF = "\r\n\r\n";
   private static String CR = "\r\n";
   private static String NEWLINE = "\n";
   private static String BLANK = "";
   private static String SPACE = " ";
 
-  public HttpRequestParser(ServerIO serverIO) {
+  public HttpRequestParser(ServerOutput serverIO, HttpParamParser paramParser) {
     this.serverIO = serverIO;
+    this.paramParser = paramParser;
   }
 
   @Override
   public HttpRequest parseRequest(SocketConnection socket) throws IOException {
-    String rawRequest = serverIO.readRequest(socket.getInputStream());
-    String[] requestLines = split(rawRequest, CRLF);
-    String head = requestLines[0];
+    InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-    String method = getMethod(head);
-    String uri = getUri(head);
-    String params = parseParams(head);
-    String httpVersion = getHttpVersion(head);
+    String head = getHead(bufferedReader);
+    String[] requestStartLine = splitRequestStartLine(head);
     HashMap<String, String> headerLines = getHeaderLines(head);
-    String body = getBody(requestLines);
+
+    String method = requestStartLine[0];
+    String uri = getUri(requestStartLine[1]);
+    HashMap<String, String> params = paramParser.getParams(requestStartLine[1]);
+    String httpVersion = requestStartLine[2];
+    String body = getBody(headerLines, bufferedReader);
 
     HttpRequest httpRequest = new HttpRequest(method, uri, params, httpVersion, headerLines, body);
 
     return httpRequest;
+  }
+
+  public String getHead(BufferedReader bufferedReader) {
+    StringBuilder head = new StringBuilder();
+    try {
+      String line = bufferedReader.readLine();
+      while (line != null && !line.equals("")) {
+        head.append(line);
+        head.append("\r\n");
+        line = bufferedReader.readLine();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return head.toString();
   }
 
   private String[] split(String data, String separator) {
@@ -48,32 +66,17 @@ public class HttpRequestParser implements RequestParser {
     return data.split(separator);
   }
 
-  private String getMethod(String head) {
-    return splitRequestStartLine(head)[0];
-  }
-
-  private String getFullUri(String head) {
-    return splitRequestStartLine(head)[1];
-  }
-
-  private String getUri(String head) {
-    String fullUri = getFullUri(head);
-    return fullUri.split("\\?")[0];
-  }
-
-  private String getHttpVersion(String head) {
-    return splitRequestStartLine(head)[2];
-  }
-
-  private String getRequestStartLine(String head) {
-    String[] headLines = split(head, CR);
-    return headLines[0];
+  private String getUri(String uriWithParams) {
+    return uriWithParams.split("\\?")[0];
   }
 
   private String[] splitRequestStartLine(String head) {
     String startLine = getRequestStartLine(head);
-    String[] startLineElements = split(startLine, SPACE);
-    return startLineElements;
+    return startLine.split(SPACE);
+  }
+
+  private String getRequestStartLine(String head) {
+    return head.split(CR)[0];
   }
 
   private HashMap<String, String> getHeaderLines(String head) {
@@ -82,60 +85,25 @@ public class HttpRequestParser implements RequestParser {
     int length = headLines.length;
 
     for (int i = 1; i < headLines.length; i++) {
-      String[] headerInfo = split(headLines[i], ": ");
-
-      headers.put(headerInfo[0], headerInfo[1]);
+      String[] headerPair = headLines[i].split(": ");
+      headers.put(headerPair[0], headerPair[1].trim());
     }
     return headers;
   }
 
-  private String getBody(String[] requestLines) {
-    if (requestLines.length == 2) {
-      return requestLines[1];
-    } else {
-      return BLANK;
-    }
-  }
-
-  private String parseParams(String head) {
-    String startLine = getRequestStartLine(head);
-    String[] params = getParams(startLine).split("&");
-    return buildParams(params);
-  }
-
-  private String getParams(String head) {
-    String params = "";
-    String wholeUri = getFullUri(head);
-    String[] uri = wholeUri.split("\\?");
-    if (uri.length > 1) {
-      params = uri[1];
-    }
-    return params;
-  }
-
-  private String buildParams(String[] params) {
-    String decodedParams = "";
-    try {
-      for (String param : params) {
-        if (param.contains("=")) {
-          decodedParams += formatParam(param);
-        } else {
-          decodedParams += decode(param) + "\n";
+  public String getBody(HashMap<String, String> headers, BufferedReader bufferedReader) {
+    StringBuilder body = new StringBuilder();
+    String length = headers.get("Content-Length");
+    if (length != null) {
+      while (body.length() < Integer.parseInt(length)) {
+        try {
+          body.append((char) bufferedReader.read());
+        } catch (IOException e) {
+          e.printStackTrace();
         }
       }
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
     }
-    return decodedParams;
-  }
-
-  private String formatParam(String param) throws UnsupportedEncodingException {
-    String[] parts = param.split("=");
-    return parts[0] + " = " + decode(parts[1]) + "\n";
-  }
-
-  private String decode(String param) throws UnsupportedEncodingException {
-    return URLDecoder.decode(param, "UTF-8");
+    return body.toString();
   }
 
 }

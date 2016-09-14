@@ -1,13 +1,13 @@
-import io.HttpServerIO;
+import io.HttpServerOutput;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class HttpServerIOTest extends junit.framework.TestCase {
+public class HttpServerOutputTest extends junit.framework.TestCase {
   private String request;
   private String response;
   private InputStream input;
   private MockHttpSocketConnection socketConnection;
-  private HttpServerIO serverIO;
+  private HttpServerOutput serverOutput;
 
   protected void setUp() throws IOException {
     request = "GET / HTTP/1.0\r\n\r\n";
@@ -16,19 +16,15 @@ public class HttpServerIOTest extends junit.framework.TestCase {
     MockHttpServerSocket serverSocket = new MockHttpServerSocket();
     serverSocket.stubInputStream(request);
     socketConnection = serverSocket.listen();
-    serverIO = new HttpServerIO();
+    serverOutput = new HttpServerOutput();
   }
 
   protected void tearDown() {
-    serverIO = null;
-  }
-
-  public void testReadRequest() throws IOException {
-    assertEquals(request, serverIO.readRequest(socketConnection.getInputStream()));
+    serverOutput = null;
   }
 
   public void testWriteResponse() throws IOException {
-    serverIO.writeResponse(response.getBytes(), socketConnection.getOutputStream());
+    serverOutput.writeResponse(response.getBytes(), socketConnection.getOutputStream());
     assertEquals(response, socketConnection.getOutputStream().toString());
   }
 }

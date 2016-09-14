@@ -9,7 +9,7 @@ public class MockHttpRequestParser implements RequestParser {
 
   public HttpRequest parseRequest(SocketConnection socket) throws IOException {
     parseRequestCalled = true;
-    HttpRequest mockRequest = new HttpRequest("mockMethod", "mockUri", "mockParams", "mockHttpVersion", new HashMap<String, String>(), "mockBody");
+    HttpRequest mockRequest = new HttpRequest("mockMethod", "mockUri", new HashMap<>(), "HTTP/1.1", new HashMap<String, String>(), "mockBody");
     return mockRequest;
   }
 

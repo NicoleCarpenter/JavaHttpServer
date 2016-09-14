@@ -33,7 +33,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
   private HttpResponse testHandlerResponse(String responseBody) {
     fileIO.stubResponseBody(responseBody);
     Handler handler = new PatchHandler(responseBuilder, fileIO);
-    HttpRequest request = new HttpRequest("PATCH", "/file", "", "HTTP/1.1", requestHeaders, "");
+    HttpRequest request = new HttpRequest("PATCH", "/file", new HashMap<>(), "HTTP/1.1", requestHeaders, "");
 
     return handler.handleRoute(request);
   }
@@ -58,7 +58,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
 
     fileIO.stubResponseBody(responseBody);
     Handler handler = new PatchHandler(responseBuilder, fileIO);
-    HttpRequest request = new HttpRequest("PATCH", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    HttpRequest request = new HttpRequest("PATCH", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
 
     response = handler.handleRoute(request);
 
@@ -75,7 +75,7 @@ public class PatchHandlerTest extends junit.framework.TestCase {
 
     fileIO.stubResponseBody(responseBody);
     Handler handler = new PatchHandler(responseBuilder, fileIO);
-    HttpRequest request = new HttpRequest("PATCH", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    HttpRequest request = new HttpRequest("PATCH", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
 
     response = handler.handleRoute(request);
     

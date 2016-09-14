@@ -8,7 +8,7 @@ public class HttpServerRunnerTest extends junit.framework.TestCase {
   private MockHttpSocketConnection socketConnection;
   private MockHttpRequestParser requestParser;
   private MockHttpRouter router;
-  private MockHttpServerIO serverIO;
+  private MockHttpServerOutput serverIO;
   private HttpServerRunner server;
 
   protected void setUp() {
@@ -17,7 +17,7 @@ public class HttpServerRunnerTest extends junit.framework.TestCase {
     socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
     requestParser = new MockHttpRequestParser();
     router = new MockHttpRouter();
-    serverIO = new MockHttpServerIO();
+    serverIO = new MockHttpServerOutput();
     server = new HttpServerRunner(socketConnection, requestParser, router, serverIO);
     server.run();
   }
