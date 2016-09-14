@@ -1,9 +1,9 @@
-import io.ServerIO;
+import io.ServerOutput;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 
-public class MockHttpServerIO implements ServerIO {
+public class MockHttpServerOutput implements ServerOutput {
   boolean readRequestCalled = false;
   boolean writeResponseCalled = false;
   String stubbedRequest;

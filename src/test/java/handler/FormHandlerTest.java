@@ -37,7 +37,7 @@ public class FormHandlerTest extends junit.framework.TestCase {
     fileSystem.stubExists(exists);
 
     Handler handler = new FormHandler(responseBuilder, fileSystem, fileIO);
-    HttpRequest request = new HttpRequest(method, "/form", "", "HTTP/1.1", new HashMap<String, String>(), "");
+    HttpRequest request = new HttpRequest(method, "/form", new HashMap<>(), "HTTP/1.1", new HashMap<String, String>(), "");
     
     return handler.handleRoute(request);
   }

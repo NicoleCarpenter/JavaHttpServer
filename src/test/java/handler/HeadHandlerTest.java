@@ -14,7 +14,7 @@ public class HeadHandlerTest extends junit.framework.TestCase {
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     HeadHandler handler = new HeadHandler(responseBuilder);
 
-    HttpRequest request = new HttpRequest("HEAD", "/", "", "HTTP/1.1", new HashMap<String, String>(), "");
+    HttpRequest request = new HttpRequest("HEAD", "/", new HashMap<>(), "HTTP/1.1", new HashMap<String, String>(), "");
     response = handler.handleRoute(request);
   }
 

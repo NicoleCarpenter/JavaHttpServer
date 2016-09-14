@@ -20,7 +20,7 @@ public class MethodOptionsHandlerTest extends junit.framework.TestCase {
   }
 
   private HttpResponse testHandlerResponse(String uri, String allowedMethods) {
-    HttpRequest request = new HttpRequest("HEAD", uri, "", "HTTP/1.1", new HashMap<String, String>(), "");
+    HttpRequest request = new HttpRequest("HEAD", uri, new HashMap<>(), "HTTP/1.1", new HashMap<String, String>(), "");
     testHeaders.put("Allow", allowedMethods);
     return handler.handleRoute(request);
   }

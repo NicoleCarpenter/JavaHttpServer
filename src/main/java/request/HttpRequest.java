@@ -6,12 +6,12 @@ import java.io.File;
 public class HttpRequest {
   private String method;
   private String uri;
-  private String params;
+  private HashMap<String, String> params;
   private String httpVersion;
   private HashMap<String, String> headerLines;
   private String body;
 
-  public HttpRequest(String method, String uri, String params, String httpVersion, HashMap<String, String> headerLines, String body) {
+  public HttpRequest(String method, String uri, HashMap<String, String> params, String httpVersion, HashMap<String, String> headerLines, String body) {
     this.method = method;
     this.uri = uri;
     this.params = params;
@@ -32,7 +32,7 @@ public class HttpRequest {
     return uri;
   }
 
-  public String getParams() {
+  public HashMap<String, String> getParams() {
     return params;
   }
 

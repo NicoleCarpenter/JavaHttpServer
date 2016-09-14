@@ -12,9 +12,11 @@ public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
 
   protected void setUp() {
     formatter = new Formatter();
+    HashMap<String, String> params = new HashMap<>();
+    params.put("variable_2", "stuff");
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
     handler = new ParameterDecoderHandler(responseBuilder);
-    HttpRequest request = new HttpRequest("mockMethod", "mockUri", "variable_2 = stuff", "mockHttpVersion", new HashMap<String, String>(), "mockBody");    
+    HttpRequest request = new HttpRequest("mockMethod", "mockUri", params, "HTTP/1.1", new HashMap<String, String>(), "mockBody");    
     response = handler.handleRoute(request);
   }
 
@@ -26,6 +28,6 @@ public class ParameterDecoderHandlerTest extends junit.framework.TestCase {
     assertEquals("200", response.getStatusCode());
     assertEquals("OK", response.getStatusMessage());
     assertEquals(testHeaders, response.getHeaderLines());
-    assertEquals("variable_2 = stuff", formatter.bodyToString(response));
+    assertEquals("variable_2 = stuff\n", formatter.bodyToString(response));
   }
 }

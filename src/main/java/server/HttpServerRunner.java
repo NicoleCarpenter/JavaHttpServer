@@ -1,7 +1,7 @@
 package server;
 
 import handler.Handler;
-import io.ServerIO;
+import io.ServerOutput;
 import request.HttpRequest;
 import request.RequestParser;
 import response.HttpResponse;
@@ -13,9 +13,9 @@ public class HttpServerRunner implements Runnable {
   SocketConnection socketConnection;
   RequestParser requestParser;
   Router router;
-  ServerIO serverIO;
+  ServerOutput serverIO;
 
-  public HttpServerRunner(SocketConnection socketConnection, RequestParser requestParser, Router router, ServerIO serverIO) {
+  public HttpServerRunner(SocketConnection socketConnection, RequestParser requestParser, Router router, ServerOutput serverIO) {
     this.socketConnection = socketConnection;
     this.requestParser = requestParser;
     this.router = router;

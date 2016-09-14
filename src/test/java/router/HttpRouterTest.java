@@ -31,101 +31,101 @@ public class HttpRouterTest extends junit.framework.TestCase {
 
   public void testGetRootRoute() {
     fileSystem.stubExists(true);
-    request = new HttpRequest("GET", "/", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FileHandler);
   }
 
   public void testGetParametersRoute() {
-    request = new HttpRequest("GET", "/parameters", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/parameters", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof ParameterDecoderHandler);
   }
 
   public void testGetCoffeeRoute() {
-    request = new HttpRequest("GET", "/coffee", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/coffee", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof TeapotHandler);
   }
 
   public void testGetTeaRoute() {
-    request = new HttpRequest("GET", "/tea", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/tea", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof TeapotHandler);
   }
 
   public void testGetRedirectRoute() {
-    request = new HttpRequest("GET", "/redirect", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/redirect", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof RedirectHandler);
   }
 
   public void testGetLogsRoute() {
-    request = new HttpRequest("GET", "/logs", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/logs", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof BasicAuthHandler);
   }
 
   public void testGetFormRoute() {
-    request = new HttpRequest("GET", "/form", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/form", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FormHandler);
   }
 
   public void testGetFormRoutePost() {
-    request = new HttpRequest("POST", "/form", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("POST", "/form", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FormHandler);
   }
 
   public void testGetFormRoutePut() {
-    request = new HttpRequest("PUT", "/form", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("PUT", "/form", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FormHandler);
   }
 
   public void testGetFormRouteDelete() {
-    request = new HttpRequest("DELETE", "/form", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("DELETE", "/form", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FormHandler);
   }
 
   public void testGetRoutePatch() {
-    request = new HttpRequest("PATCH", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("PATCH", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof PatchHandler);
   }
 
   public void testGetRouteOptions() {
-    request = new HttpRequest("OPTIONS", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("OPTIONS", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof MethodOptionsHandler);
   }
 
   public void testGetRouteHead() {
     fileSystem.stubExists(true);
-    request = new HttpRequest("HEAD", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("HEAD", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof HeadHandler);
   }
 
   public void testGetRouteHeadNotFound() {
     fileSystem.stubExists(false);
-    request = new HttpRequest("HEAD", "/nonExistantFile", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("HEAD", "/nonExistantFile", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof NotFoundHandler);
   }
 
   public void testGetRouteFile() {
     fileSystem.stubExists(true);
-    request = new HttpRequest("GET", "/file", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FileHandler);
   }
 
   public void testGetRouteFileNotFound() {
     fileSystem.stubExists(false);
-    request = new HttpRequest("GET", "/nonExistantFile", "", "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/nonExistantFile", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof NotFoundHandler);
   }

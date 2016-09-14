@@ -1,6 +1,6 @@
 package server;
 
-import io.ServerIO;
+import io.ServerOutput;
 import request.RequestParser;
 import router.Router;
 import socket.ServerSocketInterface;
@@ -12,9 +12,9 @@ public class HttpServer extends Thread {
   private SocketConnection socketConnection;
   private RequestParser requestParser;
   private Router router;
-  private ServerIO serverIO;
+  private ServerOutput serverIO;
 
-  public HttpServer(ServerSocketInterface serverSocket, RequestParser requestParser, Router router, ServerIO serverIO) {
+  public HttpServer(ServerSocketInterface serverSocket, RequestParser requestParser, Router router, ServerOutput serverIO) {
     this.serverSocket = serverSocket;
     this.requestParser = requestParser;
     this.router = router;

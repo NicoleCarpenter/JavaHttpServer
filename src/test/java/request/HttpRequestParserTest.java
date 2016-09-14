@@ -1,3 +1,4 @@
+import parser.HttpParamParser;
 import request.HttpRequest;
 import request.HttpRequestParser;
 import java.util.HashMap;
@@ -8,18 +9,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HttpRequestParserTest extends junit.framework.TestCase {
-  private MockHttpServerIO serverIO;
+  private MockHttpServerOutput serverIO;
+  private MockHttpSocketConnection socketConnection;
 
   protected void setUp() {
-    serverIO = new MockHttpServerIO();
+    serverIO = new MockHttpServerOutput();
   }
 
   private HttpRequest createTestParsedRequest(String request) throws IOException {
     serverIO.stubRequest(request);
-    HttpRequestParser requestParser = new HttpRequestParser(serverIO);
+    HttpParamParser paramParser = new HttpParamParser();
+    HttpRequestParser requestParser = new HttpRequestParser(serverIO, paramParser);
     OutputStream outputStream = new ByteArrayOutputStream();
     InputStream inputStream = new ByteArrayInputStream(request.getBytes());
-    MockHttpSocketConnection socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
+    socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
     return requestParser.parseRequest(socketConnection);
   }
 
@@ -27,7 +30,7 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     String request = "GET / HTTP/1.1\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
-    assertTrue(serverIO.readRequestCalled);
+    assertTrue(socketConnection.getInputStreamCalled);
   }
 
   public void testParseRequestHttpVersion() throws IOException {
@@ -55,14 +58,21 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     String request = "GET /index.html?parameter=value HTTP/1.1\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
-    assertEquals("parameter = value\n", parsedRequest.getParams());
+    HashMap<String, String> testParams = new HashMap<>();
+    testParams.put("parameter", "value");
+
+    assertEquals(testParams, parsedRequest.getParams());
   }
 
   public void testParstRequestMultipleParams() throws IOException {
     String request = "GET /index.html?parameter1=value1&parameter2=value2 HTTP/1.1\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
-    assertEquals("parameter1 = value1\nparameter2 = value2\n", parsedRequest.getParams());
+    HashMap<String, String> testParams = new HashMap<>();
+    testParams.put("parameter1", "value1");
+    testParams.put("parameter2", "value2");
+
+    assertEquals(testParams, parsedRequest.getParams());
   }
 
   public void testParseRequestNoHeaders() throws IOException {
@@ -87,30 +97,32 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
-    headers.put("Accept", "text/plain\r");
+    headers.put("Accept", "text/plain");
     headers.put("Accept-Language", "en-US");
 
     assertEquals(headers, parsedRequest.getHeaderLines());
   }
 
   public void testParseRequestSingleHeaderWithBody() throws IOException {
-    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\n\r\nHello World\r\n\r\n";
+    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\nContent-Length: 11\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
     headers.put("Accept", "text/plain");
+    headers.put("Content-Length", "11");
 
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("Hello World", parsedRequest.getBody());
   }
 
   public void testParseRequestMultipleHeadersWithBody() throws IOException {
-    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\nAccept-Language: en-US\r\n\r\nHello World\r\n\r\n";
+    String request = "POST /index.html HTTP/1.1\r\nAccept: text/plain\r\nAccept-Language: en-US\r\nContent-Length: 11\r\n\r\nHello World\r\n\r\n";
     HttpRequest parsedRequest = createTestParsedRequest(request);
 
     HashMap<String, String> headers = new HashMap<>();
-    headers.put("Accept", "text/plain\r");
+    headers.put("Accept", "text/plain");
     headers.put("Accept-Language", "en-US");
+    headers.put("Content-Length", "11");
 
     assertEquals(headers, parsedRequest.getHeaderLines());
     assertEquals("Hello World", parsedRequest.getBody());
@@ -123,10 +135,4 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
     assertEquals("", parsedRequest.getBody());
   }
 
-  public void testParseRequestWithBody() throws IOException {
-    String request = "GET /index.html HTTP/1.1\r\n\r\nHello World\r\n\r\n";
-    HttpRequest parsedRequest = createTestParsedRequest(request);
-
-    assertEquals("Hello World", parsedRequest.getBody());
-  }
 }
