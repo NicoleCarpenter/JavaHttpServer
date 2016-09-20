@@ -2,34 +2,43 @@ package util;
 
 import handler.*;
 import router.Router;
+import router.Routes;
 import response.HttpResponseBuilder;
 import file.FileSystem;
 import io.FileIO;
 
 public class SetUp {
 
-  public void setUpRouter(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
-    registerRoutes(router, responseBuilder, fileSystem, fileIO);
-    registerMethodHandlers(router, responseBuilder, fileSystem, fileIO, typeMatcher);
+  public void registerRoutes(HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
+    Config.routes.addRoute("/", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/image.jpeg", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/image.png", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/image.gif", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/text-file.txt", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/file1", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/method_options", "GET", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options", "HEAD", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options", "POST", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options", "PUT", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options", "DELETE", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options", "OPTIONS", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options2", "GET", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/method_options2", "OPTIONS", new DefaultHandler(responseBuilder));
+    Config.routes.addRoute("/form", "GET", new FormHandler(responseBuilder, fileSystem, fileIO));
+    Config.routes.addRoute("/form", "PUT", new FormHandler(responseBuilder, fileSystem, fileIO));
+    Config.routes.addRoute("/form", "POST", new FormHandler(responseBuilder, fileSystem, fileIO));
+    Config.routes.addRoute("/form", "DELETE", new FormHandler(responseBuilder, fileSystem, fileIO));
+    Config.routes.addRoute("/parameters", "GET", new ParameterDecoderHandler(responseBuilder));
+    Config.routes.addRoute("/redirect", "GET", new RedirectHandler(responseBuilder));
+    Config.routes.addRoute("/redirect", "Redirect", new RedirectHandler(responseBuilder));
+    Config.routes.addRoute("/logs", "GET", new BasicAuthHandler(responseBuilder));
+    Config.routes.addRoute("/tea", "GET", new TeapotHandler(responseBuilder));
+    Config.routes.addRoute("/coffee", "GET", new TeapotHandler(responseBuilder));
+    Config.routes.addRoute("/index.txt", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/partial_content.txt", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/patch-content.txt", "GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
+    Config.routes.addRoute("/patch-content.txt", "PATCH", new PatchHandler(responseBuilder, fileIO));
+    Config.routes.addRoute("/", "HEAD", new HeadHandler(responseBuilder));
   }
-
-  public void registerRoutes(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO) {
-    router.registerRoute("GET /parameters", new ParameterDecoderHandler(responseBuilder));
-    router.registerRoute("GET /coffee", new TeapotHandler(responseBuilder));
-    router.registerRoute("GET /tea", new TeapotHandler(responseBuilder));
-    router.registerRoute("GET /redirect", new RedirectHandler(responseBuilder));
-    router.registerRoute("GET /logs", new BasicAuthHandler(responseBuilder));
-    router.registerRoute("GET /form", new FormHandler(responseBuilder, fileSystem, fileIO));
-    router.registerRoute("POST /form", new FormHandler(responseBuilder, fileSystem, fileIO));
-    router.registerRoute("PUT /form", new FormHandler(responseBuilder, fileSystem, fileIO));
-    router.registerRoute("DELETE /form", new FormHandler(responseBuilder, fileSystem, fileIO));
-  }
-
-  public void registerMethodHandlers(Router router, HttpResponseBuilder responseBuilder, FileSystem fileSystem, FileIO fileIO, FileTypeMatcher typeMatcher) {
-    router.registerMethodHandler("GET", new FileHandler(responseBuilder, fileSystem, fileIO, typeMatcher));
-    router.registerMethodHandler("PATCH", new PatchHandler(responseBuilder, fileIO));
-    router.registerMethodHandler("HEAD", new HeadHandler(responseBuilder));
-    router.registerMethodHandler("OPTIONS", new MethodOptionsHandler(responseBuilder));
-  }
-
+  
 }

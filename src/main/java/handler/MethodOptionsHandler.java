@@ -3,17 +3,19 @@ package handler;
 import request.HttpRequest;
 import response.HttpResponse;
 import response.ResponseBuilder;
+import java.util.ArrayList;
 
-public class MethodOptionsHandler implements Handler {
-  private ResponseBuilder responseBuilder;
+public class MethodOptionsHandler extends DefaultHandler implements Handler {
+  private ArrayList<String> methodOptions;
 
-  public MethodOptionsHandler(ResponseBuilder responseBuilder) {
-    this.responseBuilder = responseBuilder;
+  public MethodOptionsHandler(ResponseBuilder responseBuilder, ArrayList<String> methodOptions) {
+    super(responseBuilder);
+    this.methodOptions = methodOptions;
   }
 
   @Override
   public HttpResponse handleRoute(HttpRequest request) {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(emptyBody);
     getAllowedMethodsHeader(request);
@@ -21,10 +23,13 @@ public class MethodOptionsHandler implements Handler {
   }
 
   private void getAllowedMethodsHeader(HttpRequest request) {
-    if (request.getUri().equals("/method_options")) {
-      responseBuilder.setHeader("Allow", "GET,HEAD,POST,OPTIONS,PATCH,PUT");
-    } else {
-      responseBuilder.setHeader("Allow", "GET,OPTIONS");
+    StringBuilder builder = new StringBuilder();
+    for (String item : methodOptions) {
+      if (builder.length() != 0) {
+        builder.append(",");
+      }
+      builder.append(item);
     }
+    responseBuilder.setHeader("Allow", builder.toString());
   }
 }

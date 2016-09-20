@@ -19,7 +19,7 @@ public class MockHandler implements Handler {
 
   private HttpResponse buildMockResponse() {
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();

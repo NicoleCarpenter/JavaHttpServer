@@ -9,11 +9,11 @@ public class BasicAuthHandlerTest extends junit.framework.TestCase {
   private MockHttpResponseBuilder responseBuilder;
   private BasicAuthHandler handler;
   private HashMap<String, String> requestHeaders;
-  private static String incorrectUsername = "basic dXNlcjpodW50ZXIy"; // basic user:hunter2
-  private static String incorrectPassphrase = "basic YWRtaW46aHVudGVyMQ=="; // basic admin:hunter1
-  private static String incorrectFormat = "basic YWRtaW58aHVudGVyMg=="; // basic admin|hunter2
-  private static String incorrectFormat2 = "YWRtaW46aHVudGVyMg=="; // admin:hunter2
-  private static String correctCredentials = "basic YWRtaW46aHVudGVyMg=="; // basic admin:hunter2
+  private static String incorrectUsername = "basic dXNlcjpodW50ZXIy";
+  private static String incorrectPassphrase = "basic YWRtaW46aHVudGVyMQ==";
+  private static String incorrectFormat = "basic YWRtaW58aHVudGVyMg==";
+  private static String incorrectFormat2 = "YWRtaW46aHVudGVyMg==";
+  private static String correctCredentials = "basic YWRtaW46aHVudGVyMg==";
 
   protected void setUp() {
     responseBuilder = new MockHttpResponseBuilder();
