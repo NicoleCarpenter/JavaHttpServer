@@ -1,40 +1,53 @@
 import handler.Handler;
 import router.Routes;
 import util.HttpMethods;
+import java.util.Map;
 import java.util.HashMap;
 
 public class RoutesTest extends junit.framework.TestCase {
   Routes routes;
-  HashMap<String, HashMap<String, Handler>> routesList;
+  Map<String, HashMap<String, Handler>> routesList;
 
   protected void setUp() {
     routes = new Routes();
   }
 
-  private boolean routeExists(String uri, HashMap<String, HashMap<String, Handler>> routesList) {
-    return routesList.get(uri) != null;
+  public void testGetRouteForUriDoesNotExist() {
+    routesList = routes.getRoutes();
+    assertTrue(routesList.isEmpty());
   }
 
-  public void testAddRouteExists() {
+  public void testGetRouteForUriExists() {
     routes.addRoute("/index", HttpMethods.get, new MockHandler());
     routesList = routes.getRoutes();
-    assertTrue(routeExists("/index", routesList));
+    assertNotNull(routes.getRouteForUri("/index"));
+    assertFalse(routesList.isEmpty());
   }
 
   public void testAddRouteDoesNotExist() {
     routesList = routes.getRoutes();
-    assertFalse(routeExists("/foo", routesList));
+    assertFalse(routes.routeExists("/foo", "GET"));
   }
 
-  public void testGetRoute() {
+  public void testAddRouteExists() {
     routes.addRoute("/index", HttpMethods.get, new MockHandler());
-    routesList = routes.getRoutes();
-    assertNotNull(routes.getRoute("/index"));
-    assertFalse(routesList.isEmpty());
+    assertTrue(routes.routeExists("/index", "GET"));
   }
 
-  public void testGetRouteEmpty() {
-    routesList = routes.getRoutes();
-    assertTrue(routesList.isEmpty());
+  public void testAddRouteRouteExistsNewMethod() {
+    routes.addRoute("/index", HttpMethods.get, new MockHandler());
+    routes.addRoute("/index", HttpMethods.post, new MockHandler());
+    assertTrue(routes.routeExists("/index", "GET"));
+    assertTrue(routes.routeExists("/index", "POST"));
+  }
+
+  public void testRouteExistsTrue() {
+    routes.addRoute("/index", HttpMethods.get, new MockHandler());
+    assertTrue(routes.routeExists("/index", "GET"));
+  }
+
+  public void testRouteExistsFalse() {
+    routes.addRoute("/index", HttpMethods.get, new MockHandler());
+    assertFalse(routes.routeExists("/other_page", "GET"));
   }
 }

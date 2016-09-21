@@ -13,7 +13,7 @@ public class RedirectHandler implements Handler {
 
   @Override
   public HttpResponse handleRoute(HttpRequest request) {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildRedirectResponse();
     responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();

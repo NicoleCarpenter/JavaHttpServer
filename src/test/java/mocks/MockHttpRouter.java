@@ -13,12 +13,4 @@ public class MockHttpRouter implements Router {
     getRouteCalled = true;
     return new MockHandler();
   }
-
-  public void registerRoute(String uriWithMethod, Handler handler) {
-    registerRouteCalled = true;
-  }
-
-  public void registerMethodHandler(String uriWithMethod, Handler handler) {
-    registerMethodHandlerCalled = true;
-  }
 }

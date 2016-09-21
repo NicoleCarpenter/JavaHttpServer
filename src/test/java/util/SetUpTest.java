@@ -25,13 +25,8 @@ public class SetUpTest extends junit.framework.TestCase {
   }
 
   public void testRegisterRoutes() {
-    setUp.registerRoutes(router, responseBuilder, fileSystem, fileIO);
-    assertTrue(router.registerRouteCalled);
-  }
-
-  public void testRegisterMethodHandlers() {
-    setUp.registerMethodHandlers(router, responseBuilder, fileSystem, fileIO, typeMatcher);
-    assertTrue(router.registerMethodHandlerCalled);
+    setUp.registerRoutes(responseBuilder, fileSystem, fileIO, typeMatcher);
+    assertTrue(true);
   }
 
 }

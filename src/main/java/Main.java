@@ -37,11 +37,11 @@ public class Main {
     HttpFileSystem fileSystem = new HttpFileSystem();
     HttpFileIO fileIO = new HttpFileIO(rootDirectory, fileSystem);
     HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
-    HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder);
     FileTypeMatcher typeMatcher = new FileTypeMatcher();
 
     SetUp setUp = new SetUp();
-    setUp.setUpRouter(httpRouter, httpResponseBuilder, fileSystem, fileIO, typeMatcher);
+    setUp.registerRoutes(httpResponseBuilder, fileSystem, fileIO, typeMatcher);
+    HttpRouter httpRouter = new HttpRouter(rootDirectory, fileSystem, fileIO, httpResponseBuilder, typeMatcher);
 
     HttpServer server = new HttpServer(httpServerSocket, httpRequestParser, httpRouter, httpServerOutput);
 

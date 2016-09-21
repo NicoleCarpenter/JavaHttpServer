@@ -2,24 +2,28 @@ import handler.MethodOptionsHandler;
 import request.HttpRequest;
 import response.HttpResponse;
 import response.HttpResponseBuilder;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.io.File;
 
 public class MethodOptionsHandlerTest extends junit.framework.TestCase {
   private HttpResponse response;
+  private HttpResponseBuilder responseBuilder;
   private Formatter formatter;
-  private MethodOptionsHandler handler;
   private HashMap<String, String> testHeaders;
 
   protected void setUp() {
     formatter = new Formatter();
-    HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-    handler = new MethodOptionsHandler(responseBuilder);
+    responseBuilder = new HttpResponseBuilder();
     testHeaders = new HashMap<>();
     testHeaders.put("Server", "Nicole's HTTP server");
   }
 
   private HttpResponse testHandlerResponse(String uri, String allowedMethods) {
+    ArrayList<String> methods = new ArrayList<String>(Arrays.asList(allowedMethods.split(",")));
+    MethodOptionsHandler handler = new MethodOptionsHandler(responseBuilder, methods);
     HttpRequest request = new HttpRequest("HEAD", uri, new HashMap<>(), "HTTP/1.1", new HashMap<String, String>(), "");
     testHeaders.put("Allow", allowedMethods);
     return handler.handleRoute(request);

@@ -4,10 +4,10 @@ import request.HttpRequest;
 import response.HttpResponse;
 import response.ResponseBuilder;
 
-public class HeadHandler implements Handler {
-  private ResponseBuilder responseBuilder;
+public class DefaultHandler implements Handler {
+  ResponseBuilder responseBuilder;
 
-  public HeadHandler(ResponseBuilder responseBuilder) {
+  public DefaultHandler(ResponseBuilder responseBuilder) {
     this.responseBuilder = responseBuilder;
   }
 
@@ -18,4 +18,5 @@ public class HeadHandler implements Handler {
     responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();
   }
+
 }
