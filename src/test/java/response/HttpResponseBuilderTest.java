@@ -43,7 +43,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
   }
 
   public void testSetBodyEmpty() {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     builder.setBody(emptyBody);
     response = builder.getResponse();
     assertEquals("", formatter.bodyToString(response));
@@ -57,7 +57,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
   }
 
   public void testGetResponse() {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     builder.setStatusCode("200");
     builder.setStatusMessage("OK");
     builder.setDefaultHeaders();

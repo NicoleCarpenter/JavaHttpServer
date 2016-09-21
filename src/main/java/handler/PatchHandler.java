@@ -17,7 +17,6 @@ public class PatchHandler implements Handler {
     this.responseBuilder = responseBuilder;
     this.fileIO = fileIO;
     this.etag = "dc50a0d27dda2eee9f65644cd7e4c9cf11de8bec";
-    this.defaultEtag = "5c36acad75b78b82be6d9cbbd6143ab7e0cc04b0";
   }
 
   @Override
@@ -33,7 +32,6 @@ public class PatchHandler implements Handler {
     }
 
     responseBuilder.setHeader("Etag", etag);
-    etag = defaultEtag;
     return responseBuilder.getResponse();
   }
 
@@ -46,15 +44,15 @@ public class PatchHandler implements Handler {
   }
 
   private void buildPatchedContentResponse() {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildPatchedContentResponse();
     responseBuilder.setBody(emptyBody);
   }
 
   private void buildFullFileContentResponse(String path) {
-      byte[] fileContent = fileIO.getFileContents(path);
-      responseBuilder.buildOkResponse();
-      responseBuilder.setBody(fileContent);
+    byte[] fileContent = fileIO.getFileContents(path);
+    responseBuilder.buildOkResponse();
+    responseBuilder.setBody(fileContent);
   }
 
   private String findPath(HttpRequest request) {

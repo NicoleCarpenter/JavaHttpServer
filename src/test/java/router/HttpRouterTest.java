@@ -18,11 +18,10 @@ public class HttpRouterTest extends junit.framework.TestCase {
     fileSystem = new MockHttpFileSystem();
     MockHttpFileIO fileIO = new MockHttpFileIO();
     HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-    router = new HttpRouter(rootDirectory, fileSystem, fileIO, responseBuilder);
+    router = new HttpRouter(rootDirectory, fileSystem, fileIO, responseBuilder, typeMatcher);
 
     SetUp setUp = new SetUp();
-    setUp.registerRoutes(router, responseBuilder, fileSystem, fileIO);
-    setUp.registerMethodHandlers(router, responseBuilder, fileSystem, fileIO, typeMatcher);
+    setUp.registerRoutes(responseBuilder, fileSystem, fileIO, typeMatcher);
   }
 
   protected void tearDown() {
@@ -90,21 +89,15 @@ public class HttpRouterTest extends junit.framework.TestCase {
     assertTrue(handler instanceof FormHandler);
   }
 
-  public void testGetRoutePatch() {
-    request = new HttpRequest("PATCH", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
-    Handler handler = router.getRoute(request);
-    assertTrue(handler instanceof PatchHandler);
-  }
-
   public void testGetRouteOptions() {
-    request = new HttpRequest("OPTIONS", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("OPTIONS", "/method_options", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof MethodOptionsHandler);
   }
 
   public void testGetRouteHead() {
     fileSystem.stubExists(true);
-    request = new HttpRequest("HEAD", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("HEAD", "/", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof HeadHandler);
   }
@@ -118,7 +111,7 @@ public class HttpRouterTest extends junit.framework.TestCase {
 
   public void testGetRouteFile() {
     fileSystem.stubExists(true);
-    request = new HttpRequest("GET", "/file", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
+    request = new HttpRequest("GET", "/index.txt", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof FileHandler);
   }
@@ -128,6 +121,18 @@ public class HttpRouterTest extends junit.framework.TestCase {
     request = new HttpRequest("GET", "/nonExistantFile", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
     Handler handler = router.getRoute(request);
     assertTrue(handler instanceof NotFoundHandler);
+  }
+
+  public void testGetRouteBadRequest() {
+    request = new HttpRequest("PUT", "/file1", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
+    Handler handler = router.getRoute(request);
+    assertTrue(handler instanceof MethodNotAllowedHandler);
+  }
+
+  public void testGetRouteBadRequestNotAMethod() {
+    request = new HttpRequest("BADMETHOD", "/file1", new HashMap<>(), "HTTP/1.1", new HashMap<>(), "");
+    Handler handler = router.getRoute(request);
+    assertTrue(handler instanceof MethodNotAllowedHandler);
   }
 
 }

@@ -14,7 +14,7 @@ public class MethodNotAllowedHandler implements Handler {
 
   @Override
   public HttpResponse handleRoute(HttpRequest request) {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildMethodNotAllowedResponse();
     responseBuilder.setBody(emptyBody);
     return responseBuilder.getResponse();

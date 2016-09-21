@@ -29,7 +29,7 @@ public class TeapotHandler implements Handler {
   }
 
   private void buildTeaResponse() {
-    byte[] emptyBody = new String("").getBytes();
+    byte[] emptyBody = new byte[0];
     responseBuilder.buildOkResponse();
     responseBuilder.setBody(emptyBody);
   }
