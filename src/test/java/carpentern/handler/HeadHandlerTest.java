@@ -1,7 +1,7 @@
-import carpentern.handler.HeadHandler;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponseBuilder;
+import carpentern.coreServer.handler.HeadHandler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponseBuilder;
 import java.util.HashMap;
 import java.io.File;
 

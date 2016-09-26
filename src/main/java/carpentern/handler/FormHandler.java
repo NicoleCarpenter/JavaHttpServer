@@ -1,11 +1,11 @@
-package carpentern.handler;
+package carpentern.coreServer.handler;
 
-import carpentern.io.FileIO;
-import carpentern.file.FileSystem;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponse;
-import carpentern.response.ResponseBuilder;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.file.FileSystem;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.ResponseBuilder;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.io.File;

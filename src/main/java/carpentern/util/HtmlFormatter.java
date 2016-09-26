@@ -1,4 +1,4 @@
-package carpentern.util;
+package carpentern.coreServer.util;
 
 public class HtmlFormatter {
   private final String htmlHead = "<!DOCTYPE html><html><body>";

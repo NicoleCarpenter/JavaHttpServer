@@ -1,11 +1,11 @@
-package carpentern.util;
+package carpentern.coreServer.util;
 
-import carpentern.handler.*;
-import carpentern.router.Router;
-import carpentern.router.Routes;
-import carpentern.response.HttpResponseBuilder;
-import carpentern.file.FileSystem;
-import carpentern.io.FileIO;
+import carpentern.coreServer.handler.*;
+import carpentern.coreServer.router.Router;
+import carpentern.coreServer.router.Routes;
+import carpentern.coreServer.response.HttpResponseBuilder;
+import carpentern.coreServer.file.FileSystem;
+import carpentern.coreServer.io.FileIO;
 
 public class SetUp {
 

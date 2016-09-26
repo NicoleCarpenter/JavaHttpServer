@@ -1,7 +1,7 @@
-import carpentern.handler.DefaultHandler;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponseBuilder;
+import carpentern.coreServer.handler.DefaultHandler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class DefaultHandlerTest extends junit.framework.TestCase {

@@ -1,12 +1,12 @@
-package carpentern.server;
+package carpentern.coreServer.server;
 
-import carpentern.handler.Handler;
-import carpentern.io.ServerOutput;
-import carpentern.request.HttpRequest;
-import carpentern.request.RequestParser;
-import carpentern.response.HttpResponse;
-import carpentern.router.Router;
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.io.ServerOutput;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.request.RequestParser;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.router.Router;
+import carpentern.coreServer.socket.SocketConnection;
 import java.io.IOException;
 
 public class HttpServerRunner implements Runnable {

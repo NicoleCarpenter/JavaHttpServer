@@ -1,4 +1,4 @@
-package carpentern.response;
+package carpentern.coreServer.response;
 
 import java.util.HashMap;
 import java.io.ByteArrayOutputStream;

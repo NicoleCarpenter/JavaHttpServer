@@ -1,5 +1,5 @@
-import carpentern.response.HttpResponse;
-import carpentern.response.ResponseBuilder;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.ResponseBuilder;
 
 public class MockHttpResponseBuilder implements ResponseBuilder {
   boolean setStatusCodeCalled;

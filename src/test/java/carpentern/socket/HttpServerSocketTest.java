@@ -1,5 +1,5 @@
-import carpentern.socket.ServerSocketInterface;
-import carpentern.socket.HttpServerSocket;
+import carpentern.coreServer.socket.ServerSocketInterface;
+import carpentern.coreServer.socket.HttpServerSocket;
 import java.net.Socket;
 import java.io.IOException;
 

@@ -1,5 +1,5 @@
-import carpentern.io.HttpFileIO;
-import carpentern.file.FileSystem;
+import carpentern.coreServer.io.HttpFileIO;
+import carpentern.coreServer.file.FileSystem;
 import java.io.File;
 import org.junit.Test;
 import org.junit.Ignore;

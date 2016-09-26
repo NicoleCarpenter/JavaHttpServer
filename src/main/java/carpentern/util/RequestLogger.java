@@ -1,6 +1,6 @@
-package carpentern.util;
+package carpentern.coreServer.util;
 
-import carpentern.request.HttpRequest;
+import carpentern.coreServer.request.HttpRequest;
 import java.util.ArrayList;
 
 public class RequestLogger {

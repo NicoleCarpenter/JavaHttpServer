@@ -1,6 +1,6 @@
-package carpentern.request;
+package carpentern.coreServer.request;
 
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.socket.SocketConnection;
 import java.io.IOException;
 
 public interface RequestParser {

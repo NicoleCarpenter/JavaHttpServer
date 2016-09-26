@@ -1,4 +1,4 @@
-package carpentern.request;
+package carpentern.coreServer.request;
 
 import java.util.HashMap;
 import java.io.File;

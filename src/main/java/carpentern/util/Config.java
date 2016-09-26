@@ -1,6 +1,6 @@
-package carpentern.util;
+package carpentern.coreServer.util;
 
-import carpentern.router.Routes;
+import carpentern.coreServer.router.Routes;
 
 public class Config {
   public static Routes routes = new Routes();

@@ -1,4 +1,4 @@
-import carpentern.util.ArgumentParser;
+import carpentern.coreServer.util.ArgumentParser;
 
 public class ArgumentParserTest extends junit.framework.TestCase {
 

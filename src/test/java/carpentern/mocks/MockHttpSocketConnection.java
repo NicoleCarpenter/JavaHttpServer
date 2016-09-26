@@ -1,4 +1,4 @@
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.socket.SocketConnection;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;

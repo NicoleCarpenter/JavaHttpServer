@@ -1,6 +1,6 @@
-import carpentern.handler.Handler;
-import carpentern.router.Routes;
-import carpentern.util.HttpMethods;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.router.Routes;
+import carpentern.coreServer.util.HttpMethods;
 import java.util.Map;
 import java.util.HashMap;
 

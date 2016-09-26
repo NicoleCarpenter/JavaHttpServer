@@ -1,6 +1,6 @@
-import carpentern.request.HttpRequest;
-import carpentern.request.RequestParser;
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.request.RequestParser;
+import carpentern.coreServer.socket.SocketConnection;
 import java.util.HashMap;
 import java.io.IOException;
 

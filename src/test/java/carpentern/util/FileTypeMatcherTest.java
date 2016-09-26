@@ -1,4 +1,4 @@
-import carpentern.util.FileTypeMatcher;
+import carpentern.coreServer.util.FileTypeMatcher;
 
 public class FileTypeMatcherTest extends junit.framework.TestCase {
   FileTypeMatcher typeMatcher;

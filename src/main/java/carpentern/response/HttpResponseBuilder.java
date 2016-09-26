@@ -1,7 +1,7 @@
-package carpentern.response;
+package carpentern.coreServer.response;
 
-import carpentern.io.FileIO;
-import carpentern.request.HttpRequest;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.request.HttpRequest;
 
 public class HttpResponseBuilder implements ResponseBuilder {
   HttpResponse response;

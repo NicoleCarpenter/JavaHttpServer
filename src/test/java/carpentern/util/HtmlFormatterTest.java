@@ -1,4 +1,4 @@
-import carpentern.util.HtmlFormatter;
+import carpentern.coreServer.util.HtmlFormatter;
 
 public class HtmlFormatterTest extends junit.framework.TestCase {
   HtmlFormatter formatter;

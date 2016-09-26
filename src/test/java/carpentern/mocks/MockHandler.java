@@ -1,7 +1,7 @@
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponseBuilder;
-import carpentern.handler.Handler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponseBuilder;
+import carpentern.coreServer.handler.Handler;
 import java.util.HashMap;
 
 public class MockHandler implements Handler {

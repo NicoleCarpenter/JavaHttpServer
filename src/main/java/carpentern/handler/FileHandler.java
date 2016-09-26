@@ -1,12 +1,12 @@
-package carpentern.handler;
+package carpentern.coreServer.handler;
 
-import carpentern.io.FileIO;
-import carpentern.file.FileSystem;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.ResponseBuilder;
-import carpentern.util.FileTypeMatcher;
-import carpentern.util.HtmlFormatter;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.file.FileSystem;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.ResponseBuilder;
+import carpentern.coreServer.util.FileTypeMatcher;
+import carpentern.coreServer.util.HtmlFormatter;
 import java.util.HashMap;
 
 public class FileHandler implements Handler {
