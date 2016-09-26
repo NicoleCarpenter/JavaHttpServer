@@ -1,4 +1,4 @@
-import carpentern.io.HttpServerOutput;
+import carpentern.coreServer.io.HttpServerOutput;
 import java.io.InputStream;
 import java.io.IOException;
 

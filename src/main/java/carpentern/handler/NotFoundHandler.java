@@ -1,8 +1,8 @@
-package carpentern.handler;
+package carpentern.coreServer.handler;
 
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.ResponseBuilder;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.ResponseBuilder;
 
 public class NotFoundHandler implements Handler {
   private ResponseBuilder responseBuilder;

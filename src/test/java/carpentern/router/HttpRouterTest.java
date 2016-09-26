@@ -1,9 +1,9 @@
-import carpentern.handler.*;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponseBuilder;
-import carpentern.router.HttpRouter;
-import carpentern.util.FileTypeMatcher;
-import carpentern.util.SetUp;
+import carpentern.coreServer.handler.*;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponseBuilder;
+import carpentern.coreServer.router.HttpRouter;
+import carpentern.coreServer.util.FileTypeMatcher;
+import carpentern.coreServer.util.SetUp;
 import java.util.HashMap;
 import java.io.File;
 

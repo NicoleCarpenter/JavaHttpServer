@@ -1,13 +1,13 @@
-package carpentern.router;
+package carpentern.coreServer.router;
 
-import carpentern.io.FileIO;
-import carpentern.file.FileSystem;
-import carpentern.handler.*;
-import carpentern.request.HttpRequest;
-import carpentern.response.ResponseBuilder;
-import carpentern.util.Config;
-import carpentern.util.FileTypeMatcher;
-import carpentern.util.RequestLogger;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.file.FileSystem;
+import carpentern.coreServer.handler.*;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.ResponseBuilder;
+import carpentern.coreServer.util.Config;
+import carpentern.coreServer.util.FileTypeMatcher;
+import carpentern.coreServer.util.RequestLogger;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

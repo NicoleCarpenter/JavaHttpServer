@@ -1,6 +1,6 @@
-package carpentern.io;
+package carpentern.coreServer.io;
 
-import carpentern.request.HttpRequest;
+import carpentern.coreServer.request.HttpRequest;
 import java.io.File;
 
 public interface FileIO {

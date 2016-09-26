@@ -1,10 +1,10 @@
-package carpentern.server;
+package carpentern.coreServer.server;
 
-import carpentern.io.ServerOutput;
-import carpentern.request.RequestParser;
-import carpentern.router.Router;
-import carpentern.socket.ServerSocketInterface;
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.io.ServerOutput;
+import carpentern.coreServer.request.RequestParser;
+import carpentern.coreServer.router.Router;
+import carpentern.coreServer.socket.ServerSocketInterface;
+import carpentern.coreServer.socket.SocketConnection;
 import java.io.IOException;
 
 public class HttpServer extends Thread {

@@ -1,17 +1,17 @@
-package carpentern;
+package carpentern.coreServer;
 
-import carpentern.file.HttpFileSystem;
-import carpentern.io.HttpServerOutput;
-import carpentern.io.HttpFileIO;
-import carpentern.request.HttpRequestParser;
-import carpentern.response.HttpResponseBuilder;
-import carpentern.router.HttpRouter;
-import carpentern.parser.HttpParamParser;
-import carpentern.server.HttpServer;
-import carpentern.socket.HttpServerSocket;
-import carpentern.util.ArgumentParser;
-import carpentern.util.FileTypeMatcher;
-import carpentern.util.SetUp;
+import carpentern.coreServer.file.HttpFileSystem;
+import carpentern.coreServer.io.HttpServerOutput;
+import carpentern.coreServer.io.HttpFileIO;
+import carpentern.coreServer.request.HttpRequestParser;
+import carpentern.coreServer.response.HttpResponseBuilder;
+import carpentern.coreServer.router.HttpRouter;
+import carpentern.coreServer.parser.HttpParamParser;
+import carpentern.coreServer.server.HttpServer;
+import carpentern.coreServer.socket.HttpServerSocket;
+import carpentern.coreServer.util.ArgumentParser;
+import carpentern.coreServer.util.FileTypeMatcher;
+import carpentern.coreServer.util.SetUp;
 
 import java.net.ServerSocket;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package carpentern.parser;
+package carpentern.coreServer.parser;
 
 import java.net.URLDecoder;
 import java.io.UnsupportedEncodingException;

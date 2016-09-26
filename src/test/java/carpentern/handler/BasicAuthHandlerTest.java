@@ -1,9 +1,9 @@
-import carpentern.handler.BasicAuthHandler;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
+import carpentern.coreServer.handler.BasicAuthHandler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
 import java.util.HashMap;
 import java.util.Arrays;
-import carpentern.util.RequestLogger;
+import carpentern.coreServer.util.RequestLogger;
 
 public class BasicAuthHandlerTest extends junit.framework.TestCase {
   private MockHttpResponseBuilder responseBuilder;

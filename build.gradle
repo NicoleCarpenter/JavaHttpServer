@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'carpentern.Main'
+mainClassName = 'carpentern.coreServer.Main'
 
 repositories {
   mavenCentral()
@@ -19,7 +19,7 @@ jar {
   manifest {
     attributes (
       'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-      'Main-Class': 'carpentern.Main')
+      'Main-Class': 'carpentern.coreServer.Main')
   }
 
 

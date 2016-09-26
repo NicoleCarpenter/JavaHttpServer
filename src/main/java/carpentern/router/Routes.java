@@ -1,7 +1,7 @@
-package carpentern.router;
+package carpentern.coreServer.router;
 
-import carpentern.handler.Handler;
-import carpentern.util.HttpMethods;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.util.HttpMethods;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;

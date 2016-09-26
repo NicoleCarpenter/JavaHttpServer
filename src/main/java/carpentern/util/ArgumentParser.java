@@ -1,4 +1,4 @@
-package carpentern.util;
+package carpentern.coreServer.util;
 
 public class ArgumentParser {
   private int port = 5000;

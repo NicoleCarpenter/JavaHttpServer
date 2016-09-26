@@ -1,4 +1,4 @@
-package carpentern.response;
+package carpentern.coreServer.response;
 
 public interface ResponseBuilder {
   public abstract void setStatusCode(String code);

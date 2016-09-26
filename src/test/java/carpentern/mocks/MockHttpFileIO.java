@@ -1,5 +1,5 @@
-import carpentern.io.FileIO;
-import carpentern.request.HttpRequest;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.request.HttpRequest;
 import java.io.File;
 
 public class MockHttpFileIO implements FileIO {

@@ -1,4 +1,4 @@
-package carpentern.socket;
+package carpentern.coreServer.socket;
 
 import java.io.InputStream;
 import java.io.OutputStream;

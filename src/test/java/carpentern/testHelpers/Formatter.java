@@ -1,4 +1,4 @@
-import carpentern.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponse;
 import java.io.IOException;
 import java.util.HashMap;
 

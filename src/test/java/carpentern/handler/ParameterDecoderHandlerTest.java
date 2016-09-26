@@ -1,8 +1,8 @@
-import carpentern.handler.Handler;
-import carpentern.handler.ParameterDecoderHandler;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponseBuilder;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.handler.ParameterDecoderHandler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class ParameterDecoderHandlerTest extends junit.framework.TestCase {

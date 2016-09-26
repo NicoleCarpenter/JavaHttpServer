@@ -1,4 +1,4 @@
-import carpentern.socket.ServerSocketInterface;
+import carpentern.coreServer.socket.ServerSocketInterface;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayInputStream;

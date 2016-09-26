@@ -1,4 +1,4 @@
-package carpentern.io;
+package carpentern.coreServer.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;

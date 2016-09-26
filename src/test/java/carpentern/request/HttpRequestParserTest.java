@@ -1,6 +1,6 @@
-import carpentern.parser.HttpParamParser;
-import carpentern.request.HttpRequest;
-import carpentern.request.HttpRequestParser;
+import carpentern.coreServer.parser.HttpParamParser;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.request.HttpRequestParser;
 import java.util.HashMap;
 import java.io.InputStream;
 import java.io.OutputStream;

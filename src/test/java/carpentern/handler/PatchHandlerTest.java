@@ -1,8 +1,8 @@
-import carpentern.handler.Handler;
-import carpentern.handler.PatchHandler;
-import carpentern.request.HttpRequest;
-import carpentern.response.HttpResponse;
-import carpentern.response.HttpResponseBuilder;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.handler.PatchHandler;
+import carpentern.coreServer.request.HttpRequest;
+import carpentern.coreServer.response.HttpResponse;
+import carpentern.coreServer.response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class PatchHandlerTest extends junit.framework.TestCase {

@@ -1,11 +1,11 @@
 
-import carpentern.handler.*;
-import carpentern.router.Router;
-import carpentern.response.HttpResponseBuilder;
-import carpentern.file.FileSystem;
-import carpentern.io.FileIO;
-import carpentern.util.FileTypeMatcher;
-import carpentern.util.SetUp;
+import carpentern.coreServer.handler.*;
+import carpentern.coreServer.router.Router;
+import carpentern.coreServer.response.HttpResponseBuilder;
+import carpentern.coreServer.file.FileSystem;
+import carpentern.coreServer.io.FileIO;
+import carpentern.coreServer.util.FileTypeMatcher;
+import carpentern.coreServer.util.SetUp;
 
 public class SetUpTest extends junit.framework.TestCase {
   private MockHttpRouter router;

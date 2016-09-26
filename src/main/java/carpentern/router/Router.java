@@ -1,7 +1,7 @@
-package carpentern.router;
+package carpentern.coreServer.router;
 
-import carpentern.handler.Handler;
-import carpentern.request.HttpRequest;
+import carpentern.coreServer.handler.Handler;
+import carpentern.coreServer.request.HttpRequest;
 
 public interface Router {
   public abstract Handler getRoute(HttpRequest request);

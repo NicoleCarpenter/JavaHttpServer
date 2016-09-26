@@ -1,8 +1,8 @@
-package carpentern.request;
+package carpentern.coreServer.request;
 
-import carpentern.io.ServerOutput;
-import carpentern.parser.HttpParamParser;
-import carpentern.socket.SocketConnection;
+import carpentern.coreServer.io.ServerOutput;
+import carpentern.coreServer.parser.HttpParamParser;
+import carpentern.coreServer.socket.SocketConnection;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.HashMap;
