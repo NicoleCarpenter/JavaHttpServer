@@ -22,7 +22,6 @@ jar {
       'Main-Class': 'carpentern.coreServer.Main')
   }
 
-
   from {
     configurations.compile.collect { it.isDirectory() ? it: zipTree(it) }
   }
