@@ -1,7 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'maven'
 
 mainClassName = 'carpentern.coreServer.Main'
+group = "org.clojars.ncarpenter"
+version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -25,5 +28,4 @@ jar {
   from {
     configurations.compile.collect { it.isDirectory() ? it: zipTree(it) }
   }
-
 }
