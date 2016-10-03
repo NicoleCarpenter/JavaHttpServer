@@ -1,5 +1,5 @@
 package carpentern.coreServer.response;
 
-interface ResponseBuilder {
+public interface ResponseBuilder {
   HttpResponse getResponse();
 }

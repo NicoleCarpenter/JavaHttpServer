@@ -10,7 +10,7 @@ public class HttpResponse {
   private String statusCode;
   private String statusMessage;
   private HashMap<String, String> headerLines = new HashMap<String, String>();
-  private byte[] body;
+  private byte[] body = new byte[0];
 
   public String getHttpVersion() {
     return httpVersion;
