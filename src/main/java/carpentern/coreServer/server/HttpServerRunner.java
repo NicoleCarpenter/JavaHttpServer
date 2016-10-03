@@ -10,10 +10,10 @@ import carpentern.coreServer.socket.SocketConnection;
 import java.io.IOException;
 
 public class HttpServerRunner implements Runnable {
-  SocketConnection socketConnection;
-  RequestParser requestParser;
-  Router router;
-  ServerOutput serverIO;
+  private SocketConnection socketConnection;
+  private RequestParser requestParser;
+  private Router router;
+  private ServerOutput serverIO;
 
   public HttpServerRunner(SocketConnection socketConnection, RequestParser requestParser, Router router, ServerOutput serverIO) {
     this.socketConnection = socketConnection;

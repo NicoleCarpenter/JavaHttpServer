@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class HttpParamParserTest extends junit.framework.TestCase {
-  HttpParamParser paramParser;
+  private HttpParamParser paramParser;
 
   protected void setUp() {
     paramParser = new HttpParamParser();

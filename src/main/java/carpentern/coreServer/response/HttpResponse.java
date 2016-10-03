@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HttpResponse {
-  private static String CRLF = "\r\n\r\n";
   private static String CR = "\r\n";
   private String httpVersion = "HTTP/1.1";
   private String statusCode;
@@ -33,19 +32,19 @@ public class HttpResponse {
     return body;
   }
 
-  public void setStatusCode(String statusCode) {
+  void setStatusCode(String statusCode) {
     this.statusCode = statusCode;
   }
 
-  public void setStatusMessage(String statusMessage) {
+  void setStatusMessage(String statusMessage) {
     this.statusMessage = statusMessage;
   }
 
-  public void setHeader(String key, String value) {
+  void setHeader(String key, String value) {
     headerLines.put(key, value);
   }
 
-  public void setBody(byte[] body) {
+  void setBody(byte[] body) {
     this.body = body;
   }
 

@@ -1,15 +1,14 @@
 import carpentern.coreServer.socket.SocketConnection;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
-public class MockHttpSocketConnection implements SocketConnection {
+class MockHttpSocketConnection implements SocketConnection {
   boolean getInputStreamCalled = false;
   boolean getOutputStreamCalled = false;
   InputStream inputStream;
   OutputStream outputStream;
 
-  public MockHttpSocketConnection(InputStream inputStream, OutputStream outputStream) {
+  MockHttpSocketConnection(InputStream inputStream, OutputStream outputStream) {
     this.inputStream = inputStream;
     this.outputStream = outputStream;
   }
