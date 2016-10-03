@@ -2,7 +2,7 @@ import carpentern.coreServer.response.HttpResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Formatter {
+class Formatter {
 
   public String headersToString(HttpResponse response) {
     HashMap<String, String> headerLines = response.getHeaderLines();
@@ -16,7 +16,7 @@ public class Formatter {
     return new String(responseInBytes);
   }
 
-  public String bodyToString(HttpResponse response) {
+  String bodyToString(HttpResponse response) {
     return new String(response.getBody());
   }
 }

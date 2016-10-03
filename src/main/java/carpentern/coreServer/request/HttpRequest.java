@@ -1,7 +1,6 @@
 package carpentern.coreServer.request;
 
 import java.util.HashMap;
-import java.io.File;
 
 public class HttpRequest {
   private String method;
@@ -18,10 +17,6 @@ public class HttpRequest {
     this.httpVersion = httpVersion;
     this.headerLines = headerLines;
     this.body = body;
-  }
-
-  public String getRequestStartLine() {
-    return method + " " + uri + " " + httpVersion;
   }
 
   public String getMethod() {
@@ -46,10 +41,6 @@ public class HttpRequest {
 
   public String getBody() {
     return body;
-  }
-
-  public String getMethodWithUri() {
-    return method + " " + getUri();
   }
 
 }

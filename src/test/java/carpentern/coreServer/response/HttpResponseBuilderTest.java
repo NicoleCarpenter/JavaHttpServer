@@ -36,7 +36,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
 
   public void testSetBody() {
     String responseBody = "This is the root";
-    byte[] bodyContent = new String("/").getBytes();
+    byte[] bodyContent = "/".getBytes();
     builder.setBody(bodyContent);
     response = builder.getResponse();
     assertEquals("/", formatter.bodyToString(response));
@@ -50,7 +50,7 @@ public class HttpResponseBuilderTest extends junit.framework.TestCase {
   }
 
   public void testSetBodyMessage() {
-    byte[] responseMessage = new String("This is a body message").getBytes();
+    byte[] responseMessage = "This is a body message".getBytes();
     builder.setBody(responseMessage);
     response = builder.getResponse();
     assertEquals("This is a body message", formatter.bodyToString(response));

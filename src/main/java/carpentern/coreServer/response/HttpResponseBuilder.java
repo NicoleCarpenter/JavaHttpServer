@@ -1,12 +1,15 @@
 package carpentern.coreServer.response;
 
-import carpentern.coreServer.request.HttpRequest;
-
 public class HttpResponseBuilder implements ResponseBuilder {
   HttpResponse response;
 
   public HttpResponseBuilder() {
     response = new HttpResponse();
+  }
+
+  @Override
+  public HttpResponse getResponse() {
+    return response;
   }
 
   public void setStatusCode(String code) {
@@ -27,10 +30,6 @@ public class HttpResponseBuilder implements ResponseBuilder {
 
   public void setBody(byte[] bodyContent) {
     response.setBody(bodyContent);
-  }
-
-  public HttpResponse getResponse() {
-    return response;
   }
 
   public void buildOkResponse() {

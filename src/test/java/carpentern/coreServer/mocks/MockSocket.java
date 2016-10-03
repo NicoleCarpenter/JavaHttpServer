@@ -1,11 +1,11 @@
 import java.net.Socket;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.IOException;
 
-public class MockSocket extends Socket {
-  public MockSocket() throws IOException {
+class MockSocket extends Socket {
+
+  MockSocket() throws IOException {
     super();
   }
 

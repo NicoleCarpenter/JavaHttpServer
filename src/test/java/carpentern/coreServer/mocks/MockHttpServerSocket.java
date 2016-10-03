@@ -5,7 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class MockHttpServerSocket implements ServerSocketInterface {
+class MockHttpServerSocket implements ServerSocketInterface {
   String stubbedInputStream;
   boolean listenCalled = false;
   boolean stubbedIsConnectionClosed;

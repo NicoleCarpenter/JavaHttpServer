@@ -9,17 +9,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class HttpRequestParserTest extends junit.framework.TestCase {
-  private MockHttpServerOutput serverIO;
   private MockHttpSocketConnection socketConnection;
 
-  protected void setUp() {
-    serverIO = new MockHttpServerOutput();
-  }
-
   private HttpRequest createTestParsedRequest(String request) throws IOException {
-    serverIO.stubRequest(request);
     HttpParamParser paramParser = new HttpParamParser();
-    HttpRequestParser requestParser = new HttpRequestParser(serverIO, paramParser);
+    HttpRequestParser requestParser = new HttpRequestParser(paramParser);
     OutputStream outputStream = new ByteArrayOutputStream();
     InputStream inputStream = new ByteArrayInputStream(request.getBytes());
     socketConnection = new MockHttpSocketConnection(inputStream, outputStream);
@@ -28,7 +22,7 @@ public class HttpRequestParserTest extends junit.framework.TestCase {
 
   public void testGetInputStreamCalled() throws IOException {
     String request = "GET / HTTP/1.1\r\n\r\n";
-    HttpRequest parsedRequest = createTestParsedRequest(request);
+    createTestParsedRequest(request);
 
     assertTrue(socketConnection.getInputStreamCalled);
   }

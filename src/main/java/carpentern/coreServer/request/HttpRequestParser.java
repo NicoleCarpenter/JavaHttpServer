@@ -1,28 +1,17 @@
 package carpentern.coreServer.request;
 
-import carpentern.coreServer.io.ServerOutput;
 import carpentern.coreServer.parser.HttpParamParser;
 import carpentern.coreServer.socket.SocketConnection;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.HashMap;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 
 public class HttpRequestParser implements RequestParser {
-  private ServerOutput serverIO;
   private HttpParamParser paramParser;
-  private static String CRLF = "\r\n\r\n";
   private static String CR = "\r\n";
-  private static String NEWLINE = "\n";
-  private static String BLANK = "";
-  private static String SPACE = " ";
 
-  public HttpRequestParser(ServerOutput serverIO, HttpParamParser paramParser) {
-    this.serverIO = serverIO;
+  public HttpRequestParser(HttpParamParser paramParser) {
     this.paramParser = paramParser;
   }
 
@@ -41,18 +30,16 @@ public class HttpRequestParser implements RequestParser {
     String httpVersion = requestStartLine[2];
     String body = getBody(headerLines, bufferedReader);
 
-    HttpRequest httpRequest = new HttpRequest(method, uri, params, httpVersion, headerLines, body);
-
-    return httpRequest;
+    return new HttpRequest(method, uri, params, httpVersion, headerLines, body);
   }
 
-  public String getHead(BufferedReader bufferedReader) {
+  private String getHead(BufferedReader bufferedReader) {
     StringBuilder head = new StringBuilder();
     try {
       String line = bufferedReader.readLine();
       while (line != null && !line.equals("")) {
         head.append(line);
-        head.append("\r\n");
+        head.append(CR);
         line = bufferedReader.readLine();
       }
     } catch (IOException e) {
@@ -71,6 +58,7 @@ public class HttpRequestParser implements RequestParser {
   }
 
   private String[] splitRequestStartLine(String head) {
+    String SPACE = " ";
     String startLine = getRequestStartLine(head);
     return startLine.split(SPACE);
   }
@@ -80,9 +68,9 @@ public class HttpRequestParser implements RequestParser {
   }
 
   private HashMap<String, String> getHeaderLines(String head) {
+    String NEWLINE = "\n";
     String[] headLines = split(head, NEWLINE);
     HashMap<String, String> headers = new HashMap<>();
-    int length = headLines.length;
 
     for (int i = 1; i < headLines.length; i++) {
       String[] headerPair = headLines[i].split(": ");
@@ -91,7 +79,7 @@ public class HttpRequestParser implements RequestParser {
     return headers;
   }
 
-  public String getBody(HashMap<String, String> headers, BufferedReader bufferedReader) {
+  private String getBody(HashMap<String, String> headers, BufferedReader bufferedReader) {
     StringBuilder body = new StringBuilder();
     String length = headers.get("Content-Length");
     if (length != null) {
